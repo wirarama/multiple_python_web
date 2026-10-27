@@ -105,6 +105,7 @@ ok "Dependensi terpasang"
 
 # --------------------------------------------------------------- 4. konfigurasi
 mkdir -p logs run
+chmod +x "$ROOT"/*.sh 2>/dev/null || true   # file dari Windows tidak membawa izin eksekusi
 if [ ! -f config.env ]; then
   cp config.env.example config.env
   ok "config.env dibuat dari config.env.example (ubah port di sini bila perlu)"

@@ -16,6 +16,30 @@ tidak bisa digabung ke dalam WSGI; ia dijalankan sebagai proses kedua dan ditaut
 dari portal. Dengan nginx (`deploy/nginx.conf.example`) keduanya bisa tampil di satu
 domain/port 80.
 
+## Cara paling mudah (tanpa mengetik perintah)
+
+**Windows** — klik dua kali di File Explorer:
+
+| File | Fungsi |
+|---|---|
+| `start.bat` | setup otomatis bila belum pernah, jalankan layanan, buka portal di browser; jendela tertutup sendiri |
+| `start-silent.vbs` | sama, tanpa jendela sama sekali (muncul pesan hanya bila gagal) |
+| `stop.bat` / `stop-silent.vbs` | hentikan semua layanan |
+
+Agar menyala otomatis setiap login Windows: `run.bat autostart-on` (sekali saja).
+
+**Linux server** — cukup sekali lewat SSH, setelah itu layanan menyala otomatis setiap
+server boot (systemd), tanpa perlu SSH lagi:
+
+```bash
+bash start.sh --boot       # pasang & nyalakan layanan systemd (butuh sudo)
+bash start.sh --no-boot    # matikan autostart
+```
+
+**Linux desktop** — `bash start.sh --install-launcher` membuat ikon **Start Portal** dan
+**Stop Portal** di menu aplikasi dan Desktop; selanjutnya cukup klik ikon.
+`bash start.sh` sendiri = setup otomatis bila perlu + jalankan + buka browser.
+
 ## Instalasi di server (via SSH)
 
 ```bash
@@ -55,7 +79,7 @@ setup.bat            :: membuat .venv + memasang dependensi + uji impor
 run.bat start        :: portal (8000) + Data Mining UI (8501), berjalan tanpa jendela
 run.bat open         :: buka portal di browser
 run.bat status
-run.bat stop
+run.bat stop         :: atau: stop.bat
 ```
 
 | Perintah | Fungsi |
@@ -75,6 +99,16 @@ dijalankan, Windows Firewall mungkin meminta izin. Bila hanya dipakai di kompute
 sendiri, isi `HOST=127.0.0.1` di `config.env`.
 
 ## Mengelola layanan
+
+```bash
+bash stop.sh [portal|datamining]          # Linux   - hentikan layanan
+stop.bat [portal|datamining]              # Windows - hentikan layanan
+```
+
+`stop.sh` / `stop.bat` menghentikan layanan lewat file PID, lalu juga membersihkan
+proses portal/Streamlit milik paket ini yang tertinggal tapi masih memegang port
+(misalnya file PID hilang atau layanan dijalankan dengan `fg`). Proses lain yang
+kebetulan memakai port yang sama tidak dihentikan, hanya dilaporkan.
 
 ```bash
 bash run.sh start | stop | restart [portal|datamining]
