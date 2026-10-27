@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="layout" style="grid-template-columns:minmax(0,360px) minmax(0,1fr)">
+  <div class="col">
+    <div class="card">
+      <h3><span data-i18n="rules">Aturan Otomasi (Rule)</span><span class="spacer"></span>
+        <button class="sm primary" id="btnNew" data-i18n="rule_new">Rule Baru</button></h3>
+      <div class="list" id="ruleList"></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="log">Catatan Kejadian</span></h3>
+      <div class="scroll" id="logBox"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <h3><span id="edTitle">—</span><span class="spacer"></span>
+        <span class="badge" id="edStatus"></span></h3>
+      <div class="body" id="edBox">
+        <p class="muted small" data-i18n="pick_rule"></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/rules.js') }}"></script>
+{% endblock %}

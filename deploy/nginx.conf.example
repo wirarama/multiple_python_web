@@ -1,0 +1,32 @@
+# Contoh nginx: semua aplikasi di port 80 dalam satu domain.
+#   sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/mpw
+#   sudo ln -s /etc/nginx/sites-available/mpw /etc/nginx/sites-enabled/
+#   sudo nginx -t && sudo systemctl reload nginx
+# Lalu di config.env:  HOST=127.0.0.1  dan  DATAMINING_URL=/datamining/
+# kemudian: bash run.sh restart
+
+server {
+    listen 80;
+    server_name _;                 # ganti dengan domain/IP server
+    client_max_body_size 200m;     # unggah CSV besar (PySpark, Data Mining)
+
+    # Data Mining UI (Streamlit, butuh WebSocket)
+    location /datamining/ {
+        proxy_pass http://127.0.0.1:8501/datamining/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+    }
+
+    # Portal + aplikasi Flask (sdn, smarthome, rlfl, pyspark)
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300;
+    }
+}

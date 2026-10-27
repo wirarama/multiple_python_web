@@ -1,0 +1,1045 @@
+<title>Panduan Simulator SDN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#f5f7fa;
+  --surface:#ffffff;
+  --surface-2:#eef1f6;
+  --text:#1b2430;
+  --text-dim:#525f70;
+  --text-faint:#7c8798;
+  --border:#dde3ea;
+  --accent:#1f5f9e;
+  --accent-soft:#e4eefa;
+  --accent-2:#c9741a;
+  --accent-2-soft:#faead9;
+  --code-bg:#eef1f6;
+  --shadow: 0 1px 2px rgba(20,30,45,0.06), 0 8px 24px -12px rgba(20,30,45,0.10);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161f;
+    --surface:#161e29;
+    --surface-2:#1c2531;
+    --text:#e7ecf2;
+    --text-dim:#a7b2c0;
+    --text-faint:#7c8798;
+    --border:#2a3444;
+    --accent:#6fa8dc;
+    --accent-soft:#1c2c3d;
+    --accent-2:#e0a25c;
+    --accent-2-soft:#382a1a;
+    --code-bg:#1c2531;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10161f;
+  --surface:#161e29;
+  --surface-2:#1c2531;
+  --text:#e7ecf2;
+  --text-dim:#a7b2c0;
+  --text-faint:#7c8798;
+  --border:#2a3444;
+  --accent:#6fa8dc;
+  --accent-soft:#1c2c3d;
+  --accent-2:#e0a25c;
+  --accent-2-soft:#382a1a;
+  --code-bg:#1c2531;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height:1.6;
+  font-size:16px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
+
+a{color:var(--accent); text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:focus-visible, button:focus-visible, summary:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-radius:3px;
+}
+
+code, .kbd{
+  font-family:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  background:var(--code-bg);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:0.05em 0.4em;
+  font-size:0.88em;
+  color:var(--text);
+}
+
+h1,h2,h3,h4{
+  text-wrap:balance;
+  font-weight:600;
+  line-height:1.25;
+}
+
+.shell{
+  max-width:1180px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:280px minmax(0,1fr);
+  gap:0;
+  min-height:100vh;
+}
+
+/* ---------- Masthead ---------- */
+.masthead{
+  grid-column:1 / -1;
+  padding:2.6rem clamp(1.25rem,4vw,3rem) 2rem;
+  border-bottom:1px solid var(--border);
+  background:
+    linear-gradient(135deg, var(--accent-soft) 0%, transparent 55%),
+    var(--surface);
+}
+.eyebrow{
+  font-family:"IBM Plex Mono", monospace;
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:600;
+  margin:0 0 0.7rem;
+}
+.masthead h1{
+  margin:0 0 0.6rem;
+  font-size:clamp(1.7rem, 3vw, 2.35rem);
+  max-width:34ch;
+}
+.masthead p{
+  margin:0;
+  color:var(--text-dim);
+  max-width:62ch;
+  font-size:1.02rem;
+}
+.mode-pills{
+  display:flex;
+  gap:0.6rem;
+  margin-top:1.1rem;
+  flex-wrap:wrap;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  font-size:0.82rem;
+  font-weight:500;
+  padding:0.32rem 0.75rem;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--text-dim);
+}
+.pill.routing{color:var(--accent); border-color:color-mix(in srgb, var(--accent) 35%, var(--border));}
+.pill.lb{color:var(--accent-2); border-color:color-mix(in srgb, var(--accent-2) 40%, var(--border));}
+.dot{width:0.5rem;height:0.5rem;border-radius:50%;background:currentColor;flex:none;}
+
+/* ---------- Nav / TOC ---------- */
+nav.toc{
+  border-right:1px solid var(--border);
+  padding:1.6rem 1.1rem 3rem 1.4rem;
+  align-self:start;
+  position:sticky;
+  top:0;
+  max-height:100vh;
+  overflow-y:auto;
+}
+nav.toc h2{
+  font-size:0.72rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin:1.4rem 0 0.5rem;
+  font-family:"IBM Plex Mono", monospace;
+  font-weight:600;
+}
+nav.toc h2:first-child{margin-top:0;}
+nav.toc ul{list-style:none; margin:0; padding:0;}
+nav.toc li{margin:0;}
+nav.toc a{
+  display:block;
+  color:var(--text-dim);
+  font-size:0.9rem;
+  padding:0.28rem 0.5rem;
+  border-radius:5px;
+  border-left:2px solid transparent;
+}
+nav.toc a:hover{
+  background:var(--surface-2);
+  color:var(--text);
+  text-decoration:none;
+}
+nav.toc .sub a{
+  font-size:0.83rem;
+  padding-left:1.1rem;
+  color:var(--text-faint);
+}
+nav.toc .algo-list a{
+  font-family:"IBM Plex Mono", monospace;
+  font-size:0.78rem;
+}
+
+/* ---------- Main content ---------- */
+main{
+  padding:2.4rem clamp(1.25rem,4vw,3.2rem) 6rem;
+  min-width:0;
+}
+.section{
+  padding-top:2.4rem;
+  margin-top:2.4rem;
+  border-top:1px solid var(--border);
+  scroll-margin-top:1.2rem;
+}
+.section:first-of-type{border-top:none; margin-top:0.5rem;}
+.section > h2{
+  font-size:1.5rem;
+  margin:0 0 0.3rem;
+  display:flex;
+  align-items:baseline;
+  gap:0.6rem;
+}
+.section-kicker{
+  font-family:"IBM Plex Mono", monospace;
+  font-size:0.75rem;
+  color:var(--text-faint);
+  letter-spacing:0.06em;
+}
+.section > p.lead{
+  color:var(--text-dim);
+  max-width:70ch;
+  margin:0.4rem 0 1.4rem;
+}
+
+.ui-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.1rem 1.3rem;
+  margin:1.1rem 0;
+  box-shadow:var(--shadow);
+  scroll-margin-top:1.2rem;
+}
+.ui-card h3{
+  margin:0 0 0.5rem;
+  font-size:1.02rem;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  flex-wrap:wrap;
+}
+.ui-card h3 .anchor-tag{
+  font-family:"IBM Plex Mono", monospace;
+  font-size:0.68rem;
+  color:var(--text-faint);
+  font-weight:400;
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:0.05em 0.4em;
+}
+.ui-card p{margin:0.4rem 0; color:var(--text-dim); max-width:68ch;}
+.ui-card ul{margin:0.5rem 0 0.2rem; padding-left:1.2rem; color:var(--text-dim);}
+.ui-card li{margin:0.2rem 0;}
+.back-link{
+  display:inline-block;
+  margin-top:0.6rem;
+  font-size:0.82rem;
+  color:var(--text-faint);
+}
+
+table.field-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:0.7rem 0 0.3rem;
+  font-size:0.88rem;
+}
+table.field-table th, table.field-table td{
+  text-align:left;
+  padding:0.4rem 0.6rem;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+table.field-table th{
+  color:var(--text-faint);
+  font-weight:500;
+  font-size:0.76rem;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+table.field-table td.mono, table.field-table span.mono{font-family:"IBM Plex Mono",monospace; font-size:0.85em;}
+.table-wrap{overflow-x:auto;}
+
+.algo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+  gap:0.9rem;
+  margin:1.2rem 0;
+}
+.algo-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1rem 1.1rem;
+  box-shadow:var(--shadow);
+  scroll-margin-top:1.2rem;
+}
+.algo-card .kicker{
+  font-family:"IBM Plex Mono", monospace;
+  font-size:0.68rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin-bottom:0.35rem;
+}
+.algo-card h4{margin:0 0 0.45rem; font-size:1rem;}
+.algo-card p{margin:0 0 0.5rem; color:var(--text-dim); font-size:0.91rem;}
+.tag-row{display:flex; gap:0.4rem; flex-wrap:wrap; margin-top:0.5rem;}
+.tag{
+  font-size:0.7rem;
+  padding:0.15rem 0.5rem;
+  border-radius:999px;
+  background:var(--surface-2);
+  color:var(--text-faint);
+  font-family:"IBM Plex Mono", monospace;
+}
+
+.callout{
+  border-left:3px solid var(--accent);
+  background:var(--accent-soft);
+  border-radius:0 8px 8px 0;
+  padding:0.85rem 1.1rem;
+  margin:1.2rem 0;
+  font-size:0.92rem;
+  color:var(--text);
+}
+.callout.amber{border-left-color:var(--accent-2); background:var(--accent-2-soft);}
+.callout p{margin:0.3rem 0;}
+.callout strong{color:var(--text);}
+
+.qos-scale{
+  display:flex;
+  gap:0.5rem;
+  flex-wrap:wrap;
+  margin:0.8rem 0;
+}
+.qos-chip{
+  flex:1 1 130px;
+  border-radius:8px;
+  padding:0.6rem 0.8rem;
+  border:1px solid var(--border);
+  background:var(--surface);
+}
+.qos-chip .n{font-family:"IBM Plex Mono",monospace; font-size:0.78rem; color:var(--text-faint);}
+.qos-chip .l{font-weight:600; font-size:0.95rem;}
+.qos-chip.excellent{border-top:3px solid #2f9e58;}
+.qos-chip.good{border-top:3px solid #4f8fce;}
+.qos-chip.fair{border-top:3px solid #d19a1f;}
+.qos-chip.poor{border-top:3px solid #c9502f;}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:1.6rem clamp(1.25rem,4vw,3.2rem) 2.4rem;
+  color:var(--text-faint);
+  font-size:0.82rem;
+  max-width:70ch;
+}
+
+.top-link{
+  position:fixed;
+  right:1.4rem;
+  bottom:1.4rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:999px;
+  padding:0.5rem 0.9rem;
+  font-size:0.8rem;
+  color:var(--text-dim);
+}
+
+@media (max-width: 880px){
+  .shell{grid-template-columns:1fr;}
+  nav.toc{
+    position:static;
+    max-height:none;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+}
+</style>
+
+<div class="shell">
+  <header class="masthead">
+    <p class="eyebrow">Panduan Pengguna</p>
+    <h1>Simulator Node Jaringan &amp; Evaluasi Algoritma Optimasi SDN</h1>
+    <p>Panduan ini menjelaskan setiap tombol dan kolom pada layar simulator, apa yang terjadi ketika Anda menjalankan simulasi, dan bagaimana cara kerja setiap algoritma dijelaskan dengan bahasa sederhana &mdash; tanpa istilah pemrograman.</p>
+    <div class="mode-pills">
+      <span class="pill routing"><span class="dot"></span>Mode Optimasi Routing</span>
+      <span class="pill lb"><span class="dot"></span>Mode Load Balancing</span>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Daftar isi">
+    <h2>Mulai</h2>
+    <ul>
+      <li><a href="#pendahuluan">Pendahuluan</a></li>
+      <li><a href="#konfigurasi">Konfigurasi &amp; Ekspor</a></li>
+    </ul>
+
+    <h2>Mode Routing</h2>
+    <ul>
+      <li><a href="#topo-editor">Editor Topologi</a></li>
+      <li class="sub"><a href="#gen-topo">&ndash; Bangkitkan Topologi</a></li>
+      <li class="sub"><a href="#tambah-node">&ndash; Tambah Node</a></li>
+      <li class="sub"><a href="#tambah-link">&ndash; Tambah / Ubah Link</a></li>
+      <li class="sub"><a href="#daftar-node-link">&ndash; Daftar Node &amp; Link</a></li>
+      <li class="sub"><a href="#reset-topo">&ndash; Reset Topologi</a></li>
+      <li><a href="#kontrol-routing">Panel Kontrol</a></li>
+      <li><a href="#algoritma-routing">Algoritma Routing (10)</a></li>
+      <li><a href="#hasil-routing">Tabel Hasil &amp; QoS</a></li>
+      <li><a href="#riwayat-routing">Riwayat Perbandingan</a></li>
+      <li><a href="#grafik-routing">Grafik Perbandingan</a></li>
+      <li><a href="#visual-routing">Visualisasi Topologi</a></li>
+      <li><a href="#modal-detail">Jendela Detail Algoritma</a></li>
+    </ul>
+
+    <h2>Algoritma Routing</h2>
+    <ul class="algo-list">
+      <li><a href="#algo-dijkstra">Dijkstra</a></li>
+      <li><a href="#algo-astar">A*</a></li>
+      <li><a href="#algo-greedy">Greedy Routing</a></li>
+      <li><a href="#algo-mst">Minimum Spanning Tree</a></li>
+      <li><a href="#algo-aco">Ant Colony Optimization</a></li>
+      <li><a href="#algo-genetic">Genetic Algorithm</a></li>
+      <li><a href="#algo-pso">Particle Swarm Optimization</a></li>
+      <li><a href="#algo-sa">Simulated Annealing</a></li>
+      <li><a href="#algo-tabu">Tabu Search</a></li>
+      <li><a href="#algo-qlearning">Q-Learning</a></li>
+    </ul>
+
+    <h2>Mode Load Balancing</h2>
+    <ul>
+      <li><a href="#lb-editor">Editor Cluster</a></li>
+      <li class="sub"><a href="#lb-generate">&ndash; Bangkitkan Cluster</a></li>
+      <li class="sub"><a href="#lb-daftar">&ndash; Daftar Server &amp; Klien</a></li>
+      <li><a href="#kontrol-lb">Panel Kontrol</a></li>
+      <li><a href="#algoritma-lb">Algoritma Load Balancing (7)</a></li>
+      <li><a href="#hasil-lb">Tabel Hasil &amp; QoS</a></li>
+      <li><a href="#grafik-lb">Grafik Perbandingan</a></li>
+      <li><a href="#visual-lb">Visualisasi Cluster</a></li>
+      <li><a href="#log-lb">Log Klien &amp; Server</a></li>
+    </ul>
+
+    <h2>Algoritma Load Balancing</h2>
+    <ul class="algo-list">
+      <li><a href="#lb-algo-rr">Round Robin</a></li>
+      <li><a href="#lb-algo-lc">Least Connections</a></li>
+      <li><a href="#lb-algo-wrt">Weighted Response Time</a></li>
+      <li><a href="#lb-algo-ga">Genetic Algorithm</a></li>
+      <li><a href="#lb-algo-pso">Particle Swarm Optimization</a></li>
+      <li><a href="#lb-algo-aco">Ant Colony Optimization</a></li>
+      <li><a href="#lb-algo-sa">Simulated Annealing</a></li>
+      <li><a href="#lb-algo-tabu">Tabu Search</a></li>
+    </ul>
+
+    <h2>Referensi</h2>
+    <ul>
+      <li><a href="#metrik-routing">Metrik &amp; Skor QoS (Routing)</a></li>
+      <li><a href="#metrik-lb">Metrik &amp; Skor QoS (Load Balancing)</a></li>
+      <li><a href="#tips">Tips Penggunaan</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ================= PENDAHULUAN ================= -->
+    <section class="section" id="pendahuluan">
+      <h2>Pendahuluan <span class="section-kicker">apa itu simulator ini</span></h2>
+      <p class="lead">Simulator ini adalah alat bantu belajar untuk memahami bagaimana jaringan Software Defined Network (SDN) dapat memilih jalur data atau membagi beban server dengan cara yang berbeda-beda, lalu membandingkan hasilnya secara berdampingan.</p>
+
+      <p>Layar utama terbagi menjadi dua mode yang dapat dipilih lewat dua tombol besar di bagian atas halaman:</p>
+      <ul>
+        <li><strong>Optimasi Routing</strong> &mdash; menyimulasikan sebuah jaringan berisi node (misalnya switch atau router) yang saling terhubung, lalu mencari jalur terbaik dari satu node awal (source) ke node tujuan (target) menggunakan sepuluh cara/algoritma yang berbeda.</li>
+        <li><strong>Load Balancing (Grid / Distributed Computing)</strong> &mdash; menyimulasikan sekumpulan server dan klien yang mengirim permintaan (request), lalu membandingkan tujuh cara berbeda untuk membagi permintaan tersebut ke server agar beban merata dan waktu tunggu singkat.</li>
+      </ul>
+      <p>Kedua mode memiliki alur kerja yang mirip: <em>atur kondisi simulasi &rarr; pilih/atur algoritma &rarr; jalankan &rarr; baca tabel hasil, skor kualitas layanan (QoS), grafik, dan gambar visual</em>. Panduan ini membahas setiap bagian layar secara berurutan.</p>
+    </section>
+
+    <!-- ================= KONFIGURASI ================= -->
+    <section class="section" id="konfigurasi">
+      <h2>Konfigurasi &amp; Ekspor Hasil <span class="section-kicker">bar atas</span></h2>
+      <p class="lead">Bar ini muncul di bagian atas halaman, di luar kedua mode, sehingga selalu terlihat baik saat berada di mode Routing maupun Load Balancing.</p>
+
+      <div class="ui-card" id="export-config">
+        <h3>Export Konfigurasi <span class="anchor-tag">tombol</span></h3>
+        <p>Menyimpan seluruh pengaturan yang sedang aktif &mdash; topologi/cluster (termasuk posisi tiap node/server/klien hasil digeser manual), algoritma yang dipilih, dan nilai parameternya &mdash; ke dalam sebuah berkas yang dapat disimpan di perangkat Anda. Gunakan ini bila ingin menyimpan sebuah skenario untuk dibuka kembali nanti, atau membagikannya ke orang lain.</p>
+      </div>
+      <div class="ui-card" id="import-config">
+        <h3>Import Konfigurasi <span class="anchor-tag">tombol</span></h3>
+        <p>Memuat kembali berkas konfigurasi yang pernah diekspor sebelumnya, sehingga topologi/cluster, posisi tiap node/server/klien, dan pengaturan algoritma langsung kembali seperti saat disimpan &mdash; tanpa perlu mengatur ulang satu per satu.</p>
+      </div>
+      <div class="ui-card" id="export-excel">
+        <h3>Export Semua Hasil ke Excel <span class="anchor-tag">tombol</span></h3>
+        <p>Mengunduh tabel hasil, riwayat perbandingan, daftar topologi, dan daftar cluster yang sedang tampil di layar ke dalam satu berkas lembar kerja. Jalankan perbandingan routing dan/atau load balancing terlebih dahulu agar ada hasil yang bisa diekspor.</p>
+      </div>
+    </section>
+
+    <!-- ================= EDITOR TOPOLOGI ================= -->
+    <section class="section" id="topo-editor">
+      <h2>Editor Topologi <span class="section-kicker">panel kiri &middot; mode Routing</span></h2>
+      <p class="lead">Panel di sisi kiri layar adalah tempat Anda membangun atau mengubah "peta jaringan" yang akan dipakai untuk mencari jalur. Sebuah topologi terdiri dari sejumlah node (titik/perangkat jaringan) dan link (kabel/koneksi) yang menghubungkannya.</p>
+
+      <div class="ui-card" id="gen-topo">
+        <h3>Simulasi Jumlah Node &amp; Luas Wilayah <span class="anchor-tag">form</span></h3>
+        <p>Membangkitkan sebuah topologi baru secara acak, seolah-olah sejumlah perangkat disebar di suatu area geografis lalu saling dihubungkan ke tetangga terdekatnya.</p>
+        <div class="table-wrap">
+        <table class="field-table">
+          <thead><tr><th>Kolom</th><th>Kegunaan</th></tr></thead>
+          <tbody>
+            <tr><td>Jumlah node</td><td>Berapa banyak perangkat yang akan disebar (2&ndash;300).</td></tr>
+            <tr><td>Tetangga terdekat (k)</td><td>Setiap node otomatis dihubungkan ke sejumlah <em>k</em> tetangga yang jaraknya paling dekat.</td></tr>
+            <tr><td>Lebar &amp; Panjang wilayah (m)</td><td>Ukuran area (dalam meter) tempat node disebar secara acak.</td></tr>
+            <tr><td>Seed</td><td>Angka "kunci acak" &mdash; seed yang sama akan selalu menghasilkan topologi acak yang identik, berguna untuk mengulang percobaan yang sama persis.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Setelah menekan <strong>Bangkitkan Topologi Acak</strong>, jarak antar node yang saling terhubung akan menentukan delay (semakin jauh, semakin besar delay) pada link tersebut.</p>
+      </div>
+
+      <div class="ui-card" id="tambah-node">
+        <h3>Tambah Node Manual <span class="anchor-tag">form</span></h3>
+        <p>Menambahkan satu node baru dengan nama pilihan Anda sendiri (misalnya <code>S11</code>) ke topologi yang sedang aktif, tanpa harus membangkitkan ulang seluruh topologi.</p>
+      </div>
+
+      <div class="ui-card" id="tambah-link">
+        <h3>Tambah / Ubah Link <span class="anchor-tag">form</span></h3>
+        <p>Menghubungkan dua node yang sudah ada, atau memperbarui koneksi yang sudah ada di antara keduanya, dengan tiga sifat yang menentukan kualitas koneksi tersebut:</p>
+        <div class="table-wrap">
+        <table class="field-table">
+          <thead><tr><th>Kolom</th><th>Kegunaan</th></tr></thead>
+          <tbody>
+            <tr><td>Delay (ms)</td><td>Waktu tunda data melewati link ini &mdash; makin kecil makin baik.</td></tr>
+            <tr><td>Bandwidth (Mbps)</td><td>Kapasitas maksimum data yang bisa lewat per detik.</td></tr>
+            <tr><td>Loss (0&ndash;1)</td><td>Peluang dasar sebuah paket data hilang saat melewati link ini.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="ui-card" id="daftar-node-link">
+        <h3>Daftar Node &amp; Daftar Link <span class="anchor-tag">tampilan</span></h3>
+        <p>Menampilkan seluruh node (sebagai kumpulan label kecil) dan seluruh link (sebagai tabel berisi delay, bandwidth, dan loss) yang sedang aktif pada topologi saat ini, lengkap dengan tombol hapus di setiap barisnya untuk membuang node atau link yang tidak diinginkan.</p>
+      </div>
+
+      <div class="ui-card" id="reset-topo">
+        <h3>Reset ke Topologi Bawaan <span class="anchor-tag">tombol</span></h3>
+        <p>Membuang seluruh perubahan dan mengembalikan topologi ke contoh bawaan simulator (jaringan mesh berisi sepuluh switch), berguna sebagai titik awal yang konsisten untuk latihan.</p>
+      </div>
+    </section>
+
+    <!-- ================= KONTROL ROUTING ================= -->
+    <section class="section" id="kontrol-routing">
+      <h2>Panel Kontrol <span class="section-kicker">bagian atas &middot; kolom utama</span></h2>
+      <p class="lead">Menentukan skenario pengiriman data yang akan diuji sebelum menjalankan perbandingan algoritma.</p>
+      <div class="ui-card">
+        <div class="table-wrap">
+        <table class="field-table">
+          <thead><tr><th>Kolom</th><th>Kegunaan</th></tr></thead>
+          <tbody>
+            <tr><td>Source</td><td>Node asal pengiriman data.</td></tr>
+            <tr><td>Target</td><td>Node tujuan pengiriman data.</td></tr>
+            <tr><td>Kongesti simulasi (0&ndash;1)</td><td>Seberapa padat trafik jaringan yang disimulasikan; 0 berarti jaringan sepi, mendekati 1 berarti sangat padat. Nilai ini memperberat estimasi throughput dan packet loss pada seluruh algoritma secara adil.</td></tr>
+            <tr><td>Seed acak</td><td>Kunci acak yang membuat algoritma yang mengandalkan proses acak (ACO, GA, PSO, SA, Tabu Search) menghasilkan keputusan yang sama setiap kali dijalankan dengan seed serupa.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Tombol <strong>Jalankan Perbandingan</strong> menjalankan seluruh algoritma yang aktif pada bagian <a href="#algoritma-routing">Algoritma Routing</a> secara bersamaan, lalu memperbarui <a href="#hasil-routing">tabel hasil</a>, <a href="#grafik-routing">grafik</a>, dan <a href="#visual-routing">visualisasi topologi</a> di bawahnya.</p>
+      </div>
+    </section>
+
+    <!-- ================= ALGORITMA ROUTING ================= -->
+    <section class="section" id="algoritma-routing">
+      <h2>Algoritma Routing &amp; Parameter <span class="section-kicker">10 cara mencari jalur</span></h2>
+      <p class="lead">Setiap kartu di bawah ini mewakili satu cara berbeda untuk mencari jalur dari source ke target. Algoritma yang memiliki parameter menampilkan kolom isian tambahan agar Anda dapat mengatur seberapa lama/teliti algoritma tersebut bekerja; algoritma lain berjalan langsung tanpa pengaturan.</p>
+
+      <div class="callout">
+        <p><strong>Cara membaca kartu:</strong> label <span class="tag">jalur</span> berarti algoritma mencari satu jalur dari source ke target; label <span class="tag">pohon</span> berarti algoritma justru membangun satu struktur yang menghubungkan <em>seluruh</em> node sekaligus (khusus MST).</p>
+      </div>
+
+      <div class="algo-grid">
+        <article class="algo-card" id="algo-dijkstra">
+          <p class="kicker">Pasti optimal</p>
+          <h4>Dijkstra</h4>
+          <p>Menjajaki seluruh kemungkinan jalur secara sistematis berdasarkan delay terkecil di setiap langkah, sehingga dijamin menemukan jalur dengan total delay paling rendah. Menjadi acuan pembanding bagi algoritma lain.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="algo-astar">
+          <p class="kicker">Pasti optimal, lebih terarah</p>
+          <h4>A*</h4>
+          <p>Bekerja seperti Dijkstra, namun dibantu perkiraan jarak menuju tujuan sebagai "kompas" agar penjajakan lebih terarah ke target dan cenderung lebih cepat, tanpa mengorbankan hasil terbaik.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="algo-greedy">
+          <p class="kicker">Cepat, tidak dijamin optimal</p>
+          <h4>Greedy Routing</h4>
+          <p>Pada setiap node, langsung memilih tetangga dengan delay terkecil tanpa mempertimbangkan jalur ke depan. Sangat cepat, tetapi bisa saja terjebak di jalan buntu atau menghasilkan jalur yang kurang efisien.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="algo-mst">
+          <p class="kicker">Menghubungkan semua node</p>
+          <h4>Minimum Spanning Tree</h4>
+          <p>Berbeda dari yang lain &mdash; MST tidak mencari satu jalur source&rarr;target, melainkan membangun satu struktur pohon yang menghubungkan <em>seluruh</em> node di topologi dengan total delay sekecil mungkin. Cocok untuk merancang jaringan distribusi atau multicast.</p>
+          <div class="tag-row"><span class="tag">pohon</span><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="algo-aco">
+          <p class="kicker">Terinspirasi koloni semut</p>
+          <h4>Ant Colony Optimization</h4>
+          <p>Sejumlah "semut virtual" berulang kali menjajaki jalur dari source ke target. Jalur pendek yang sering dilalui meninggalkan "jejak feromon" yang makin kuat sehingga makin menarik semut-semut berikutnya, hingga koloni cenderung berkumpul di jalur terbaik.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Semut</td><td>Banyak semut yang menjajaki jalur di tiap putaran.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali seluruh koloni mengulang penjajakan.</td></tr>
+              <tr><td>Alpha</td><td>Seberapa besar semut mengikuti jejak feromon yang sudah ada.</td></tr>
+              <tr><td>Beta</td><td>Seberapa besar semut tertarik pada link berdelay kecil secara langsung.</td></tr>
+              <tr><td>Laju Evaporasi</td><td>Seberapa cepat jejak feromon lama memudar agar tidak terus terpaku pada jalur awal.</td></tr>
+              <tr><td>Konstanta Q</td><td>Mengatur seberapa besar jejak baru ditambahkan pada jalur yang berhasil.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="algo-genetic">
+          <p class="kicker">Terinspirasi evolusi</p>
+          <h4>Genetic Algorithm</h4>
+          <p>Sekumpulan jalur acak diperlakukan sebagai "populasi". Jalur-jalur terbaik saling disilangkan untuk menghasilkan jalur baru, dan sesekali dimutasi secara acak, sehingga populasi berangsur-angsur berevolusi menuju jalur yang makin baik dari generasi ke generasi.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Ukuran Populasi</td><td>Jumlah jalur yang dipertahankan di setiap generasi.</td></tr>
+              <tr><td>Jumlah Generasi</td><td>Berapa kali populasi diperbarui melalui persilangan.</td></tr>
+              <tr><td>Laju Mutasi</td><td>Peluang sebuah jalur baru diganti dengan jalur acak sepenuhnya, menjaga keragaman populasi.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="algo-pso">
+          <p class="kicker">Terinspirasi kawanan</p>
+          <h4>Particle Swarm Optimization</h4>
+          <p>Sekumpulan "partikel" bergerak menjajaki ruang solusi jalur; setiap partikel condong menuju posisi terbaik yang pernah ditemuinya sendiri sekaligus posisi terbaik yang ditemukan seluruh kawanan, sehingga lambat laun kawanan berkumpul menuju solusi terbaik.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Partikel</td><td>Banyak partikel yang bergerak bersamaan.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali seluruh kawanan memperbarui posisinya.</td></tr>
+              <tr><td>Bobot Inersia (w)</td><td>Seberapa besar partikel mempertahankan arah geraknya sebelumnya.</td></tr>
+              <tr><td>Koefisien Kognitif (c1)</td><td>Seberapa kuat tarikan menuju pengalaman terbaik partikel itu sendiri.</td></tr>
+              <tr><td>Koefisien Sosial (c2)</td><td>Seberapa kuat tarikan menuju pengalaman terbaik seluruh kawanan.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="algo-sa">
+          <p class="kicker">Terinspirasi pendinginan logam</p>
+          <h4>Simulated Annealing</h4>
+          <p>Dimulai dari sebuah jalur acak, lalu berulang kali mencoba jalur tetangga. Di awal proses ("suhu" tinggi), algoritma sesekali tetap menerima jalur yang sedikit lebih buruk agar tidak terjebak pada solusi yang kurang baik; seiring "suhu" menurun, algoritma menjadi makin selektif hingga akhirnya menetap pada jalur terbaik yang ditemukan.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Suhu Awal (T0)</td><td>Seberapa besar peluang awal menerima jalur yang lebih buruk.</td></tr>
+              <tr><td>Laju Pendinginan (alpha)</td><td>Seberapa cepat "suhu" menurun setiap putaran.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali proses pencarian jalur tetangga diulang.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="algo-tabu">
+          <p class="kicker">Mengingat langkah terakhir</p>
+          <h4>Tabu Search</h4>
+          <p>Menjelajahi jalur-jalur di sekitar solusi saat ini, sambil menyimpan daftar "terlarang" (tabu) berisi jalur yang baru saja dicoba, sehingga pencarian tidak berputar-putar mengulang tempat yang sama dan terdorong menjelajahi kemungkinan baru.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali proses penjelajahan jalur tetangga diulang.</td></tr>
+              <tr><td>Ukuran Tabu List</td><td>Berapa banyak jalur terakhir yang tetap diingat/dihindari sementara.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="algo-qlearning">
+          <p class="kicker">Belajar dari percobaan</p>
+          <h4>Q-Learning (RL Sederhana)</h4>
+          <p>Sebuah "agen" mencoba mencapai target berulang kali (tiap percobaan disebut episode). Setiap kali berhasil melewati link dengan delay kecil, pilihan tersebut diberi "nilai" yang makin diperkuat; sebaliknya, delay besar mengurangi nilainya. Setelah cukup banyak episode, agen memilih jalur berdasarkan pengalaman yang telah dipelajarinya.</p>
+          <div class="tag-row"><span class="tag">jalur</span><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Episode</td><td>Berapa kali agen mencoba mencapai target dari awal.</td></tr>
+              <tr><td>Learning Rate (alpha)</td><td>Seberapa besar pengalaman baru mengubah nilai yang sudah dipelajari.</td></tr>
+              <tr><td>Discount Factor (gamma)</td><td>Seberapa besar agen mempertimbangkan keuntungan jangka panjang dibanding keuntungan langsung.</td></tr>
+              <tr><td>Epsilon (eksplorasi)</td><td>Peluang agen mencoba langkah acak alih-alih pilihan terbaik yang sudah diketahui, agar tetap terbuka pada kemungkinan baru.</td></tr>
+              <tr><td>Maks. Langkah/Episode</td><td>Batas jumlah langkah sebelum satu episode dihentikan.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+      </div>
+      <p class="back-link"><a href="#kontrol-routing">&larr; kembali ke Panel Kontrol</a></p>
+    </section>
+
+    <!-- ================= HASIL ROUTING ================= -->
+    <section class="section" id="hasil-routing">
+      <h2>Tabel Hasil &amp; QoS <span class="section-kicker">setelah menjalankan perbandingan</span></h2>
+      <p class="lead">Muncul setelah menekan Jalankan Perbandingan, menampilkan satu baris untuk setiap algoritma yang dijalankan.</p>
+      <div class="ui-card">
+        <ul>
+          <li><strong>Jalur / Struktur</strong> &mdash; urutan node yang dilalui (atau, untuk MST, ringkasan struktur pohon yang terbentuk).</li>
+          <li><strong>Hop</strong> &mdash; jumlah lompatan antar node sepanjang jalur.</li>
+          <li><strong>Delay, Throughput, Packet Loss</strong> &mdash; lihat penjelasan lengkap di <a href="#metrik-routing">Metrik &amp; Skor QoS</a>.</li>
+          <li><strong>Skor QoS &amp; Kelas QoS</strong> &mdash; nilai gabungan 0&ndash;100 beserta kategorinya (Excellent/Good/Fair/Poor).</li>
+          <li><strong>Runtime (ms)</strong> &mdash; berapa lama algoritma tersebut butuh waktu untuk menyelesaikan pencariannya pada percobaan ini.</li>
+          <li><strong>Input &amp; Luaran</strong> &mdash; tombol "Lihat" yang membuka <a href="#modal-detail">jendela detail algoritma</a>, berisi parameter yang dipakai dan informasi proses (misalnya generasi/iterasi ke berapa solusi terbaik ditemukan).</li>
+        </ul>
+        <p class="callout" style="margin-bottom:0;">Klik salah satu baris pada tabel untuk menyorot jalur algoritma tersebut pada <a href="#visual-routing">visualisasi topologi</a> di bawah.</p>
+      </div>
+    </section>
+
+    <!-- ================= RIWAYAT ================= -->
+    <section class="section" id="riwayat-routing">
+      <h2>Riwayat Perbandingan Parameter <span class="section-kicker">membandingkan antar percobaan</span></h2>
+      <div class="ui-card">
+        <p>Setiap kali Anda menjalankan ulang perbandingan setelah mengubah parameter sebuah algoritma, tabel ini menampilkan selisih (&Delta;) antara hasil percobaan sekarang dan percobaan sebelumnya untuk algoritma yang sama &mdash; misalnya perubahan delay, hop, throughput, packet loss, dan skor QoS. Berguna untuk melihat langsung dampak dari perubahan parameter yang baru saja Anda lakukan.</p>
+        <p>Tombol <strong>Bersihkan Riwayat</strong> mengosongkan catatan perbandingan ini.</p>
+      </div>
+    </section>
+
+    <!-- ================= GRAFIK ================= -->
+    <section class="section" id="grafik-routing">
+      <h2>Grafik Perbandingan <span class="section-kicker">lima grafik batang</span></h2>
+      <div class="ui-card">
+        <p>Menyajikan hasil tabel dalam bentuk grafik batang agar mudah dibandingkan sekilas: Delay, Hop Count, Throughput, Packet Loss, dan Skor QoS untuk seluruh algoritma yang dijalankan. Tombol PNG pada setiap grafik (atau tombol <strong>Unduh Semua Grafik</strong> di bagian atas) menyimpan grafik tersebut sebagai gambar.</p>
+      </div>
+    </section>
+
+    <!-- ================= VISUAL ROUTING ================= -->
+    <section class="section" id="visual-routing">
+      <h2>Visualisasi Topologi <span class="section-kicker">peta jaringan</span></h2>
+      <div class="ui-card">
+        <p>Menggambarkan seluruh node dan link topologi yang sedang aktif secara visual. Setelah menjalankan perbandingan dan mengklik salah satu baris pada <a href="#hasil-routing">tabel hasil</a>, jalur yang ditempuh algoritma tersebut akan disorot di atas peta ini sehingga Anda bisa melihat langsung rute yang dipilih.</p>
+        <p>Setiap node bisa <strong>digeser langsung (drag &amp; drop)</strong> dengan mouse/sentuhan untuk mengubah posisinya. Posisi baru langsung tersimpan di server dan ikut disertakan saat konfigurasi diekspor/diimpor sebagai JSON (lihat <a href="#export-config">Export Konfigurasi</a> &amp; <a href="#import-config">Import Konfigurasi</a>), sehingga layout yang sudah Anda susun tidak hilang. Posisi node juga dipakai sebagai jarak Euclidean pada heuristik algoritma <strong>A*</strong>, jadi menggeser node ikut mempengaruhi bagaimana algoritma tersebut menelusuri graf menuju simpul tujuan.</p>
+      </div>
+    </section>
+
+    <!-- ================= MODAL ================= -->
+    <section class="section" id="modal-detail">
+      <h2>Jendela Detail Algoritma <span class="section-kicker">tombol "Lihat"</span></h2>
+      <div class="ui-card">
+        <p>Terbuka saat menekan tombol "Lihat" pada baris tabel hasil (baik di mode Routing maupun Load Balancing). Berisi dua bagian:</p>
+        <ul>
+          <li><strong>Parameter Input</strong> &mdash; nilai parameter yang digunakan algoritma tersebut pada percobaan ini.</li>
+          <li><strong>Luaran Proses Optimasi</strong> &mdash; informasi tambahan tentang bagaimana algoritma sampai pada hasilnya, misalnya generasi/iterasi/episode ke berapa solusi terbaik pertama kali ditemukan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= EDITOR CLUSTER ================= -->
+    <section class="section" id="lb-editor">
+      <h2>Editor Cluster / Grid Komputasi <span class="section-kicker">panel kiri &middot; mode Load Balancing</span></h2>
+      <p class="lead">Sama seperti editor topologi pada mode Routing, panel ini digunakan untuk membangun skenario server, klien, dan permintaan (request) yang akan diuji.</p>
+
+      <div class="ui-card" id="lb-generate">
+        <h3>Bangkitkan Server, Klien &amp; Request <span class="anchor-tag">form</span></h3>
+        <p>Membangkitkan cluster secara acak: sejumlah server dan klien disebar pada suatu area, lalu setiap klien mengirim beberapa permintaan dengan beban yang bervariasi.</p>
+        <div class="table-wrap">
+        <table class="field-table">
+          <thead><tr><th>Kolom</th><th>Kegunaan</th></tr></thead>
+          <tbody>
+            <tr><td>Jumlah server</td><td>Berapa banyak server yang tersedia untuk melayani permintaan.</td></tr>
+            <tr><td>Jumlah klien</td><td>Berapa banyak klien yang mengirim permintaan.</td></tr>
+            <tr><td>Request / klien</td><td>Berapa banyak permintaan yang dikirim oleh setiap klien.</td></tr>
+            <tr><td>Seed</td><td>Kunci acak agar cluster yang sama bisa dibangkitkan ulang secara identik.</td></tr>
+            <tr><td>Kapasitas server min/maks</td><td>Rentang kapasitas proses acak yang diberikan ke setiap server.</td></tr>
+            <tr><td>Beban request min/maks</td><td>Rentang besar beban proses acak dari setiap permintaan klien.</td></tr>
+            <tr><td>Lebar &amp; Panjang area (m)</td><td>Ukuran area tempat server dan klien disebar; jarak antar keduanya menentukan latensi jaringan, mirip prinsip delay pada mode Routing.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="ui-card" id="lb-daftar">
+        <h3>Daftar Server &amp; Daftar Klien <span class="anchor-tag">tampilan</span></h3>
+        <p>Menampilkan seluruh server beserta kapasitasnya, dan seluruh klien yang terdaftar pada cluster yang sedang aktif.</p>
+      </div>
+    </section>
+
+    <!-- ================= KONTROL LB ================= -->
+    <section class="section" id="kontrol-lb">
+      <h2>Panel Kontrol <span class="section-kicker">bagian atas &middot; kolom utama</span></h2>
+      <div class="ui-card">
+        <p><strong>Seed acak (algoritma)</strong> mengunci proses acak yang dipakai oleh algoritma metaheuristik (Genetic Algorithm, PSO, ACO, Simulated Annealing, Tabu Search) agar hasilnya dapat diulang secara identik.</p>
+        <p>Tombol <strong>Jalankan Perbandingan</strong> menjalankan seluruh algoritma pada bagian <a href="#algoritma-lb">Algoritma Load Balancing</a>, lalu memperbarui <a href="#hasil-lb">tabel hasil</a>, <a href="#grafik-lb">grafik</a>, <a href="#visual-lb">visualisasi cluster</a>, dan <a href="#log-lb">log klien &amp; server</a>.</p>
+      </div>
+    </section>
+
+    <!-- ================= ALGORITMA LB ================= -->
+    <section class="section" id="algoritma-lb">
+      <h2>Algoritma Load Balancing &amp; Parameter <span class="section-kicker">7 cara membagi beban</span></h2>
+      <p class="lead">Alih-alih mencari jalur, algoritma pada mode ini menentukan permintaan mana yang ditangani oleh server mana. Empat algoritma metaheuristik terakhir memakai teknik berpikir yang sama seperti pada <a href="#algoritma-routing">mode Routing</a>, hanya saja diterapkan pada masalah pembagian beban, bukan pemilihan jalur.</p>
+
+      <div class="algo-grid">
+        <article class="algo-card" id="lb-algo-rr">
+          <p class="kicker">Baseline sederhana</p>
+          <h4>Round Robin</h4>
+          <p>Setiap permintaan dikirim bergiliran ke server berikutnya dalam urutan tetap, tanpa memandang beban server saat itu. Menjadi pembanding paling dasar untuk algoritma lain.</p>
+          <div class="tag-row"><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-lc">
+          <p class="kicker">Melihat beban terkini</p>
+          <h4>Least Connections</h4>
+          <p>Setiap permintaan dikirim ke server dengan rasio beban terhadap kapasitas paling ringan saat itu, sehingga server yang lebih lega cenderung menerima lebih banyak pekerjaan.</p>
+          <div class="tag-row"><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-wrt">
+          <p class="kicker">Mempertimbangkan jaringan</p>
+          <h4>Weighted Response Time</h4>
+          <p>Sebelum mengirim tiap permintaan, algoritma memperkirakan waktu respons (gabungan beban proses dan latensi jaringan klien ke server), lalu memilih server dengan perkiraan waktu respons tercepat.</p>
+          <div class="tag-row"><span class="tag">tanpa parameter</span></div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-ga">
+          <p class="kicker">Terinspirasi evolusi</p>
+          <h4>Genetic Algorithm</h4>
+          <p>Sekumpulan skema pembagian permintaan-ke-server diperlakukan sebagai populasi; skema terbaik saling disilangkan dan sesekali dimutasi antar generasi hingga ditemukan pembagian yang makin merata dan cepat. Lihat prinsip dasarnya di <a href="#algo-genetic">Genetic Algorithm (Routing)</a>.</p>
+          <div class="tag-row"><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Ukuran Populasi</td><td>Jumlah skema pembagian yang dipertahankan tiap generasi.</td></tr>
+              <tr><td>Jumlah Generasi</td><td>Berapa kali populasi diperbarui.</td></tr>
+              <tr><td>Laju Mutasi</td><td>Peluang sebuah skema diacak ulang untuk menjaga keragaman.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-pso">
+          <p class="kicker">Terinspirasi kawanan</p>
+          <h4>Particle Swarm Optimization</h4>
+          <p>Sekumpulan "partikel" menjajaki berbagai skema pembagian beban, saling menarik menuju pengalaman terbaik pribadi dan kelompok hingga kawanan berkumpul pada pembagian terbaik. Lihat prinsip dasarnya di <a href="#algo-pso">PSO (Routing)</a>.</p>
+          <div class="tag-row"><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Partikel</td><td>Banyak partikel yang bergerak bersamaan.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali kawanan memperbarui posisinya.</td></tr>
+              <tr><td>Bobot Inersia (w)</td><td>Seberapa besar partikel mempertahankan arah sebelumnya.</td></tr>
+              <tr><td>Koefisien Kognitif (c1)</td><td>Tarikan menuju pengalaman terbaik partikel itu sendiri.</td></tr>
+              <tr><td>Koefisien Sosial (c2)</td><td>Tarikan menuju pengalaman terbaik seluruh kawanan.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-aco">
+          <p class="kicker">Terinspirasi koloni semut</p>
+          <h4>Ant Colony Optimization</h4>
+          <p>Sejumlah "semut virtual" mencoba berbagai skema pembagian beban berulang kali; skema yang menghasilkan beban merata dan cepat meninggalkan "jejak" yang makin kuat, menarik percobaan berikutnya ke arah yang sama. Lihat prinsip dasarnya di <a href="#algo-aco">ACO (Routing)</a>.</p>
+          <div class="tag-row"><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Semut</td><td>Banyak percobaan skema di tiap putaran.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali koloni mengulang percobaan.</td></tr>
+              <tr><td>Alpha</td><td>Seberapa besar mengikuti jejak yang sudah ada.</td></tr>
+              <tr><td>Beta</td><td>Seberapa besar tertarik langsung pada server yang lebih ringan.</td></tr>
+              <tr><td>Laju Evaporasi</td><td>Seberapa cepat jejak lama memudar.</td></tr>
+              <tr><td>Konstanta Q</td><td>Besar penambahan jejak pada skema yang berhasil baik.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-sa">
+          <p class="kicker">Terinspirasi pendinginan logam</p>
+          <h4>Simulated Annealing</h4>
+          <p>Dimulai dari skema pembagian acak, sesekali menerima skema yang sedikit lebih buruk di awal proses agar tidak terjebak pada pembagian yang kurang baik, lalu makin selektif seiring "suhu" menurun. Lihat prinsip dasarnya di <a href="#algo-sa">Simulated Annealing (Routing)</a>.</p>
+          <div class="tag-row"><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Suhu Awal (T0)</td><td>Peluang awal menerima skema yang lebih buruk.</td></tr>
+              <tr><td>Laju Pendinginan (alpha)</td><td>Seberapa cepat "suhu" menurun.</td></tr>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali proses pencarian diulang.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+
+        <article class="algo-card" id="lb-algo-tabu">
+          <p class="kicker">Mengingat langkah terakhir</p>
+          <h4>Tabu Search</h4>
+          <p>Menjelajahi skema pembagian di sekitar solusi saat ini sambil menghindari skema yang baru saja dicoba, agar pencarian terus bergerak ke kemungkinan baru. Lihat prinsip dasarnya di <a href="#algo-tabu">Tabu Search (Routing)</a>.</p>
+          <div class="tag-row"><span class="tag">metaheuristik</span></div>
+          <div class="table-wrap">
+          <table class="field-table">
+            <tbody>
+              <tr><td>Jumlah Iterasi</td><td>Berapa kali proses penjelajahan diulang.</td></tr>
+              <tr><td>Ukuran Tabu List</td><td>Berapa banyak skema terakhir yang diingat/dihindari sementara.</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </article>
+      </div>
+      <p class="back-link"><a href="#kontrol-lb">&larr; kembali ke Panel Kontrol</a></p>
+    </section>
+
+    <!-- ================= HASIL LB ================= -->
+    <section class="section" id="hasil-lb">
+      <h2>Tabel Hasil &amp; QoS <span class="section-kicker">setelah menjalankan perbandingan</span></h2>
+      <div class="ui-card">
+        <ul>
+          <li><strong>Beban Maks (%)</strong> &mdash; tingkat pemakaian server yang paling sibuk; makin rendah makin baik (beban lebih merata).</li>
+          <li><strong>Rata&sup2; Response Time (ms)</strong> &mdash; rata-rata waktu tunggu seluruh permintaan hingga selesai diproses.</li>
+          <li><strong>Fairness (Jain)</strong> dan <strong>metrik lain</strong> &mdash; lihat penjelasan lengkap di <a href="#metrik-lb">Metrik &amp; Skor QoS (Load Balancing)</a>.</li>
+          <li><strong>Dilayani / Total</strong> &mdash; jumlah permintaan yang berhasil ditangani dibanding total permintaan yang dikirim.</li>
+          <li><strong>Skor QoS &amp; Kelas QoS</strong> &mdash; nilai gabungan 0&ndash;100 beserta kategorinya.</li>
+          <li><strong>Runtime (ms)</strong> &mdash; lama waktu algoritma menyelesaikan pembagian beban pada percobaan ini.</li>
+          <li><strong>Input &amp; Luaran</strong> &mdash; tombol "Lihat" membuka <a href="#modal-detail">jendela detail algoritma</a> yang sama seperti pada mode Routing.</li>
+        </ul>
+        <p class="callout amber" style="margin-bottom:0;">Klik salah satu baris untuk melihat beban tiap server pada <a href="#visual-lb">visualisasi cluster</a> di bawah.</p>
+      </div>
+    </section>
+
+    <!-- ================= GRAFIK LB ================= -->
+    <section class="section" id="grafik-lb">
+      <h2>Grafik Perbandingan <span class="section-kicker">lima grafik batang</span></h2>
+      <div class="ui-card">
+        <p>Menyajikan Beban Maks Server, Rata&sup2; Response Time, Fairness Index, Request Loss, dan Skor QoS dalam bentuk grafik batang untuk seluruh algoritma yang dijalankan. Tombol PNG per grafik atau <strong>Unduh Semua Grafik</strong> menyimpannya sebagai gambar.</p>
+      </div>
+    </section>
+
+    <!-- ================= VISUAL LB ================= -->
+    <section class="section" id="visual-lb">
+      <h2>Visualisasi Cluster <span class="section-kicker">peta server &amp; klien</span></h2>
+      <div class="ui-card">
+        <p>Ukuran lingkaran tiap server menunjukkan kapasitasnya, sedangkan warnanya menunjukkan tingkat utilisasi untuk algoritma yang dipilih pada tabel hasil: hijau berarti beban masih aman, kuning berarti sibuk, dan merah berarti kelebihan beban (overload).</p>
+        <p>Server maupun klien bisa <strong>digeser langsung (drag &amp; drop)</strong> untuk mengubah posisinya. Posisi baru tersimpan di server dan ikut disertakan saat konfigurasi diekspor/diimpor sebagai JSON (lihat <a href="#export-config">Export Konfigurasi</a> &amp; <a href="#import-config">Import Konfigurasi</a>). Posisi ini dipakai untuk menghitung ulang latensi jaringan klien&rarr;server berdasarkan jarak Euclidean, sehingga menggeser node ikut mempengaruhi hasil (response time) algoritma load balancing pada evaluasi berikutnya.</p>
+      </div>
+    </section>
+
+    <!-- ================= SARAN AUTO-SCALING LB ================= -->
+    <section class="section" id="lb-scaling">
+      <h2>Saran Auto-Scaling Server <span class="section-kicker">kapan perlu scale up</span></h2>
+      <div class="ui-card">
+        <p>Setelah menjalankan perbandingan dan memilih salah satu baris pada tabel hasil, bagian ini menampilkan saran otomatis untuk server yang bebannya (hasil <a href="#hasil-lb">metrik utilisasi</a> algoritma tersebut) sudah tinggi:</p>
+        <ul>
+          <li><strong>Scale Up (Vertical)</strong> &mdash; utilisasi &ge;80% tapi belum ada request ditolak: server mulai sibuk, disarankan menaikkan kapasitasnya sampai ke titik aman (&asymp;70% utilisasi) sebagai antisipasi.</li>
+          <li><strong>Scale Out (Horizontal)</strong> &mdash; utilisasi &ge;100% (sudah ada request yang ditolak/dropped): kapasitas satu server saja tidak lagi cukup, disarankan menambah instance server baru berkapasitas serupa agar beban terbagi.</li>
+        </ul>
+        <p>Saran ini murni bantuan perencanaan kapasitas berdasarkan simulasi yang sedang berjalan, bukan tindakan otomatis &mdash; jumlah instance tambahan dan target kapasitas yang disarankan bisa dijadikan acuan awal saat mengatur ulang parameter cluster (mis. lewat <a href="#lb-generate">Bangkitkan Cluster</a>) atau kapasitas server pada skenario Anda sendiri.</p>
+      </div>
+    </section>
+
+    <!-- ================= LOG LB ================= -->
+    <section class="section" id="log-lb">
+      <h2>Log Klien &amp; Server yang Melayani <span class="section-kicker">rincian per klien</span></h2>
+      <div class="ui-card">
+        <p>Untuk algoritma yang dipilih pada tabel hasil, bagian ini merinci setiap klien: berapa jumlah dan total beban permintaannya, serta server mana saja yang akhirnya menangani permintaan-permintaan tersebut.</p>
+      </div>
+    </section>
+
+    <!-- ================= METRIK ROUTING ================= -->
+    <section class="section" id="metrik-routing">
+      <h2>Metrik &amp; Skor QoS &mdash; Mode Routing <span class="section-kicker">cara membaca angka</span></h2>
+      <p class="lead">Empat angka berikut dipakai untuk menilai kualitas sebuah jalur, lalu digabung menjadi satu Skor QoS.</p>
+
+      <div class="ui-card">
+        <ul>
+          <li><strong>Delay (ms)</strong> &mdash; total waktu tunda seluruh link sepanjang jalur; makin rendah makin baik.</li>
+          <li><strong>Hop Count</strong> &mdash; jumlah lompatan antar node sepanjang jalur.</li>
+          <li><strong>Throughput (simulasi, Mbps)</strong> &mdash; diperkirakan dari kapasitas link tersempit sepanjang jalur, dikurangi sedikit demi setiap hop tambahan dan oleh tingkat kongesti yang Anda atur.</li>
+          <li><strong>Packet Loss (simulasi, %)</strong> &mdash; diperkirakan dari peluang kehilangan paket dasar tiap link sepanjang jalur, ditambah kontribusi dari tingkat kongesti.</li>
+        </ul>
+        <p>Kedua metrik terakhir diberi label "(simulasi)" karena bukan hasil pengukuran trafik data yang sesungguhnya, melainkan perkiraan berdasarkan sifat-sifat link pada topologi yang sedang aktif.</p>
+      </div>
+
+      <div class="ui-card">
+        <h3 style="margin-top:0;">Skor QoS (0&ndash;100)</h3>
+        <p>Skor QoS menggabungkan ketiga metrik di atas (Delay, Packet Loss, Throughput) menjadi satu angka, dengan porsi bobot Delay paling besar, disusul Packet Loss dan Throughput yang setara. Setiap metrik dinilai relatif terhadap kondisi terburuk/terbaik yang mungkin terjadi pada topologi yang sedang aktif &mdash; sehingga skor ini bersifat relatif untuk keperluan belajar/simulasi, bukan standar kualitas jaringan resmi.</p>
+        <div class="qos-scale">
+          <div class="qos-chip excellent"><div class="n">&ge; 85</div><div class="l">Excellent</div></div>
+          <div class="qos-chip good"><div class="n">70&ndash;84</div><div class="l">Good</div></div>
+          <div class="qos-chip fair"><div class="n">50&ndash;69</div><div class="l">Fair</div></div>
+          <div class="qos-chip poor"><div class="n">&lt; 50</div><div class="l">Poor</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= METRIK LB ================= -->
+    <section class="section" id="metrik-lb">
+      <h2>Metrik &amp; Skor QoS &mdash; Mode Load Balancing <span class="section-kicker">cara membaca angka</span></h2>
+      <div class="ui-card">
+        <ul>
+          <li><strong>Beban Maks (%)</strong> &mdash; tingkat pemakaian kapasitas server yang paling sibuk di antara seluruh server.</li>
+          <li><strong>Rata&sup2; Response Time (ms)</strong> &mdash; rata-rata gabungan waktu proses dan latensi jaringan seluruh permintaan.</li>
+          <li><strong>Fairness (Jain)</strong> &mdash; indeks 0&ndash;1 yang mengukur seberapa merata beban dibagi ke seluruh server; nilai 1 berarti semua server menerima porsi beban yang sama persis relatif terhadap kapasitasnya, nilai yang lebih rendah menandakan sebagian server jauh lebih sibuk dari yang lain.</li>
+          <li><strong>Packet/Request Loss (%)</strong> &mdash; persentase permintaan yang gagal ditangani, misalnya karena seluruh server yang relevan sudah kelebihan beban.</li>
+        </ul>
+      </div>
+      <div class="ui-card">
+        <h3 style="margin-top:0;">Skor QoS (0&ndash;100)</h3>
+        <p>Sama seperti mode Routing, Skor QoS pada mode ini menggabungkan latensi, fairness (pemerataan beban), dan tingkat permintaan yang gagal dilayani menjadi satu angka, dengan porsi bobot yang hampir seimbang di antara ketiganya, lalu dipetakan ke kategori Excellent/Good/Fair/Poor yang sama seperti pada mode Routing.</p>
+      </div>
+    </section>
+
+    <!-- ================= TIPS ================= -->
+    <section class="section" id="tips">
+      <h2>Tips Penggunaan <span class="section-kicker">agar perbandingan lebih bermakna</span></h2>
+      <div class="ui-card">
+        <ul>
+          <li>Gunakan <strong>Seed</strong> yang sama saat membandingkan pengaruh sebuah parameter, agar perbedaan hasil murni berasal dari parameter yang diubah, bukan dari keberuntungan proses acak.</li>
+          <li>Untuk algoritma metaheuristik (ACO, GA, PSO, SA, Tabu Search), menaikkan jumlah iterasi/generasi/episode umumnya membuat hasil makin mendekati optimal, tetapi juga menambah waktu proses (Runtime).</li>
+          <li>Bandingkan dulu dengan Dijkstra atau A* sebagai acuan "jalur terbaik yang mungkin", sebelum menilai seberapa baik algoritma lain mendekatinya.</li>
+          <li>Naikkan nilai <strong>Kongesti</strong> secara bertahap untuk melihat bagaimana setiap algoritma bereaksi terhadap jaringan yang makin padat.</li>
+          <li>Simpan skenario menarik lewat <a href="#export-config">Export Konfigurasi</a> sebelum bereksperimen lebih jauh, agar dapat kembali ke kondisi tersebut kapan saja.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Panduan ini menjelaskan tampilan dan perilaku Simulator Node Jaringan &amp; Evaluasi Algoritma Optimasi SDN untuk keperluan belajar/praktikum. Angka throughput dan packet loss bersifat estimasi simulasi, bukan hasil pengukuran trafik jaringan nyata.</p>
+  </footer>
+</div>
+
+<a class="top-link" href="#pendahuluan">&uarr; Ke atas</a>

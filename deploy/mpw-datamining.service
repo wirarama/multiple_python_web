@@ -1,0 +1,18 @@
+# Opsional: jalankan otomatis saat server boot (systemd).
+# Ganti USER dan /home/USER/multiple_python_web sesuai lokasi clone, lalu:
+#   sudo cp deploy/mpw-portal.service deploy/mpw-datamining.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now mpw-portal mpw-datamining
+# (Jangan dipakai bersamaan dengan "bash run.sh start".)
+[Unit]
+Description=Data Mining UI (Streamlit)
+After=network.target
+
+[Service]
+User=USER
+WorkingDirectory=/home/USER/multiple_python_web
+ExecStart=/bin/bash /home/USER/multiple_python_web/run.sh fg datamining
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

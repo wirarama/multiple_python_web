@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PySpark MLlib Script Generator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="page">
+
+  <header class="app-header">
+    <h1>PySpark MLlib Script Generator</h1>
+    <p>Susun script PySpark MLlib siap-jalan untuk Classification, Regression, Clustering, dan Association Rule Mining — dari CSV Anda atau data acak.</p>
+  </header>
+
+  <main class="container">
+
+    <section class="panel" id="taskSection">
+      <h2><span class="step-badge">1</span>Pilih Jenis Tugas (Task)</h2>
+      <div class="task-cards" id="taskCards">
+        {% for key, label in tasks.items() %}
+        <button type="button" class="task-card" data-task="{{ key }}">
+          <span class="task-card-title">{{ label }}</span>
+        </button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="panel" id="dataSourceSection" hidden>
+      <h2><span class="step-badge">2</span>Sumber Data</h2>
+
+      <div class="toggle-group" id="dataSourceToggle">
+        <label class="toggle-option">
+          <input type="radio" name="dataSource" value="csv" checked>
+          <span>Upload CSV</span>
+        </label>
+        <label class="toggle-option">
+          <input type="radio" name="dataSource" value="random">
+          <span>Buat Data Acak</span>
+        </label>
+      </div>
+
+      <div id="csvPanel" class="source-panel">
+        <div class="upload-row">
+          <input type="file" id="csvFile" accept=".csv">
+          <button type="button" id="uploadBtn" class="btn btn-secondary">Upload &amp; Analisis</button>
+        </div>
+        <p class="hint">Setelah upload, kolom pada CSV akan otomatis terbaca (termasuk tipe numerik/kategorikal) agar Anda tinggal memilih kolom target dan fitur.</p>
+        <div id="uploadStatus" class="status-msg"></div>
+
+        <div id="columnConfig" hidden>
+          <div id="targetColumnWrap" class="field-block" hidden>
+            <label for="targetColumn">Kolom Target / Label</label>
+            <select id="targetColumn"></select>
+          </div>
+
+          <div id="itemsColumnWrap" class="field-block" hidden>
+            <label for="itemsColumn">Kolom Daftar Item (Transaksi)</label>
+            <select id="itemsColumn"></select>
+            <label for="itemsDelimiter" class="mt">Pemisah Antar Item</label>
+            <input type="text" id="itemsDelimiter" value="," maxlength="5">
+          </div>
+
+          <div id="featureColumnsWrap" class="field-block">
+            <label>Kolom Fitur</label>
+            <div id="featureColumnsList" class="checkbox-grid"></div>
+          </div>
+
+          <div id="previewWrap" class="field-block">
+            <label>Pratinjau Data (5 baris pertama)</label>
+            <div class="table-scroll"><table id="previewTable"></table></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="randomPanel" class="source-panel" hidden>
+        <p class="hint">Atur parameter data acak sesuai jenis task yang dipilih. Data akan dibuat langsung di dalam script (numpy + pandas) lalu dikonversi menjadi Spark DataFrame.</p>
+        <div id="randomParamsFields" class="param-grid"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="algoSection" hidden>
+      <h2><span class="step-badge">3</span>Algoritma &amp; Hyperparameter</h2>
+      <div class="field-block">
+        <label for="algoSelect">Algoritma</label>
+        <select id="algoSelect"></select>
+        <p id="algoNotes" class="hint algo-notes"></p>
+      </div>
+      <div id="hyperparamFields" class="param-grid"></div>
+    </section>
+
+    <section class="panel" id="settingsSection" hidden>
+      <h2><span class="step-badge">4</span>Pengaturan Tambahan</h2>
+      <div class="param-grid">
+        <div class="field-block">
+          <label for="appName">Nama Aplikasi Spark (appName)</label>
+          <input type="text" id="appName" placeholder="PySpark MLlib App">
+        </div>
+        <div id="splitSettings" class="split-settings">
+          <div class="field-block">
+            <label for="trainRatio">Rasio Data Latih (Train)</label>
+            <input type="number" id="trainRatio" step="0.05" min="0.5" max="0.95" value="0.8">
+          </div>
+          <div class="field-block">
+            <label for="splitSeed">Random Seed (Train/Test Split)</label>
+            <input type="number" id="splitSeed" value="42">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel generate-panel" id="generateSection" hidden>
+      <button type="button" id="generateBtn" class="btn btn-primary btn-large">Generate Script PySpark</button>
+      <div id="generateStatus" class="status-msg"></div>
+    </section>
+
+    <section class="panel" id="resultSection" hidden>
+      <h2>Script PySpark Hasil Generate</h2>
+      <div class="result-meta" id="resultMeta"></div>
+      <div class="result-actions">
+        <button type="button" id="copyBtn" class="btn btn-secondary">Copy Script</button>
+        <button type="button" id="downloadBtn" class="btn btn-primary">Download .py</button>
+      </div>
+      <pre class="code-block"><code id="scriptOutput"></code></pre>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Script yang dihasilkan hanya memanggil PySpark MLlib — jalankan dengan <code>spark-submit nama_script.py</code> atau <code>python nama_script.py</code> pada lingkungan yang sudah terpasang PySpark.</p>
+  </footer>
+
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

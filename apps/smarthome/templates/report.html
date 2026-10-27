@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="layout" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+  <div class="col">
+    <div class="card viz-root">
+      <h3><span data-i18n="chart_power">Grafik Daya (W)</span><span class="spacer"></span>
+        <button class="sm" id="csvPower" data-i18n="export_csv">Unduh CSV</button></h3>
+      <div class="body"><div id="chPower"></div></div>
+    </div>
+    <div class="card viz-root">
+      <h3><span data-i18n="chart_energy">Grafik Energi (kWh)</span></h3>
+      <div class="body"><div id="chEnergy"></div></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="per_device">Perangkat Teraktif</span></h3>
+      <div class="scroll tall"><table class="tbl" id="tblDev"></table></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card viz-root">
+      <h3><span data-i18n="per_room">Konsumsi per Kamar</span></h3>
+      <div class="body"><div id="chRoom"></div></div>
+    </div>
+    <div class="card viz-root">
+      <h3><span data-i18n="per_circuit">Konsumsi per Grup</span></h3>
+      <div class="body"><div id="chCirc"></div></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="summary">Ringkasan Listrik</span></h3>
+      <div class="body"><div class="metrics" id="mets"></div></div>
+    </div>
+  </div>
+</div>
+<div id="vizTip" style="position:fixed;pointer-events:none;display:none;z-index:70;
+  background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:8px;font-size:12px;
+  box-shadow:var(--shadow)"></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+{% endblock %}

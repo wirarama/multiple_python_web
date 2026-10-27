@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="layout">
+
+  <!-- ================================================== kolom kiri -->
+  <div class="col">
+    <div class="card">
+      <h3><span data-i18n="sim">Kontrol Simulasi</span></h3>
+      <div class="body">
+        <div class="row" style="margin-bottom:10px">
+          <button class="primary" id="btnRun"><span id="runLbl" data-i18n="play">Jalan</span></button>
+          <button id="btnStep" data-i18n="step">Maju 1 langkah</button>
+        </div>
+        <label class="f"><span><span data-i18n="step_min">Menit / langkah</span>: <b id="stepVal">10</b></span>
+          <input type="range" id="stepMin" min="1" max="60" step="1" value="10"></label>
+        <label class="f"><span><span data-i18n="speed">Kecepatan</span>: <b id="spdVal">1.0</b> x</span>
+          <input type="range" id="speed" min="1" max="20" step="1" value="4"></label>
+        <div class="row">
+          <button class="sm" id="btnResetTrip" data-i18n="reset_trip">Reset MCB</button>
+          <button class="sm" id="btnResetEnergy" data-i18n="reset_energy">Reset energi</button>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <button class="sm" id="btnExport" data-i18n="export_json">Ekspor JSON</button>
+          <button class="sm" id="btnImport" data-i18n="import_json">Impor JSON</button>
+          <input type="file" id="fileImport" accept="application/json,.json" style="display:none">
+        </div>
+        <div class="row" style="margin-top:8px">
+          <button class="sm" id="btnDemo" data-i18n="reset_demo">Muat data contoh</button>
+          <button class="sm danger" id="btnClear" data-i18n="clear_house">Kosongkan rumah</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="env">Kondisi Lingkungan</span></h3>
+      <div class="body">
+        <label class="f"><span><span data-i18n="time">Waktu</span>: <b id="clockVal">18:00</b></span>
+          <input type="range" id="hourRange" min="0" max="1439" step="10" value="1080"></label>
+        <div class="chips" style="margin-bottom:10px" id="todChips"></div>
+        <label class="f"><span data-i18n="weather">Cuaca</span>
+          <select id="weatherSel"></select></label>
+        <label class="f"><span><span data-i18n="temp_offset">Koreksi suhu (°C)</span>: <b id="offVal">0</b></span>
+          <input type="range" id="tempOff" min="-6" max="6" step="0.5" value="0"></label>
+        <label class="row small"><input type="checkbox" id="autoWx" style="width:auto">
+          <span data-i18n="auto_weather">Cuaca acak tiap hari</span></label>
+        <div class="metrics" style="margin-top:10px">
+          <div class="metric"><div class="k" data-i18n="temp">Suhu</div>
+            <div class="v"><span id="oTemp">-</span><span class="u">°C</span></div></div>
+          <div class="metric"><div class="k" data-i18n="lux">Cahaya</div>
+            <div class="v" style="font-size:15px"><span id="oLux">-</span><span class="u"> lx</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="occupants">Penghuni</span><span class="spacer"></span>
+        <button class="sm" id="btnAddOcc">+</button></h3>
+      <div class="list" id="occList"></div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="sources">Sumber Listrik</span></h3>
+      <div class="list" id="srcList"></div>
+    </div>
+  </div>
+
+  <!-- ================================================= kolom tengah -->
+  <div class="col">
+    <div class="card">
+      <h3><span data-i18n="plan">Denah Rumah</span><span class="spacer"></span>
+        <span class="badge" id="mcbBadge">-</span></h3>
+      <div class="planbar">
+        <div class="seg" id="modeSeg">
+          <button data-mode="view" class="on" data-i18n="mode_view">Mode Lihat</button>
+          <button data-mode="edit" data-i18n="mode_edit">Edit Denah</button>
+        </div>
+        <button class="sm" id="btnAddRoom" data-i18n="add_room">Tambah Kamar</button>
+        <button class="sm primary" id="btnAddComp" data-i18n="add_comp">Tambah Komponen</button>
+        <button class="sm" id="btnTidy" data-i18n="tidy">Rapikan</button>
+        <span class="spacer"></span>
+        <label class="row small"><input type="checkbox" id="optWire" style="width:auto">
+          <span data-i18n="show_wire">Kabel daya</span></label>
+        <label class="row small"><input type="checkbox" id="optCtrl" checked style="width:auto">
+          <span data-i18n="show_ctrl">Jalur kendali</span></label>
+        <label class="row small"><input type="checkbox" id="optLabel" checked style="width:auto">
+          <span data-i18n="show_label">Nama komponen</span></label>
+      </div>
+      <div id="placeHint" class="planbar" style="display:none;background:color-mix(in srgb,var(--brand) 12%,transparent)">
+        <span data-i18n="click_place">Klik pada denah untuk menempatkan:</span>
+        <b id="placeName"></b><span class="spacer"></span>
+        <button class="sm" id="btnCancelPlace" data-i18n="cancel">Batal</button>
+      </div>
+      <div class="planwrap"><svg id="plan" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <div class="legend">
+        <span><i style="background:#fbbf24"></i><span data-i18n="legend_on">Menyala</span></span>
+        <span><i style="background:#cbd5e1"></i><span data-i18n="legend_off">Mati</span></span>
+        <span><i style="background:#2563eb"></i><span data-i18n="legend_person">Penghuni</span></span>
+        <span><i style="background:#dc2626"></i><span data-i18n="legend_trip">Grup trip</span></span>
+        <span id="legendCirc"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="log">Catatan Kejadian</span><span class="spacer"></span>
+        <button class="sm" id="btnClearLog" data-i18n="clear_log">Bersihkan</button></h3>
+      <div class="scroll" id="logBox"></div>
+    </div>
+  </div>
+
+  <!-- ================================================== kolom kanan -->
+  <div class="col col-right">
+    <div class="card">
+      <h3><span data-i18n="summary">Ringkasan Listrik</span></h3>
+      <div class="body">
+        <div class="metrics">
+          <div class="metric"><div class="k" data-i18n="power">Daya</div>
+            <div class="v"><span id="mPower">0</span><span class="u"> W</span></div></div>
+          <div class="metric"><div class="k" data-i18n="current">Arus</div>
+            <div class="v"><span id="mCurr">0</span><span class="u"> A</span></div></div>
+          <div class="metric"><div class="k" data-i18n="energy">Energi</div>
+            <div class="v"><span id="mKwh">0</span><span class="u"> kWh</span></div></div>
+          <div class="metric"><div class="k" data-i18n="cost">Biaya</div>
+            <div class="v" style="font-size:15px"><span id="mCost">Rp 0</span></div></div>
+        </div>
+        <div class="grid2" style="margin-top:10px">
+          <label class="f"><span data-i18n="voltage">Tegangan</span>
+            <input type="number" id="hVolt" step="1"></label>
+          <label class="f"><span data-i18n="pf">Faktor daya</span>
+            <input type="number" id="hPf" step="0.01"></label>
+          <label class="f"><span data-i18n="main_mcb">MCB utama</span>
+            <input type="number" id="hMcb" step="0.5"></label>
+          <label class="f"><span data-i18n="tariff">Tarif (Rp/kWh)</span>
+            <input type="number" id="hTariff" step="0.01"></label>
+        </div>
+        <button class="sm primary" id="btnSaveHouse" data-i18n="save">Simpan</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="circuits">Grup Instalasi (MCB)</span><span class="spacer"></span>
+        <button class="sm" id="btnAddCirc">+</button></h3>
+      <div class="list" id="circList"></div>
+    </div>
+
+    <div class="card">
+      <h3><span data-i18n="properties">Properti</span></h3>
+      <div class="body" id="propBox"><p class="muted small" data-i18n="nothing_sel"></p></div>
+    </div>
+  </div>
+</div>
+
+<dialog id="dlg"><form method="dialog">
+  <div class="dlg-h" id="dlgTitle"></div>
+  <div class="dlg-b" id="dlgBody"></div>
+  <div class="dlg-f"><button value="cancel" data-i18n="cancel">Batal</button>
+    <button class="primary" id="dlgOk" value="ok" data-i18n="add">Tambah</button></div>
+</form></dialog>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/floorplan.js') }}"></script>
+<script src="{{ url_for('static', filename='js/simulator.js') }}"></script>
+{% endblock %}

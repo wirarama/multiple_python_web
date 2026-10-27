@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FedNet Edu &mdash; Federated Learning untuk Optimasi Jaringan</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <h1>FedNet Edu &mdash; Simulator Federated Learning untuk Optimasi Jaringan</h1>
+    <p class="subtitle">Flask + NumPy + NetworkX &middot; Bangun kondisi jaringan &amp; region klien, latih model lokal dan global (FedAvg / FedProx / Federated Q-Routing), lalu bandingkan jalur yang dioptimasi tiap model.</p>
+    <a class="tutorial-link" href="/tutorial" target="_blank" rel="noopener">Buka Panduan &amp; Konsep Federated Learning &rarr;</a>
+  </header>
+
+  <section class="panel config-bar">
+    <div class="config-bar-group">
+      <h3>Konfigurasi Lengkap <a class="help-link" href="/tutorial#konfigurasi" target="_blank" title="Bantuan">?</a></h3>
+      <div class="config-bar-actions">
+        <a class="btn-secondary" href="/api/config/export">Export Konfigurasi (JSON)</a>
+        <button type="button" class="btn-secondary" id="import-config-btn">Import Konfigurasi (JSON)</button>
+        <input type="file" id="import-config-input" accept=".json,application/json" hidden>
+      </div>
+    </div>
+    <div class="config-bar-group">
+      <h3>Data Jaringan (CSV) <a class="help-link" href="/tutorial#csv" target="_blank" title="Bantuan">?</a></h3>
+      <div class="config-bar-actions">
+        <button type="button" class="btn-secondary" id="import-csv-btn">Import nodes / links / clients CSV</button>
+        <input type="file" id="import-csv-input" accept=".csv,text/csv" multiple hidden>
+      </div>
+    </div>
+    <div class="config-bar-group">
+      <h3>Script Python Standalone <a class="help-link" href="/tutorial#unduh" target="_blank" title="Bantuan">?</a></h3>
+      <div class="config-bar-actions">
+        <a class="btn-primary" href="/api/download.zip">Unduh Semua (ZIP)</a>
+        <button type="button" class="btn-secondary" data-goto="download">Lihat per File</button>
+      </div>
+    </div>
+    <span id="global-status" class="status"></span>
+  </section>
+
+  <div class="mode-switch" role="tablist">
+    <button type="button" class="mode-btn active" data-mode="supervised">1 &middot; Federated Learning &mdash; Prediksi Delay &amp; Routing</button>
+    <button type="button" class="mode-btn" data-mode="qrouting">2 &middot; Federated Reinforcement Learning &mdash; Q-Routing</button>
+    <button type="button" class="mode-btn" data-mode="rl">3 &middot; Reinforcement Learning &mdash; Reward per Langkah</button>
+    <button type="button" class="mode-btn" data-mode="download">4 &middot; Unduh Script &amp; Data Python</button>
+  </div>
+
+  <div class="layout">
+    <!-- ================= SIDEBAR: SIMULATOR JARINGAN ================= -->
+    <aside class="panel sidebar">
+      <h2>Simulator Jaringan <a class="help-link" href="/tutorial#simulator" target="_blank" title="Bantuan">?</a></h2>
+      <p class="topo-meta" id="topo-meta">Memuat...</p>
+      <div id="net-errors" class="error-box" hidden></div>
+
+      <div class="subblock">
+        <h3>Bangkitkan Topologi &amp; Region</h3>
+        <div class="grid-form">
+          <div class="labeled-input"><label for="g-nodes">Jumlah node</label><input type="number" id="g-nodes" min="4" max="150" value="24"></div>
+          <div class="labeled-input"><label for="g-k">Tetangga terdekat (k)</label><input type="number" id="g-k" min="1" max="8" value="3"></div>
+          <div class="labeled-input"><label for="g-w">Lebar wilayah (m)</label><input type="number" id="g-w" min="100" step="100" value="1000"></div>
+          <div class="labeled-input"><label for="g-h">Panjang wilayah (m)</label><input type="number" id="g-h" min="100" step="100" value="1000"></div>
+          <div class="labeled-input"><label for="g-clients">Jumlah klien (region)</label><input type="number" id="g-clients" min="1" max="10" value="4"></div>
+          <div class="labeled-input"><label for="g-seed">Seed</label><input type="number" id="g-seed" value="42"></div>
+        </div>
+        <button class="btn-secondary full" id="generate-btn">Bangkitkan Topologi Acak</button>
+        <button class="btn-secondary full" id="partition-btn">Bagi Ulang Region (k-means) saja</button>
+        <p class="hint">Node disebar acak dan dihubungkan ke k tetangga terdekat. Node dikelompokkan ke region; tiap region = satu <b>klien federated</b> (mis. controller SDN / ISP lokal) yang hanya melihat data trafiknya sendiri.</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Klien Federated &amp; Profil Trafik <a class="help-link" href="/tutorial#klien" target="_blank" title="Bantuan">?</a></h3>
+        <div class="table-wrap small">
+          <table class="client-table">
+            <thead><tr><th>Klien</th><th title="Intensitas trafik rata-rata (0-1.2)">Intens.</th><th title="Fluktuasi acak utilisasi">Burst</th><th title="Jam puncak trafik (0-23)">Puncak</th><th title="Peluang tujuan paket di region sendiri (Q-routing)">Lokal</th></tr></thead>
+            <tbody id="client-body"></tbody>
+          </table>
+        </div>
+        <button class="btn-secondary full" id="save-clients-btn">Simpan Profil Klien</button>
+        <p class="hint">Bedakan intensitas antar klien agar data makin <b>non-IID</b>: klien di region sepi tidak pernah melihat kondisi macet.</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Tambah Node</h3>
+        <div class="inline-form">
+          <input type="text" id="new-node-id" placeholder="otomatis">
+          <select id="new-node-region"></select>
+          <button class="btn-secondary" id="add-node-btn">Tambah</button>
+        </div>
+        <p class="hint">Node baru diletakkan acak &amp; dihubungkan ke 2 node terdekat. Seret node pada peta untuk memindahkan.</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Tambah / Ubah Link</h3>
+        <div class="grid-form">
+          <select id="e-src"></select>
+          <select id="e-dst"></select>
+          <div class="labeled-input"><label>Bandwidth (Mbps)</label><input type="number" id="e-bw" min="1" value="50"></div>
+          <div class="labeled-input"><label>Packet loss (0-1)</label><input type="number" id="e-loss" min="0" max="0.5" step="0.001" value="0.002"></div>
+          <div class="labeled-input"><label>Bobot trafik</label><input type="number" id="e-tw" min="0.1" max="3" step="0.1" value="1.0"></div>
+          <div class="labeled-input"><label>Delay dasar (ms, kosong=otomatis)</label><input type="number" id="e-delay" min="0.1" step="0.1" placeholder="auto"></div>
+        </div>
+        <button class="btn-secondary full" id="save-link-btn">Simpan Link</button>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Node &amp; Region</h3>
+        <div class="table-wrap small scroll-y">
+          <table><thead><tr><th>Node</th><th>Region</th><th></th></tr></thead><tbody id="node-body"></tbody></table>
+        </div>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Link</h3>
+        <div class="table-wrap small scroll-y">
+          <table><thead><tr><th>Link</th><th>Delay</th><th>BW</th><th>Loss</th><th>Bobot</th><th></th></tr></thead><tbody id="link-body"></tbody></table>
+        </div>
+      </div>
+      <span id="topo-status" class="status"></span>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main-col">
+      <section class="panel" id="topo-panel">
+        <div class="chart-section-head">
+          <h2>Peta Jaringan &amp; Region Klien <a class="help-link" href="/tutorial#peta" target="_blank" title="Bantuan">?</a></h2>
+          <label class="check"><input type="checkbox" id="show-util" checked> warnai link dengan utilisasi snapshot</label>
+        </div>
+        <p class="hint">Warna node = region (klien federated). Ketebalan/warna link = utilisasi pada saat evaluasi (tersedia setelah data trafik dibangkitkan). Seret node untuk mengubah posisinya.</p>
+        <div class="legend" id="region-legend"></div>
+        <div class="canvas-wrap"><svg id="topo-svg" viewBox="0 0 640 480"></svg></div>
+      </section>
+
+      <section class="panel" id="data-panel">
+        <h2>Simulasi Data Trafik Lokal (Non-IID) <a class="help-link" href="/tutorial#data" target="_blank" title="Bantuan">?</a></h2>
+        <div class="controls">
+          <div class="field"><label for="s-steps">Langkah waktu (jam)</label><input type="number" id="s-steps" min="6" max="336" value="48"></div>
+          <div class="field"><label for="s-eval">Jam evaluasi routing</label><input type="number" id="s-eval" min="0" max="23" value="19"></div>
+          <div class="field"><label for="s-test">Rasio data uji</label><input type="number" id="s-test" min="0.05" max="0.5" step="0.05" value="0.2"></div>
+          <div class="field"><label for="s-noise">Noise pengukuran (%)</label><input type="number" id="s-noise" min="0" max="30" step="1" value="5"></div>
+          <div class="field"><label for="s-seed">Seed</label><input type="number" id="s-seed" value="42"></div>
+          <button class="btn-secondary" id="data-btn">Bangkitkan Data Trafik</button>
+          <span id="data-status" class="status"></span>
+        </div>
+        <div id="data-stats" hidden>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Klien</th><th>Sampel (latih/uji)</th><th>Link teramati</th><th>Utilisasi min&ndash;maks</th><th>Rata&sup2;</th><th>Delay maks (ms)</th><th>Sebaran utilisasi (0 &rarr; 1)</th></tr></thead>
+              <tbody id="data-body"></tbody>
+            </table>
+          </div>
+          <p class="hint">Histogram kecil menunjukkan rentang utilisasi yang pernah dilihat tiap klien. Model lokal hanya belajar dari rentang tsb &mdash; federated learning menggabungkan pengetahuan semua klien tanpa memindahkan data mentah.</p>
+        </div>
+      </section>
+
+      <!-- ================= TAB 1: SUPERVISED ================= -->
+      <div class="tab" id="tab-supervised">
+        <section class="panel">
+          <h2>Konfigurasi Federated Learning (Prediksi Delay Link) <a class="help-link" href="/tutorial#fl-supervised" target="_blank" title="Bantuan">?</a></h2>
+          <div class="param-grid" id="sup-params"></div>
+          <div class="controls run-row">
+            <div class="field"><label for="sup-pairs">Pasangan uji routing</label><input type="number" id="sup-pairs" min="5" max="200" value="30"></div>
+            <button class="btn-primary" id="sup-run">Jalankan Federated Learning</button>
+            <span id="sup-status" class="status"></span>
+          </div>
+        </section>
+        <div id="sup-results" hidden></div>
+      </div>
+
+      <!-- ================= TAB 2: Q-ROUTING ================= -->
+      <div class="tab" id="tab-qrouting" hidden>
+        <section class="panel">
+          <h2>Konfigurasi Federated Q-Routing (Reinforcement Learning) <a class="help-link" href="/tutorial#fl-qrouting" target="_blank" title="Bantuan">?</a></h2>
+          <div class="param-grid" id="q-params"></div>
+          <div class="controls run-row">
+            <div class="field"><label for="q-pairs">Pasangan uji routing</label><input type="number" id="q-pairs" min="5" max="200" value="30"></div>
+            <button class="btn-primary" id="q-run">Jalankan Federated Q-Routing</button>
+            <span id="q-status" class="status"></span>
+          </div>
+        </section>
+        <div id="q-results" hidden></div>
+      </div>
+
+      <!-- ================= TAB 3: RL REWARD PER LANGKAH ================= -->
+      <div class="tab" id="tab-rl" hidden>
+        <section class="panel">
+          <h2>Reinforcement Learning Routing &mdash; Fungsi Reward <a class="help-link" href="/tutorial#rl-reward" target="_blank" title="Bantuan">?</a></h2>
+          <p class="hint">Satu agen Q-learning belajar mengirim paket dari <b>source</b> ke <b>target</b>. Di setiap langkah agen memilih tetangga berikutnya dan menerima <b>reward</b>: komponen <span class="sign plus">+</span> adalah hadiah, komponen <span class="sign minus">&minus;</span> adalah hukuman. Agen berusaha memaksimalkan total reward (return) per episode.</p>
+          <div class="formula-box">
+            <div><b>r</b> = <span class="c-plus">goal</span> <span class="c-pm">&plusmn; progress</span> <span class="c-minus">&minus; delay &minus; hop &minus; loop &minus; kongesti &minus; timeout</span></div>
+            <div><b>Q(s,a)</b> &larr; Q(s,a) + &alpha; &middot; [ r + &gamma; &middot; max<sub>a'</sub> Q(s',a') &minus; Q(s,a) ]</div>
+          </div>
+          <h3 class="sub-h">Komponen reward (bobot dapat diubah)</h3>
+          <div class="param-grid reward-grid" id="rl-reward-params"></div>
+          <h3 class="sub-h">Parameter Q-learning</h3>
+          <div class="param-grid" id="rl-params"></div>
+          <div class="controls run-row">
+            <div class="field"><label for="rl-src">Source</label><select id="rl-src"></select></div>
+            <div class="field"><label for="rl-dst">Target</label><select id="rl-dst"></select></div>
+            <button class="btn-primary" id="rl-run">Latih Agen RL</button>
+            <span id="rl-status" class="status"></span>
+          </div>
+        </section>
+
+        <div id="rl-results" hidden>
+          <section class="panel">
+            <h2>Ringkasan Hasil Pelatihan</h2>
+            <div class="kpi-row" id="rl-kpis"></div>
+            <div class="table-wrap"><table class="results-table" id="rl-compare"></table></div>
+            <p class="hint">Bandingkan reward jalur agen dengan reward jalur delay minimum (Dijkstra). Bila jalur delay minimum justru mendapat reward lebih tinggi, agen belum konvergen; bila jalur agen mendapat reward lebih tinggi tetapi delay-nya lebih besar, berarti <b>fungsi reward</b> tidak sepenuhnya selaras dengan tujuan (mis. penalti hop/kongesti terlalu besar) &mdash; bahan diskusi desain reward.</p>
+          </section>
+
+          <section class="panel">
+            <div class="chart-section-head">
+              <h2>Reward per Episode (plus vs minus)</h2>
+              <a class="btn-secondary" id="rl-fig-curve" target="_blank">PNG (matplotlib)</a>
+            </div>
+            <p class="hint">Batang hijau = jumlah reward positif, batang merah = jumlah reward negatif, garis hitam = total reward, garis magenta = rata-rata bergerak. Klik grafik untuk membuka episode tsb di pemutar langkah.</p>
+            <div class="chart-card" id="rl-curve"></div>
+          </section>
+
+          <section class="panel" id="rl-player">
+            <div class="chart-section-head">
+              <h2>Routing per Langkah &amp; Reward <a class="help-link" href="/tutorial#rl-langkah" target="_blank" title="Bantuan">?</a></h2>
+              <div class="config-bar-actions">
+                <a class="btn-secondary" id="rl-fig-steps" target="_blank">PNG langkah</a>
+                <a class="btn-secondary" id="rl-fig-policy" target="_blank">PNG kebijakan</a>
+              </div>
+            </div>
+            <div class="controls">
+              <div class="field"><label>Tampilkan</label>
+                <select id="rl-view">
+                  <option value="greedy">Kebijakan akhir agen (greedy)</option>
+                  <option value="optimal">Jalur delay minimum (pembanding)</option>
+                  <option value="episode">Episode pelatihan ke-&hellip;</option>
+                </select></div>
+              <div class="field grow" id="rl-ep-wrap"><label>Episode: <b id="rl-ep-label"></b></label>
+                <div class="round-row"><input type="range" id="rl-ep" min="1" value="1"><input type="number" id="rl-ep-num" min="1" style="width:80px"></div></div>
+              <div class="field"><label>Langkah: <b id="rl-step-label"></b></label>
+                <div class="step-btns">
+                  <button class="btn-secondary small" id="rl-first" title="Awal">&#9198;</button>
+                  <button class="btn-secondary small" id="rl-prev" title="Mundur">&#9664;</button>
+                  <button class="btn-secondary small" id="rl-next" title="Maju">&#9654;</button>
+                  <button class="btn-secondary small" id="rl-last" title="Akhir">&#9197;</button>
+                  <button class="btn-secondary small" id="rl-play">Putar</button>
+                </div></div>
+            </div>
+            <div class="rl-split">
+              <div>
+                <svg id="rl-map" viewBox="0 0 640 480"></svg>
+                <div class="legend rl-legend">
+                  <span><i class="seg pos"></i>langkah ber-reward positif</span>
+                  <span><i class="seg neg"></i>langkah ber-reward negatif</span>
+                  <span><i class="seg opt"></i>pilihan langkah berikutnya (nilai Q)</span>
+                </div>
+              </div>
+              <div class="step-card" id="rl-step-card"></div>
+            </div>
+            <h3 class="sub-h">Komponen reward tiap langkah &amp; return kumulatif</h3>
+            <div class="chart-card" id="rl-step-chart"></div>
+            <div class="table-wrap scroll-y tall"><table class="results-table" id="rl-step-table"></table></div>
+          </section>
+
+          <section class="panel">
+            <h2>Kebijakan Akhir Agen (aksi dengan Q tertinggi di tiap node)</h2>
+            <p class="hint">Panah magenta menunjukkan ke mana agen akan meneruskan paket dari setiap node yang pernah ia kunjungi. Node tanpa panah belum pernah dijelajahi. Garis hitam = jalur delay minimum.</p>
+            <div class="canvas-wrap"><svg id="rl-policy" viewBox="0 0 640 480"></svg></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- ================= TAB 4: DOWNLOAD ================= -->
+      <div class="tab" id="tab-download" hidden>
+        <section class="panel">
+          <div class="chart-section-head">
+            <h2>Unduh Script Python, Data Jaringan, Konfigurasi &amp; Hasil <a class="help-link" href="/tutorial#unduh" target="_blank" title="Bantuan">?</a></h2>
+            <a class="btn-primary" href="/api/download.zip">Unduh Semua (ZIP, termasuk gambar)</a>
+          </div>
+          <p class="hint">Semua file mencerminkan kondisi aplikasi saat ini. Script <b>standalone</b> (tidak memerlukan aplikasi ini) &mdash; hanya butuh numpy, networkx, matplotlib &mdash; dan menghasilkan angka yang identik dengan aplikasi karena memakai engine &amp; seed yang sama.</p>
+          <pre class="code-block">pip install -r requirements.txt
+python 01_data_jaringan.py          # data/*.csv  -> data/measurements.csv, data/snapshot.csv
+python 02_federated_learning.py     # + config/fl_config.json -> results/&lt;mode&gt;/*.csv
+python 03_visualisasi.py --source N1 --target N24   # -> results/&lt;mode&gt;/fig_*.png
+python 04_reinforcement_learning.py --source N1 --target N24 --episode 5   # -> results/rl/
+# atau sekaligus:  python run_all.py</pre>
+          <div id="file-groups"></div>
+        </section>
+        <section class="panel" id="preview-panel" hidden>
+          <div class="chart-section-head">
+            <h2 id="preview-title">Pratinjau</h2>
+            <button class="btn-secondary" id="preview-close">Tutup</button>
+          </div>
+          <pre class="code-block preview" id="preview-body"></pre>
+          <img id="preview-img" alt="Pratinjau gambar" hidden>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="app-footer">
+    <p style="text-align:center;">Developed by Wirarama Wedashwara 2026 &middot; Universitas Mataram</p>
+  </footer>
+</div>
+
+<template id="results-template">
+  <section class="panel">
+    <h2>Ringkasan: Global vs Lokal vs Terpusat <a class="help-link" href="/tutorial#hasil" target="_blank" title="Bantuan">?</a></h2>
+    <div class="kpi-row" data-role="kpis"></div>
+    <div class="table-wrap">
+      <table class="results-table"><thead data-role="thead"></thead><tbody data-role="tbody"></tbody></table>
+    </div>
+    <p class="hint" data-role="table-hint"></p>
+  </section>
+
+  <section class="panel">
+    <div class="chart-section-head">
+      <h2>Visualisasi Jalur Teroptimasi: Lokal &amp; Global <a class="help-link" href="/tutorial#jalur" target="_blank" title="Bantuan">?</a></h2>
+      <div class="config-bar-actions">
+        <a class="btn-secondary" data-role="fig-paths" target="_blank">PNG (matplotlib)</a>
+        <a class="btn-secondary" data-role="fig-evo" target="_blank">PNG evolusi global</a>
+      </div>
+    </div>
+    <div class="controls path-controls">
+      <div class="field"><label>Source</label><select data-role="src"></select></div>
+      <div class="field"><label>Target</label><select data-role="dst"></select></div>
+      <div class="field grow"><label>Ronde model global: <b data-role="round-label"></b></label>
+        <div class="round-row"><input type="range" data-role="round" min="1" value="1"><button class="btn-secondary small" data-role="play">&#9654; Putar</button></div></div>
+      <label class="check" data-role="weights-wrap"><input type="checkbox" data-role="weights"> warnai link dengan delay yang dipakai model</label>
+    </div>
+    <p class="hint">Setiap kartu memperlihatkan jalur yang dipilih oleh model tersebut. Delay &amp; gap dihitung memakai kondisi jaringan <b>sebenarnya</b>; gap = selisih terhadap jalur optimal (oracle). Kotak = source, bintang = target.</p>
+    <div class="path-grid" data-role="path-grid"></div>
+  </section>
+
+  <section class="panel">
+    <div class="chart-section-head">
+      <h2>Kurva Pembelajaran per Ronde Komunikasi</h2>
+      <div class="config-bar-actions">
+        <a class="btn-secondary" data-role="fig-curves" target="_blank">PNG kurva</a>
+        <a class="btn-secondary" data-role="fig-compare" target="_blank">PNG perbandingan</a>
+        <a class="btn-secondary" data-role="fig-weights" target="_blank">PNG delay link</a>
+        <a class="btn-secondary" data-role="fig-data" target="_blank">PNG data non-IID</a>
+      </div>
+    </div>
+    <p class="hint">Garis tebal magenta = model global federated per ronde; garis putus-putus = model lokal-saja (dilatih dengan komputasi setara); titik-titik abu = model terpusat (batas atas, data digabung).</p>
+    <div class="chart-grid" data-role="charts"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Log Ronde Federated</h2>
+    <div class="table-wrap scroll-y tall"><table class="results-table"><thead data-role="log-head"></thead><tbody data-role="log-body"></tbody></table></div>
+  </section>
+</template>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

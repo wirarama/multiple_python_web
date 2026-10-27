@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulator Node &amp; Evaluasi Algoritma Optimasi Routing / Load Balancing SDN</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <h1>Wire Network Simulator &amp; Evaluasi Algoritma Optimasi SDN</h1>
+    <p class="subtitle">Flask + NetworkX &middot; Atur topologi/cluster &amp; parameter algoritma, lihat tabel QoS dan visualisasi hasil optimasi</p>
+    <a class="tutorial-link" href="/tutorial" target="_blank" rel="noopener">Buka Panduan Tutorial &rarr;</a>
+  </header>
+
+  <div class="mode-switch" role="tablist">
+    <button type="button" class="mode-btn active" id="mode-btn-routing" role="tab" aria-selected="true">Optimasi Routing</button>
+    <button type="button" class="mode-btn" id="mode-btn-lb" role="tab" aria-selected="false">Load Balancing (Grid / Distributed Computing)</button>
+    <button type="button" class="mode-btn" id="mode-btn-ids" role="tab" aria-selected="false">Simulasi Deteksi Intrusi (IDS)</button>
+  </div>
+
+  <section class="panel config-bar">
+    <div class="config-bar-group">
+      <h3>Konfigurasi <a class="help-link" href="/tutorial#export-config" target="_blank" rel="noopener" title="Bantuan: Konfigurasi">?</a></h3>
+      <div class="config-bar-actions">
+        <button type="button" class="btn-secondary" id="export-config-btn">Export Konfigurasi (JSON)</button>
+        <button type="button" class="btn-secondary" id="import-config-btn">Import Konfigurasi (JSON)</button>
+        <input type="file" id="import-config-input" accept="application/json,.json" hidden>
+      </div>
+      <span id="config-status" class="status"></span>
+    </div>
+    <div class="config-bar-group">
+      <h3>Ekspor Hasil <a class="help-link" href="/tutorial#export-excel" target="_blank" rel="noopener" title="Bantuan: Ekspor Hasil">?</a></h3>
+      <div class="config-bar-actions">
+        <button type="button" class="btn-primary" id="export-excel-btn">Export Semua Hasil ke Excel</button>
+      </div>
+      <span id="export-status" class="status"></span>
+    </div>
+    <p class="hint">Konfigurasi mencakup topologi/cluster, algoritma terpilih &amp; parameternya. Export Excel mengekspor tabel hasil, riwayat, topologi, dan cluster yang sedang ditampilkan (jalankan perbandingan routing dan/atau load balancing terlebih dahulu).</p>
+  </section>
+
+  <div class="layout" id="view-routing">
+    <!-- ================= SIDEBAR: TOPOLOGY EDITOR ================= -->
+    <aside class="panel sidebar">
+      <h2>Simulator Topologi <a class="help-link" href="/tutorial#topo-editor" target="_blank" rel="noopener" title="Bantuan: Editor Topologi">?</a></h2>
+      <p class="topo-meta" id="topo-meta-info">Memuat topologi...</p>
+
+      <div class="subblock">
+        <h3>Simulasi Jumlah Node &amp; Luas Wilayah <a class="help-link" href="/tutorial#gen-topo" target="_blank" rel="noopener" title="Bantuan: Bangkitkan Topologi">?</a></h3>
+        <div class="grid-form">
+          <div class="labeled-input">
+            <label for="gen-num-nodes">Jumlah node</label>
+            <input type="number" id="gen-num-nodes" min="2" max="300" step="1" value="12">
+          </div>
+          <div class="labeled-input">
+            <label for="gen-k-neighbors">Tetangga terdekat (k)</label>
+            <input type="number" id="gen-k-neighbors" min="1" max="10" step="1" value="3">
+          </div>
+          <div class="labeled-input">
+            <label for="gen-area-width">Lebar wilayah (m)</label>
+            <input type="number" id="gen-area-width" min="10" step="10" value="1000">
+          </div>
+          <div class="labeled-input">
+            <label for="gen-area-height">Panjang wilayah (m)</label>
+            <input type="number" id="gen-area-height" min="10" step="10" value="1000">
+          </div>
+          <div class="labeled-input">
+            <label for="gen-seed">Seed</label>
+            <input type="number" id="gen-seed" value="42">
+          </div>
+        </div>
+        <button class="btn-secondary full" id="generate-topo-btn">Bangkitkan Topologi Acak</button>
+        <p class="hint">Node disebar acak pada luas wilayah (meter), dihubungkan ke k tetangga terdekat; delay tiap link diturunkan dari jarak antar node.</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Tambah Node Manual <a class="help-link" href="/tutorial#tambah-node" target="_blank" rel="noopener" title="Bantuan: Tambah Node Manual">?</a></h3>
+        <div class="inline-form">
+          <input type="text" id="new-node-id" placeholder="mis. S11">
+          <button class="btn-secondary" id="add-node-btn">Tambah</button>
+        </div>
+      </div>
+
+      <div class="subblock">
+        <h3>Tambah / Ubah Link <a class="help-link" href="/tutorial#tambah-link" target="_blank" rel="noopener" title="Bantuan: Tambah / Ubah Link">?</a></h3>
+        <div class="grid-form">
+          <select id="edge-source"></select>
+          <select id="edge-target"></select>
+          <input type="number" id="edge-delay" placeholder="Delay (ms)" min="0.1" step="0.1" value="2">
+          <input type="number" id="edge-bandwidth" placeholder="Bandwidth (Mbps)" min="1" step="1" value="100">
+          <input type="number" id="edge-loss" placeholder="Loss (0-1)" min="0" max="0.99" step="0.001" value="0.001">
+        </div>
+        <button class="btn-secondary full" id="add-edge-btn">Simpan Link</button>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Node <a class="help-link" href="/tutorial#daftar-node-link" target="_blank" rel="noopener" title="Bantuan: Daftar Node &amp; Link">?</a></h3>
+        <div class="chip-list" id="node-list"></div>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Link <a class="help-link" href="/tutorial#daftar-node-link" target="_blank" rel="noopener" title="Bantuan: Daftar Node &amp; Link">?</a></h3>
+        <div class="table-wrap small">
+          <table id="edge-table">
+            <thead><tr><th>Link</th><th>Delay</th><th>BW</th><th>Loss</th><th></th></tr></thead>
+            <tbody id="edge-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <button class="btn-danger full" id="reset-topo-btn">Reset ke Topologi Bawaan</button>
+      <a class="help-link inline" href="/tutorial#reset-topo" target="_blank" rel="noopener" title="Bantuan: Reset Topologi">?</a>
+      <span id="topo-status" class="status"></span>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-col">
+      <section class="panel controls">
+        <div class="field">
+          <label for="source">Source</label>
+          <select id="source"></select>
+        </div>
+        <div class="field">
+          <label for="target">Target</label>
+          <select id="target"></select>
+        </div>
+        <div class="field">
+          <label for="congestion">Kongesti simulasi (0 – 1)</label>
+          <input type="number" id="congestion" min="0" max="1" step="0.1" value="0.0">
+        </div>
+        <div class="field">
+          <label for="seed">Seed acak</label>
+          <input type="number" id="seed" value="42">
+        </div>
+        <button id="run-btn" class="btn-primary">Jalankan Perbandingan</button>
+        <a class="help-link inline" href="/tutorial#kontrol-routing" target="_blank" rel="noopener" title="Bantuan: Panel Kontrol">?</a>
+        <span id="status" class="status"></span>
+      </section>
+
+      <section class="panel">
+        <h2>Algoritma &amp; Parameter <a class="help-link" href="/tutorial#algoritma-routing" target="_blank" rel="noopener" title="Bantuan: Algoritma Routing">?</a></h2>
+        <div class="algo-grid" id="algo-grid"></div>
+      </section>
+
+      <section class="panel" id="results-section" hidden>
+        <h2>Tabel Hasil &amp; QoS <a class="help-link" href="/tutorial#hasil-routing" target="_blank" rel="noopener" title="Bantuan: Tabel Hasil &amp; QoS">?</a></h2>
+        <p class="hint">Klik salah satu baris untuk menyorot jalurnya pada visualisasi topologi.</p>
+        <div class="table-wrap">
+          <table id="results-table">
+            <thead>
+              <tr>
+                <th>Algoritma</th><th>Jalur / Struktur</th><th>Hop</th>
+                <th>Delay (ms)</th><th>Throughput (Mbps)</th><th>Packet Loss (%)</th>
+                <th>Skor QoS</th><th>Kelas QoS</th><th>Runtime (ms)</th><th>Input &amp; Luaran</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+          </table>
+        </div>
+
+        <h2>Riwayat Perbandingan Parameter <a class="help-link" href="/tutorial#riwayat-routing" target="_blank" rel="noopener" title="Bantuan: Riwayat Perbandingan">?</a></h2>
+        <p class="hint">Membandingkan parameter &amp; metrik hasil run saat ini dengan run sebelumnya untuk algoritma yang sama.</p>
+        <div class="table-wrap">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Algoritma</th><th>Waktu Run Sebelumnya</th><th>Parameter Berubah</th>
+                <th>&Delta; Delay (ms)</th><th>&Delta; Hop</th><th>&Delta; Throughput (Mbps)</th>
+                <th>&Delta; Packet Loss (%)</th><th>&Delta; Skor QoS</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+        <button class="btn-secondary" id="clear-history-btn">Bersihkan Riwayat</button>
+
+        <div class="chart-section-head">
+          <h2>Grafik Perbandingan <a class="help-link" href="/tutorial#grafik-routing" target="_blank" rel="noopener" title="Bantuan: Grafik Perbandingan">?</a></h2>
+          <button type="button" class="btn-secondary" id="export-charts-routing-btn">Unduh Semua Grafik (PNG)</button>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Delay (ms) &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="chart-delay">PNG</button></div>
+            <div class="bars" id="chart-delay"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Hop Count &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="chart-hop">PNG</button></div>
+            <div class="bars" id="chart-hop"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Throughput (Mbps, simulasi) &mdash; lebih tinggi lebih baik</h3><button type="button" class="chart-png-btn" data-chart="chart-throughput">PNG</button></div>
+            <div class="bars" id="chart-throughput"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Packet Loss (%, simulasi) &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="chart-loss">PNG</button></div>
+            <div class="bars" id="chart-loss"></div></div>
+          <div class="chart-card full-span">
+            <div class="chart-card-head"><h3>Skor QoS (0-100) &mdash; lebih tinggi lebih baik</h3><button type="button" class="chart-png-btn" data-chart="chart-qos">PNG</button></div>
+            <div class="bars" id="chart-qos"></div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="chart-section-head">
+          <h2>Visualisasi Topologi <a class="help-link" href="/tutorial#visual-routing" target="_blank" rel="noopener" title="Bantuan: Visualisasi Topologi">?</a></h2>
+          <button type="button" class="btn-secondary" id="export-topo-png-btn">Unduh PNG</button>
+        </div>
+        <p class="hint">Seret (drag &amp; drop) node untuk mengubah posisinya &mdash; posisi baru ikut tersimpan pada export/import konfigurasi dan mempengaruhi heuristik jarak algoritma A*.</p>
+        <div id="topo-canvas-wrap"><svg id="topo-svg" viewBox="0 0 640 480"></svg></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= LOAD BALANCING VIEW ================= -->
+  <div class="layout" id="view-lb" hidden>
+    <aside class="panel sidebar">
+      <h2>Simulator Cluster / Grid Komputasi <a class="help-link" href="/tutorial#lb-editor" target="_blank" rel="noopener" title="Bantuan: Editor Cluster">?</a></h2>
+      <p class="topo-meta" id="lb-meta-info">Memuat cluster...</p>
+
+      <div class="subblock">
+        <h3>Bangkitkan Server, Klien &amp; Request <a class="help-link" href="/tutorial#lb-generate" target="_blank" rel="noopener" title="Bantuan: Bangkitkan Cluster">?</a></h3>
+        <div class="grid-form">
+          <div class="labeled-input">
+            <label for="lb-num-servers">Jumlah server</label>
+            <input type="number" id="lb-num-servers" min="1" max="100" step="1" value="6">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-num-clients">Jumlah klien</label>
+            <input type="number" id="lb-num-clients" min="1" max="200" step="1" value="8">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-req-per-client">Request / klien</label>
+            <input type="number" id="lb-req-per-client" min="1" max="200" step="1" value="4">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-seed">Seed</label>
+            <input type="number" id="lb-seed" value="42">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-capacity-min">Kapasitas server min</label>
+            <input type="number" id="lb-capacity-min" min="1" step="1" value="60">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-capacity-max">Kapasitas server maks</label>
+            <input type="number" id="lb-capacity-max" min="1" step="1" value="220">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-demand-min">Beban request min</label>
+            <input type="number" id="lb-demand-min" min="0.1" step="0.1" value="1">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-demand-max">Beban request maks</label>
+            <input type="number" id="lb-demand-max" min="0.1" step="0.1" value="20">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-area-width">Lebar area (m)</label>
+            <input type="number" id="lb-area-width" min="10" step="10" value="1000">
+          </div>
+          <div class="labeled-input">
+            <label for="lb-area-height">Panjang area (m)</label>
+            <input type="number" id="lb-area-height" min="10" step="10" value="1000">
+          </div>
+        </div>
+        <button class="btn-secondary full" id="lb-generate-btn">Bangkitkan Cluster</button>
+        <p class="hint">Server &amp; klien disebar acak pada area (meter); latensi jaringan klien&rarr;server diturunkan dari jarak, mirip delay pada simulator routing.</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Server <a class="help-link" href="/tutorial#lb-daftar" target="_blank" rel="noopener" title="Bantuan: Daftar Server &amp; Klien">?</a></h3>
+        <div class="table-wrap small">
+          <table id="lb-server-table">
+            <thead><tr><th>Server</th><th>Kapasitas</th></tr></thead>
+            <tbody id="lb-server-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Klien <a class="help-link" href="/tutorial#lb-daftar" target="_blank" rel="noopener" title="Bantuan: Daftar Server &amp; Klien">?</a></h3>
+        <div class="chip-list" id="lb-client-list"></div>
+      </div>
+
+      <span id="lb-topo-status" class="status"></span>
+    </aside>
+
+    <main class="main-col">
+      <section class="panel controls">
+        <div class="field">
+          <label for="lb-run-seed">Seed acak (algoritma)</label>
+          <input type="number" id="lb-run-seed" value="42">
+        </div>
+        <button id="lb-run-btn" class="btn-primary">Jalankan Perbandingan</button>
+        <a class="help-link inline" href="/tutorial#kontrol-lb" target="_blank" rel="noopener" title="Bantuan: Panel Kontrol">?</a>
+        <span id="lb-status" class="status"></span>
+      </section>
+
+      <section class="panel">
+        <h2>Algoritma Load Balancing &amp; Parameter <a class="help-link" href="/tutorial#algoritma-lb" target="_blank" rel="noopener" title="Bantuan: Algoritma Load Balancing">?</a></h2>
+        <div class="algo-grid" id="lb-algo-grid"></div>
+      </section>
+
+      <section class="panel" id="lb-results-section" hidden>
+        <h2>Tabel Hasil &amp; QoS <a class="help-link" href="/tutorial#hasil-lb" target="_blank" rel="noopener" title="Bantuan: Tabel Hasil &amp; QoS">?</a></h2>
+        <p class="hint">Klik salah satu baris untuk menyorot beban tiap server pada visualisasi cluster.</p>
+        <div class="table-wrap">
+          <table id="lb-results-table">
+            <thead>
+              <tr>
+                <th>Algoritma</th><th>Beban Maks (%)</th><th>Rata² Response Time (ms)</th>
+                <th>Fairness (Jain)</th><th>Dilayani / Total</th><th>Packet/Request Loss (%)</th>
+                <th>Skor QoS</th><th>Kelas QoS</th><th>Runtime (ms)</th><th>Input &amp; Luaran</th>
+              </tr>
+            </thead>
+            <tbody id="lb-results-body"></tbody>
+          </table>
+        </div>
+
+        <div class="chart-section-head">
+          <h2>Grafik Perbandingan <a class="help-link" href="/tutorial#grafik-lb" target="_blank" rel="noopener" title="Bantuan: Grafik Perbandingan">?</a></h2>
+          <button type="button" class="btn-secondary" id="export-charts-lb-btn">Unduh Semua Grafik (PNG)</button>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Beban Maks Server (%) &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="lb-chart-util">PNG</button></div>
+            <div class="bars" id="lb-chart-util"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Rata&sup2; Response Time (ms) &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="lb-chart-rt">PNG</button></div>
+            <div class="bars" id="lb-chart-rt"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Fairness Index (Jain, 0-1) &mdash; lebih tinggi lebih baik</h3><button type="button" class="chart-png-btn" data-chart="lb-chart-fair">PNG</button></div>
+            <div class="bars" id="lb-chart-fair"></div></div>
+          <div class="chart-card">
+            <div class="chart-card-head"><h3>Request Loss (%) &mdash; lebih rendah lebih baik</h3><button type="button" class="chart-png-btn" data-chart="lb-chart-drop">PNG</button></div>
+            <div class="bars" id="lb-chart-drop"></div></div>
+          <div class="chart-card full-span">
+            <div class="chart-card-head"><h3>Skor QoS (0-100) &mdash; lebih tinggi lebih baik</h3><button type="button" class="chart-png-btn" data-chart="lb-chart-qos">PNG</button></div>
+            <div class="bars" id="lb-chart-qos"></div></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="chart-section-head">
+          <h2>Visualisasi Cluster <a class="help-link" href="/tutorial#visual-lb" target="_blank" rel="noopener" title="Bantuan: Visualisasi Cluster">?</a></h2>
+          <button type="button" class="btn-secondary" id="export-lb-png-btn">Unduh PNG</button>
+        </div>
+        <p class="hint">Ukuran lingkaran server &mdash; kapasitas; warna &mdash; tingkat utilisasi (hijau=aman, kuning=sibuk, merah=overload) untuk hasil algoritma terpilih. Seret (drag &amp; drop) server maupun klien untuk mengubah posisinya &mdash; posisi baru ikut tersimpan pada export/import konfigurasi dan mempengaruhi latensi jaringan (sehingga hasil load balancing ikut menyesuaikan).</p>
+        <div id="lb-canvas-wrap"><svg id="lb-svg" viewBox="0 0 640 480"></svg></div>
+      </section>
+
+      <section class="panel" id="lb-scaling-section" hidden>
+        <h2>Saran Auto-Scaling Server <a class="help-link" href="/tutorial#lb-scaling" target="_blank" rel="noopener" title="Bantuan: Saran Auto-Scaling Server">?</a></h2>
+        <p class="hint">Server dengan utilisasi tinggi pada hasil algoritma terpilih diberi saran scale up: <strong>Scale Up (Vertical)</strong> &mdash; naikkan kapasitas server &mdash; saat sibuk (&ge;80%) namun belum ada request ditolak; <strong>Scale Out (Horizontal)</strong> &mdash; tambah instance server &mdash; saat sudah overload (&ge;100%, request mulai ditolak).</p>
+        <div class="lb-log-list" id="lb-scaling-list"></div>
+      </section>
+
+      <section class="panel" id="lb-log-section" hidden>
+        <h2>Log Klien &amp; Server yang Melayani <a class="help-link" href="/tutorial#log-lb" target="_blank" rel="noopener" title="Bantuan: Log Klien &amp; Server">?</a></h2>
+        <p class="hint">Untuk algoritma terpilih pada tabel hasil: jumlah request &amp; total beban tiap klien, serta server mana saja yang menanganinya.</p>
+        <div class="lb-log-list" id="lb-log-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============= INTRUSION DETECTION SIMULATION VIEW ============= -->
+  <div class="layout" id="view-ids" hidden>
+    <aside class="panel sidebar">
+      <h2>Simulator Topologi Server &amp; Client</h2>
+      <p class="topo-meta" id="ids-meta-info">Memuat topologi...</p>
+
+      <div class="subblock">
+        <h3>Bangkitkan Server &amp; Client</h3>
+        <div class="grid-form">
+          <div class="labeled-input">
+            <label for="ids-num-servers">Jumlah server</label>
+            <input type="number" id="ids-num-servers" min="1" max="30" step="1" value="4">
+          </div>
+          <div class="labeled-input">
+            <label for="ids-num-clients">Jumlah client</label>
+            <input type="number" id="ids-num-clients" min="1" max="300" step="1" value="20">
+          </div>
+          <div class="labeled-input">
+            <label for="ids-attacker-ratio">Proporsi client penyerang (%)</label>
+            <input type="number" id="ids-attacker-ratio" min="0" max="100" step="5" value="25">
+          </div>
+          <div class="labeled-input">
+            <label for="ids-topo-seed">Seed topologi</label>
+            <input type="number" id="ids-topo-seed" value="42">
+          </div>
+          <div class="labeled-input">
+            <label for="ids-area-width">Lebar area (m)</label>
+            <input type="number" id="ids-area-width" min="10" step="10" value="1000">
+          </div>
+          <div class="labeled-input">
+            <label for="ids-area-height">Panjang area (m)</label>
+            <input type="number" id="ids-area-height" min="10" step="10" value="1000">
+          </div>
+        </div>
+        <button class="btn-secondary full" id="ids-generate-btn">Bangkitkan Topologi</button>
+        <p class="hint">Client umum (normal) &amp; client penyerang disebar acak pada area dengan proporsi yang dapat diatur; tiap client mengirim traffic ke salah satu server (dipilih acak).</p>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Server</h3>
+        <div class="chip-list" id="ids-server-list"></div>
+      </div>
+
+      <div class="subblock">
+        <h3>Daftar Client</h3>
+        <div class="chip-list" id="ids-client-list"></div>
+      </div>
+
+      <span id="ids-topo-status" class="status"></span>
+    </aside>
+
+    <main class="main-col">
+      <section class="panel controls">
+        <div class="field">
+          <label for="ids-flows-per-client">Flow per client</label>
+          <input type="number" id="ids-flows-per-client" min="1" max="50" step="1" value="6">
+        </div>
+        <div class="field">
+          <label for="ids-run-seed">Seed acak traffic</label>
+          <input type="number" id="ids-run-seed" value="42">
+        </div>
+        <button id="ids-run-btn" class="btn-primary">Jalankan Simulasi Deteksi</button>
+        <span id="ids-status" class="status"></span>
+      </section>
+
+      <section class="panel">
+        <h2>Jenis Intrusion &amp; Potensi</h2>
+        <p class="hint">Centang jenis intrusion yang ingin disimulasikan &amp; dideteksi, lalu atur potensi/intensitasnya (0-100%). Traffic dari client penyerang dibangkitkan sesuai jenis &amp; potensi yang dicentang (dibobot); bila tidak ada yang dicentang, seluruh traffic (termasuk dari client penyerang) dianggap normal.</p>
+        <div class="algo-grid" id="ids-attack-grid"></div>
+      </section>
+
+      <section class="panel" id="ids-results-section" hidden>
+        <h2>Ringkasan Deteksi per Jenis Traffic</h2>
+        <div class="table-wrap">
+          <table id="ids-summary-table">
+            <thead>
+              <tr><th>Label</th><th>Jumlah Flow</th><th>Terdeteksi</th><th>Detection Rate (%)</th><th>Rata&sup2; Severity</th><th>Fitur Kunci (Rata&sup2;)</th></tr>
+            </thead>
+            <tbody id="ids-summary-body"></tbody>
+          </table>
+        </div>
+
+        <h2>Confusion Matrix &amp; Skor Deteksi</h2>
+        <p class="hint">Intrusion diperlakukan sebagai kelas positif: TP = intrusion terdeteksi, FN = intrusion lolos, FP = traffic normal salah ditandai intrusion (false alarm), TN = traffic normal benar tidak ditandai.</p>
+        <div class="ids-confusion-wrap">
+          <table id="ids-confusion-table" class="ids-confusion">
+            <tbody>
+              <tr><th></th><th>Diprediksi Intrusion</th><th>Diprediksi Normal</th></tr>
+              <tr><th>Sebenarnya Intrusion</th><td id="ids-cm-tp"></td><td id="ids-cm-fn"></td></tr>
+              <tr><th>Sebenarnya Normal</th><td id="ids-cm-fp"></td><td id="ids-cm-tn"></td></tr>
+            </tbody>
+          </table>
+          <div class="kv-list" id="ids-score-kv"></div>
+        </div>
+
+        <h2>Grafik Perbandingan Jenis Traffic</h2>
+        <div class="chart-grid">
+          <div class="chart-card"><h3>Jumlah Flow per Label</h3><div class="bars" id="ids-chart-count"></div></div>
+          <div class="chart-card"><h3>Detection Rate (%) per Label</h3><div class="bars" id="ids-chart-detect"></div></div>
+          <div class="chart-card full-span"><h3>Rata&sup2; Severity per Label (0-1)</h3><div class="bars" id="ids-chart-severity"></div></div>
+        </div>
+
+        <div id="ids-linechart-section" hidden>
+          <h2>Perbandingan Variabel: Normal vs Serangan</h2>
+          <p class="hint">Kurva menunjukkan sebaran nilai fitur (diurutkan naik, sumbu-x = persentil sampel) untuk membandingkan traffic normal dengan traffic tiap jenis intrusion yang dicentang &mdash; makin jauh &amp; makin curam jarak kedua kurva, makin kuat variabel tsb membedakan serangan dari traffic normal (sesuai fitur kunci per jenis intrusion).</p>
+          <div id="ids-linechart-body"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Visualisasi Jaringan (Server &amp; Client)</h2>
+        <p class="hint">Kotak = server (warna &mdash; tekanan traffic berbahaya yang diterima: hijau=aman, kuning=waspada, merah=tinggi); lingkaran = client (biru = normal, warna lain sesuai jenis intrusion dominan bila client tsb penyerang). Garis menghubungkan tiap client ke server tujuan traffic terbanyaknya.</p>
+        <div class="ids-legend" id="ids-legend"></div>
+        <div id="ids-canvas-wrap"><svg id="ids-svg" viewBox="0 0 640 480"></svg></div>
+      </section>
+
+      <section class="panel" id="ids-log-section" hidden>
+        <h2>Contoh Log Flow</h2>
+        <p class="hint" id="ids-log-hint"></p>
+        <div class="table-wrap">
+          <table id="ids-log-table">
+            <thead><tr><th>Client</th><th>Peran</th><th>Server</th><th>Label Sebenarnya</th><th>Severity</th><th>Terdeteksi</th><th>Confidence</th><th>Detail</th></tr></thead>
+            <tbody id="ids-log-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="detail-modal" class="modal-overlay" hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-head-title">
+          <h3 id="detail-modal-title">Detail Algoritma</h3>
+          <a class="help-link" href="/tutorial#modal-detail" target="_blank" rel="noopener" title="Bantuan: Jendela Detail Algoritma">?</a>
+        </span>
+        <button id="detail-modal-close" class="icon-btn" title="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>Parameter Input</h4>
+        <div class="kv-list" id="detail-params"></div>
+        <h4>Luaran Proses Optimasi</h4>
+        <div class="kv-list" id="detail-meta"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ids-detail-modal" class="modal-overlay" hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="modal-head-title">
+          <h3 id="ids-detail-modal-title">Detail Flow</h3>
+          <a class="help-link" href="/tutorial#modal-detail" target="_blank" rel="noopener" title="Bantuan: Jendela Detail Flow">?</a>
+        </span>
+        <button id="ids-detail-modal-close" class="icon-btn" title="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>Ringkasan</h4>
+        <div class="kv-list" id="ids-detail-summary"></div>
+        <h4>Fitur Trafik (gaya NSL-KDD)</h4>
+        <div class="kv-list" id="ids-detail-features"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p style="text-align:center;">Developed by Wirarama Wedashwara 2026</p>
+  </footer>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

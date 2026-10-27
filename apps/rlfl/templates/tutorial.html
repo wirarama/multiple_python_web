@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan FedNet Edu</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+  .doc { max-width: 920px; margin: 0 auto; }
+  .doc h2 { font-size: 18px; margin: 0 0 10px; }
+  .doc h3 { font-size: 14px; margin: 16px 0 6px; }
+  .doc p, .doc li { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+  .doc b, .doc strong { color: var(--text-primary); }
+  .doc .formula { background: var(--surface-2); border-radius: 8px; padding: 10px 14px; font-family: ui-monospace, Consolas, monospace; font-size: 13px; color: var(--text-primary); overflow-x: auto; }
+  .doc table { margin: 8px 0; }
+  .doc td, .doc th { white-space: normal; font-size: 13px; }
+  .toc { columns: 2; font-size: 13px; }
+  .toc a { color: var(--series-1); text-decoration: none; }
+  .doc svg { width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<div class="app doc">
+  <header class="app-header">
+    <h1>Panduan FedNet Edu</h1>
+    <p class="subtitle">Federated Learning &amp; Federated Reinforcement Learning untuk optimasi jalur jaringan &mdash; konsep, cara pakai, dan ide praktikum.</p>
+    <a class="tutorial-link" href="/">&larr; Kembali ke simulator</a>
+  </header>
+
+  <section class="panel">
+    <h2>Daftar isi</h2>
+    <ul class="toc">
+      <li><a href="#konsep">1. Konsep federated learning</a></li>
+      <li><a href="#skenario">2. Skenario jaringan yang disimulasikan</a></li>
+      <li><a href="#simulator">3. Simulator jaringan &amp; region</a></li>
+      <li><a href="#klien">4. Profil trafik klien</a></li>
+      <li><a href="#data">5. Data trafik lokal (non-IID)</a></li>
+      <li><a href="#fl-supervised">6. Mode 1: FL prediksi delay</a></li>
+      <li><a href="#fl-qrouting">7. Mode 2: Federated Q-Routing</a></li>
+      <li><a href="#hasil">8. Membaca hasil</a></li>
+      <li><a href="#jalur">9. Visualisasi jalur lokal &amp; global</a></li>
+      <li><a href="#rl-reward">9b. RL: fungsi reward plus/minus</a></li>
+      <li><a href="#rl-langkah">9c. RL: routing per langkah</a></li>
+      <li><a href="#unduh">10. Script Python standalone</a></li>
+      <li><a href="#csv">11. Format CSV</a></li>
+      <li><a href="#praktikum">12. Ide praktikum</a></li>
+    </ul>
+  </section>
+
+  <section class="panel" id="konsep">
+    <h2>1. Konsep federated learning</h2>
+    <p><b>Federated learning (FL)</b> melatih satu model bersama dari data yang tersebar di banyak pihak (<i>klien</i>) <b>tanpa memindahkan data mentah</b>. Tiap klien melatih model di datanya sendiri, lalu hanya mengirim bobot model ke server. Server menggabungkan bobot tsb menjadi <b>model global</b> dan mengirimkannya kembali. Satu siklus ini disebut <b>ronde komunikasi</b>.</p>
+    <svg viewBox="0 0 760 170" role="img" aria-label="Siklus federated learning">
+      <rect x="300" y="10" width="160" height="44" rx="8" fill="#fbd3e6" stroke="#d6006f"/>
+      <text x="380" y="30" text-anchor="middle" font-size="13" font-weight="600">Server agregasi</text>
+      <text x="380" y="46" text-anchor="middle" font-size="11">w = &Sigma; (n_k/n) w_k</text>
+      <g font-size="12" text-anchor="middle">
+        <rect x="40" y="110" width="150" height="44" rx="8" fill="#fde3d6" stroke="#e8743b"/><text x="115" y="130">Klien C1 (Region 1)</text><text x="115" y="146" font-size="10">data lokal &rarr; w_1</text>
+        <rect x="230" y="110" width="150" height="44" rx="8" fill="#d7f3e8" stroke="#1baf7a"/><text x="305" y="130">Klien C2</text><text x="305" y="146" font-size="10">data lokal &rarr; w_2</text>
+        <rect x="420" y="110" width="150" height="44" rx="8" fill="#ecdcf8" stroke="#a259d9"/><text x="495" y="130">Klien C3</text><text x="495" y="146" font-size="10">data lokal &rarr; w_3</text>
+        <rect x="610" y="110" width="120" height="44" rx="8" fill="#fbe9c6" stroke="#c98500"/><text x="670" y="130">Klien Ck</text><text x="670" y="146" font-size="10">&hellip;</text>
+      </g>
+      <g stroke="#85847e" stroke-width="1.4" fill="none">
+        <path d="M330 54 L130 108"/><path d="M360 54 L310 108"/><path d="M400 54 L490 108"/><path d="M430 54 L660 108"/>
+      </g>
+      <text x="220" y="78" font-size="11" fill="#52514e">1. kirim model global</text>
+      <text x="470" y="78" font-size="11" fill="#52514e">3. kirim bobot lokal (bukan data)</text>
+      <text x="380" y="168" text-anchor="middle" font-size="11" fill="#52514e">2. latih beberapa epoch di data lokal &middot; 4. agregasi &rarr; ulangi</text>
+    </svg>
+    <h3>FedAvg (McMahan dkk., 2017)</h3>
+    <div class="formula">w<sup>t+1</sup> = &Sigma;<sub>k&isin;S<sub>t</sub></sub> (n<sub>k</sub> / n) &middot; w<sub>k</sub><sup>t+1</sup> &nbsp;&nbsp; dengan w<sub>k</sub><sup>t+1</sup> = hasil E epoch SGD lokal mulai dari w<sup>t</sup></div>
+    <h3>Tantangan utama: data non-IID</h3>
+    <p>Data tiap klien tidak berdistribusi sama (non-IID). Di aplikasi ini, region sepi hanya melihat link dengan utilisasi rendah, sehingga model lokalnya <b>tidak pernah belajar</b> bagaimana delay melonjak saat link macet. FL menggabungkan pengetahuan region sepi dan region padat.</p>
+    <h3>Variasi agregasi yang tersedia</h3>
+    <ul>
+      <li><b>FedProx</b>: menambah term &mu;/2&middot;||w &minus; w<sup>t</sup>||&sup2; pada loss lokal agar model lokal tidak "melenceng" terlalu jauh pada data non-IID.</li>
+      <li><b>FedMedian</b> dan <b>Trimmed Mean</b>: agregasi robust terhadap klien yang mengirim bobot ekstrem (mis. klien rusak / berbahaya).</li>
+      <li><b>Differential Privacy (DP)</b>: update klien di-<i>clip</i> lalu ditambah noise Gaussian &mdash; privasi meningkat, akurasi menurun (trade-off).</li>
+      <li><b>Fraksi klien</b> &amp; <b>peluang gagal kirim</b>: mensimulasikan partisipasi parsial dan straggler.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="skenario">
+    <h2>2. Skenario jaringan yang disimulasikan</h2>
+    <p>Jaringan dibagi menjadi beberapa <b>region</b>, masing-masing dikelola satu klien (mis. controller SDN lokal / ISP regional). Setiap klien hanya bisa mengukur link di region-nya (link perbatasan diukur kedua region). Tujuan bersama: memilih <b>jalur ber-delay minimum</b> antar node mana pun di jaringan.</p>
+    <p>Delay "sebenarnya" sebuah link pada utilisasi &rho; mengikuti model antrian (mirip M/M/1):</p>
+    <div class="formula">delay = delay_dasar + Q &middot; (12 / bandwidth) &middot; &rho; / (1 &minus; &rho;) + loss &middot; RTO &nbsp;&nbsp;(Q = 8, RTO = 200 ms)</div>
+    <p>Model ML <b>tidak diberi tahu</b> rumus ini; ia harus mempelajarinya dari pengukuran (utilisasi, bandwidth, delay dasar, loss &rarr; delay). Jalur optimal (<b>oracle</b>) dihitung dengan Dijkstra pada delay sebenarnya di saat evaluasi (snapshot), sebagai acuan.</p>
+  </section>
+
+  <section class="panel" id="simulator">
+    <h2>3. Simulator jaringan &amp; region</h2>
+    <ul>
+      <li><b>Bangkitkan Topologi Acak</b>: atur jumlah node, k tetangga terdekat, luas wilayah, jumlah klien, seed. Delay dasar link diturunkan dari jarak.</li>
+      <li><b>Bagi Ulang Region</b>: mengelompokkan ulang node ke region dengan k-means posisi tanpa mengubah link.</li>
+      <li><b>Tambah node / link</b>, ubah bandwidth, loss, dan <i>bobot trafik</i> (link populer = bobot &gt; 1). Klik baris link untuk mengisi form.</li>
+      <li><b>Daftar node</b>: pindahkan node ke region lain melalui dropdown. <b>Seret node</b> pada peta untuk mengubah posisi (jarak &amp; delay dasar dihitung ulang).</li>
+      <li id="peta"><b>Peta jaringan</b>: warna node = region; setelah data dibangkitkan, warna link = utilisasi saat evaluasi (hijau sepi &rarr; merah macet).</li>
+    </ul>
+    <p>Setiap perubahan topologi/klien otomatis mereset data trafik dan hasil lama.</p>
+  </section>
+
+  <section class="panel" id="klien">
+    <h2>4. Profil trafik klien</h2>
+    <table>
+      <tr><th>Kolom</th><th>Arti</th></tr>
+      <tr><td>Intensitas</td><td>Rata-rata utilisasi link di region (0.25 = sepi, 0.85 = padat). Perbedaan intensitas = sumber utama non-IID.</td></tr>
+      <tr><td>Burst</td><td>Simpangan baku fluktuasi acak utilisasi.</td></tr>
+      <tr><td>Puncak</td><td>Jam puncak trafik harian (pola sinus 24 jam).</td></tr>
+      <tr><td>Lokal</td><td>(Q-routing) peluang paket dari region ini bertujuan ke node di region sendiri.</td></tr>
+    </table>
+  </section>
+
+  <section class="panel" id="data">
+    <h2>5. Data trafik lokal (non-IID)</h2>
+    <p>Untuk tiap jam t (sebanyak <i>langkah waktu</i>), tiap klien mengukur utilisasi dan delay pada link yang dapat ia amati. Data dibagi menjadi latih/uji. <b>Jam evaluasi routing</b> menentukan snapshot kondisi jaringan untuk membandingkan jalur. Tabel statistik dan histogram mini memperlihatkan rentang utilisasi yang dilihat tiap klien.</p>
+  </section>
+
+  <section class="panel" id="fl-supervised">
+    <h2>6. Mode 1 &mdash; Federated Learning prediksi delay link</h2>
+    <ol>
+      <li><b>Standarisasi federated</b>: klien hanya mengirim jumlah, jumlah dan jumlah kuadrat fitur (bukan data) untuk menghitung mean/std global.</li>
+      <li>Tiap ronde: server memilih klien &rarr; klien melatih MLP numpy (atau regresi linear) selama E epoch &rarr; (opsional DP) &rarr; server mengagregasi.</li>
+      <li>Model memprediksi delay <b>seluruh</b> link pada snapshot &rarr; Dijkstra pada delay prediksi &rarr; tabel next-hop &rarr; jalur.</li>
+      <li>Pembanding: <b>Lokal-saja</b> (tiap klien melatih sendiri dengan jumlah epoch setara R&times;E), <b>Terpusat</b> (semua data digabung &mdash; batas atas), <b>Oracle</b>.</li>
+    </ol>
+    <p>Target model adalah log(1 + delay) agar lonjakan delay saat macet tetap bisa dipelajari.</p>
+  </section>
+
+  <section class="panel" id="fl-qrouting">
+    <h2>7. Mode 2 &mdash; Federated Reinforcement Learning (Q-Routing)</h2>
+    <p>Tiap klien adalah agen <b>Q-Routing</b> (Boyan &amp; Littman, 1994). Q<sub>x</sub>(d, y) = estimasi delay bila paket di node x menuju d diteruskan ke tetangga y.</p>
+    <div class="formula">Q<sub>x</sub>(d,y) &larr; Q<sub>x</sub>(d,y) + &alpha; [ c(x,y) + min<sub>z</sub> Q<sub>y</sub>(d,z) &minus; Q<sub>x</sub>(d,y) ]</div>
+    <p>Agen hanya mengalami paket yang <b>berasal dari region-nya</b>, sehingga ia hanya mengenal sebagian state (node, tujuan). Tiap ronde server menggabungkan tabel-Q: <b>rata-rata berbobot jumlah kunjungan</b> (entri hanya dipengaruhi agen yang pernah mengalaminya) atau FedAvg biasa. Kebijakan routing = memilih tetangga dengan Q terkecil (greedy). Kegagalan (loop) menunjukkan agen belum mengenal rute tsb.</p>
+  </section>
+
+  <section class="panel" id="hasil">
+    <h2>8. Membaca hasil</h2>
+    <ul>
+      <li><b>Akurasi</b>: persentase prediksi delay dengan |error| &le; toleransi &times; delay sebenarnya, pada data uji gabungan semua klien.</li>
+      <li><b>Akurasi data sendiri</b>: model lokal sering tampak baik di datanya sendiri, tetapi buruk di data klien lain (efek non-IID).</li>
+      <li><b>MAE per beban</b>: perhatikan kelompok utilisasi tinggi &mdash; di sinilah model lokal region sepi gagal.</li>
+      <li><b>Gap jalur</b>: rata-rata (delay jalur model &minus; delay jalur optimal) / delay optimal. <b>Jalur optimal %</b>: proporsi pasangan yang jalurnya sama persis dengan oracle.</li>
+      <li><b>Komunikasi</b>: byte yang dikirim (parameter &times; 4 byte &times; klien) &mdash; biaya FL dibanding mengirim data mentah.</li>
+      <li><b>Log ronde</b>: klien terpilih, klien gagal kirim, loss dan metrik global tiap ronde.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="jalur">
+    <h2>9. Visualisasi jalur lokal &amp; global</h2>
+    <p>Pilih source dan target: setiap kartu menampilkan jalur yang dioptimasi oleh <b>oracle</b>, <b>model global</b>, <b>model terpusat</b>, dan <b>model lokal tiap klien</b>. Geser slider ronde (atau tekan <i>Putar</i>) untuk melihat jalur model global berubah dari ronde ke ronde hingga mendekati optimal. Pada mode 1, centang <i>warnai link dengan delay yang dipakai model</i> untuk melihat bagaimana tiap model "memandang" kondisi jaringan (biru = cepat, merah = lambat). Tombol PNG menghasilkan gambar matplotlib yang sama dengan script 03.</p>
+  </section>
+
+  <section class="panel" id="rl-reward">
+    <h2>9b. Tab Reinforcement Learning &mdash; fungsi reward plus &amp; minus</h2>
+    <p>Tab ini fokus pada <b>reinforcement learning murni</b> (tanpa federasi) agar mekanisme reward mudah dipahami. Satu agen Q-learning belajar merutekan paket dari <b>source</b> ke <b>target</b>. State = node tempat paket berada, aksi = tetangga berikutnya.</p>
+    <table>
+      <tr><th>Komponen</th><th>Tanda</th><th>Rumus</th><th>Tujuan desain</th></tr>
+      <tr><td>Tiba di target</td><td>+</td><td>reward_goal (sekali, saat tiba)</td><td>Tujuan akhir episode</td></tr>
+      <tr><td>Kemajuan</td><td>&plusmn;</td><td>w_progress &times; (hop<sub>ke target</sub>(x) &minus; hop<sub>ke target</sub>(y))</td><td><i>Reward shaping</i>: + bila mendekat, &minus; bila menjauh, mempercepat belajar</td></tr>
+      <tr><td>Delay</td><td>&minus;</td><td>w_delay &times; delay link (ms)</td><td>Tujuan utama optimasi: delay minimum</td></tr>
+      <tr><td>Biaya hop</td><td>&minus;</td><td>hop_penalty per langkah</td><td>Mendorong jalur pendek</td></tr>
+      <tr><td>Loop</td><td>&minus;</td><td>loop_penalty bila node dikunjungi ulang</td><td>Mencegah paket berputar-putar</td></tr>
+      <tr><td>Kongesti</td><td>&minus;</td><td>congestion_penalty &times; (util &minus; ambang)/(1 &minus; ambang)</td><td>Menghindari link padat</td></tr>
+      <tr><td>Timeout</td><td>&minus;</td><td>timeout_penalty bila batas hop habis</td><td>Menghukum kegagalan mengantar</td></tr>
+    </table>
+    <div class="formula">Q(s,a) &larr; Q(s,a) + &alpha; [ r + &gamma; &middot; max<sub>a'</sub> Q(s',a') &minus; Q(s,a) ]</div>
+    <p>Grafik <b>reward per episode</b> menampilkan jumlah reward positif (hijau) dan negatif (merah) tiap episode. Di awal, eksplorasi tinggi (&epsilon; besar) sehingga paket sering berputar &rarr; hukuman loop/delay/timeout besar. Seiring &epsilon; turun dan Q terisi, total reward naik dan stabil. Klik sebuah episode untuk membukanya di pemutar langkah.</p>
+  </section>
+
+  <section class="panel" id="rl-langkah">
+    <h2>9c. Routing per langkah &amp; reward</h2>
+    <ul>
+      <li>Pilih <b>Kebijakan akhir</b> (greedy, Q tertinggi), <b>Jalur delay minimum</b> (pembanding Dijkstra yang dinilai dengan fungsi reward yang sama), atau <b>Episode pelatihan ke-n</b>.</li>
+      <li>Tombol &#9198; &#9664; &#9654; &#9197; / Putar menelusuri langkah demi langkah. Pada peta: segmen hijau = reward langkah positif, merah = negatif; lingkaran magenta = posisi paket; garis putus-putus = pilihan tetangga berikutnya beserta nilai Q-nya (magenta = yang dipilih).</li>
+      <li>Kartu penjelasan menguraikan setiap komponen reward langkah tsb, total <b>r</b>, return kumulatif, serta perhitungan update Q dengan angka sebenarnya. Badge menunjukkan apakah aksi dipilih karena <b>eksplorasi</b> (acak) atau <b>eksploitasi</b> (Q tertinggi).</li>
+      <li>Grafik batang bertumpuk memperlihatkan komponen + (di atas nol) dan &minus; (di bawah nol) per langkah dengan garis return kumulatif; tabel di bawahnya dapat diklik.</li>
+      <li>Diskusi: bila jalur agen berbeda dari jalur delay minimum padahal reward-nya lebih tinggi, fungsi reward (mis. penalti hop atau kongesti) &ldquo;menarik&rdquo; agen ke tujuan lain &mdash; contoh nyata pentingnya desain reward.</li>
+    </ul>
+  </section>
+
+  <section class="panel" id="unduh">
+    <h2>10. Script Python standalone</h2>
+    <p>Tab <b>Unduh Script &amp; Data Python</b> menyediakan setiap file secara terpisah atau dalam satu ZIP. Script tidak membutuhkan aplikasi ini dan menghasilkan angka identik (engine &amp; seed sama).</p>
+    <table>
+      <tr><th>File</th><th>Masukan &rarr; Keluaran</th></tr>
+      <tr><td>01_data_jaringan.py</td><td>data/nodes.csv, links.csv, clients.csv + config &rarr; data/measurements.csv, data/snapshot.csv (opsi <code>--generate</code> membuat topologi baru)</td></tr>
+      <tr><td>02_federated_learning.py</td><td>data + config/fl_config.json &rarr; results/&lt;mode&gt;/round_metrics.csv, model_summary.csv, paths.csv, routing_tables.csv, link_weights.csv, summary.json</td></tr>
+      <tr><td>03_visualisasi.py</td><td>results &rarr; fig_paths_*.png, fig_global_evolution_*.png, fig_learning_curves.png, fig_model_comparison.png, fig_link_weights.png, fig_data_distribution.png</td></tr>
+      <tr><td>04_reinforcement_learning.py</td><td>data + config (bagian <code>rl</code>) &rarr; results/rl/episodes.csv, steps.csv (reward tiap komponen tiap langkah), q_table.csv, greedy_vs_optimal.csv, fig_rl_*.png (opsi <code>--episode n</code>)</td></tr>
+      <tr><td>run_all.py</td><td>menjalankan 01 &rarr; 02 &rarr; 03 &rarr; 04</td></tr>
+    </table>
+    <div class="formula">pip install -r requirements.txt<br>python run_all.py --mode both --source N1 --target N24</div>
+    <p id="konfigurasi"><b>Export/Import Konfigurasi (JSON)</b> pada bilah atas menyimpan seluruh topologi + parameter, berguna untuk membagikan skenario praktikum ke mahasiswa.</p>
+  </section>
+
+  <section class="panel" id="csv">
+    <h2>11. Format CSV</h2>
+    <div class="formula">nodes.csv   : node_id,x,y,region<br>links.csv   : link_id,source,target,distance_m,base_delay_ms,bandwidth_mbps,loss,traffic_weight<br>clients.csv : client_id,name,traffic_intensity,burstiness,peak_hour,dest_locality,color</div>
+    <p>Ketiga file dapat diedit (Excel / teks) lalu diimpor kembali melalui tombol <b>Import nodes / links / clients CSV</b> (pilih ketiganya sekaligus), atau langsung dipakai oleh script 01.</p>
+  </section>
+
+  <section class="panel" id="praktikum">
+    <h2>12. Ide praktikum</h2>
+    <ol>
+      <li><b>IID vs non-IID</b>: samakan intensitas semua klien (mis. 0.6) lalu bandingkan selisih global vs lokal dengan kondisi intensitas berbeda-beda.</li>
+      <li><b>Jumlah ronde vs epoch lokal</b>: ronde sedikit &times; epoch banyak vs sebaliknya &mdash; amati akurasi dan biaya komunikasi.</li>
+      <li><b>FedAvg vs FedProx</b> pada data sangat non-IID (intensitas 0.1 vs 1.0).</li>
+      <li><b>Partisipasi parsial</b>: fraksi klien 0.5 dan peluang gagal 0.3 &mdash; kurva menjadi bergerigi?</li>
+      <li><b>Privasi</b>: DP clip 1.0, noise 0.02 / 0.05 / 0.1 &mdash; buat grafik akurasi vs noise.</li>
+      <li><b>MLP vs linear</b>: mengapa model linear gagal memprediksi delay saat macet, dan apa dampaknya pada jalur?</li>
+      <li><b>Desain reward (tab RL)</b>: set bobot kemajuan = 0, lalu bandingkan episode pertama tiba di target; naikkan hukuman kongesti menjadi 200 dan amati jalur agen menghindari link merah.</li>
+      <li><b>Q-Routing</b>: ubah <i>Lokal</i> (dest_locality) menjadi 0.9 &mdash; cakupan agen lokal menurun, manfaat federasi makin terlihat.</li>
+    </ol>
+  </section>
+
+  <footer class="app-footer"><p style="text-align:center;">Developed by Wirarama Wedashwara 2026 &middot; Universitas Mataram</p></footer>
+</div>
+</body>
+</html>

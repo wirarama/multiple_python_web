@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="margin-bottom:14px">
+  <h3><span data-i18n="transfer">Ekspor &amp; Impor Konfigurasi</span></h3>
+  <div class="body">
+    <p class="small muted" data-i18n="transfer_help">
+      Seluruh isi rumah — kamar, komponen, grup instalasi, pengkabelan, aturan, dan penghuni —
+      dapat disimpan ke satu berkas JSON dan dimuat kembali kapan saja.</p>
+    <div class="row" style="margin-top:10px">
+      <button class="primary" id="btnExport" data-i18n="export_json">Ekspor JSON</button>
+      <button id="btnImport" data-i18n="import_json">Impor JSON</button>
+      <input type="file" id="fileImport" accept="application/json,.json" style="display:none">
+      <span class="spacer"></span>
+      <span class="badge" id="caseCount">-</span>
+    </div>
+  </div>
+</div>
+
+<div id="caseGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px"></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/cases.js') }}"></script>
+{% endblock %}

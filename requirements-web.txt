@@ -1,0 +1,22 @@
+# Dependensi server gabungan: portal + 4 aplikasi Flask (sdn, smarthome, rlfl, pyspark)
+
+# --- server gabungan (portal + 4 aplikasi Flask) ---
+Flask>=3.0,<4
+Werkzeug>=3.0
+# server WSGI: gunicorn di Linux (run.sh), waitress di Windows (run.bat)
+gunicorn>=22.0 ; platform_system != "Windows"
+waitress>=3.0 ; platform_system == "Windows"
+
+# sdn
+networkx>=3.1
+openpyxl>=3.1
+
+# smarthome
+Flask-SQLAlchemy>=3.1
+
+# rlfl
+numpy>=1.24
+matplotlib>=3.7
+
+# pyspark (aplikasi hanya membangkitkan script; pyspark tidak perlu terpasang)
+pandas>=2.0

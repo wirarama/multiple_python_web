@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Simulator Smart Home{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>&#9889;</text></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <span class="logo">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+      </span>
+      <span><span data-i18n="app">Simulator Smart Home</span>
+        <small data-i18n="app_sub">Denah rumah, instalasi listrik &amp; otomasi</small></span>
+    </div>
+    <nav class="tabs">
+      <a href="/" class="{{ 'active' if page=='simulator' }}" data-i18n="nav_sim">Simulator</a>
+      <a href="/komponen" class="{{ 'active' if page=='komponen' }}" data-i18n="nav_comp">Komponen</a>
+      <a href="/rule" class="{{ 'active' if page=='rule' }}" data-i18n="nav_rule">Rule</a>
+      <a href="/laporan" class="{{ 'active' if page=='laporan' }}" data-i18n="nav_rep">Laporan</a>
+      <a href="/kasus" class="{{ 'active' if page=='kasus' }}" data-i18n="nav_case">Studi Kasus</a>
+      <a href="/panduan" class="{{ 'active' if page=='panduan' }}" data-i18n="nav_help">Panduan</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="row">
+      <span class="badge mono" id="clockBadge">--:--</span>
+      <span class="badge" id="todBadge">-</span>
+      <span class="badge" id="wxBadge">-</span>
+      <button class="sm" id="langBtn" data-i18n-title="lang" title="Bahasa">ID</button>
+      <button class="sm icon" id="themeBtn" data-i18n-title="theme" title="Tema">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="wrap">{% block content %}{% endblock %}</div>
+<div class="toast" id="toast"></div>
+<script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icons.js') }}"></script>
+<script src="{{ url_for('static', filename='js/api.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

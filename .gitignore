@@ -1,0 +1,24 @@
+# --- virtual environment (dibuat ulang oleh setup.sh di setiap server) ---
+.venv/
+venv/
+env/
+
+# --- konfigurasi & runtime lokal ---
+config.env
+logs/
+run/
+
+# --- data runtime aplikasi ---
+apps/smarthome/instance/
+*.db
+apps/sdn/data/_uploaded_topology.json
+apps/pyspark/uploads/*
+!apps/pyspark/uploads/.gitkeep
+
+# --- cache ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.DS_Store
+Thumbs.db

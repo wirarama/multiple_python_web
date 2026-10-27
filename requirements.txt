@@ -1,0 +1,5 @@
+# Semua dependensi (dipakai setup.sh). Pisahan:
+#   requirements-web.txt        -> portal + aplikasi Flask
+#   requirements-datamining.txt -> Streamlit Data Mining UI
+-r requirements-web.txt
+-r requirements-datamining.txt

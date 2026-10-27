@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="layout" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr)">
+  <div class="col">
+    <div class="card">
+      <h3><span data-i18n="comp_devices">Perangkat Elektronik</span><span class="spacer"></span>
+        <span class="badge" id="cntDev">0</span></h3>
+      <div class="scroll tall"><table class="tbl" id="tblDev"></table></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="comp_switches">Saklar &amp; Sensor</span><span class="spacer"></span>
+        <span class="badge" id="cntSw">0</span></h3>
+      <div class="scroll tall"><table class="tbl" id="tblSw"></table></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="comp_sources">Sumber Listrik</span></h3>
+      <div class="scroll"><table class="tbl" id="tblSrc"></table></div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="circuits">Grup Instalasi (MCB)</span></h3>
+      <div class="scroll"><table class="tbl" id="tblCirc"></table></div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card">
+      <h3><span data-i18n="wiring">Pengkabelan Saklar → Perangkat</span></h3>
+      <div class="body">
+        <label class="f"><span data-i18n="device">Perangkat</span>
+          <select id="wDev"></select></label>
+        <label class="f"><span data-i18n="combine">Gabungan saklar</span>
+          <select id="wComb"></select></label>
+        <div id="wList" style="margin:10px 0"></div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+        <label class="f"><span data-i18n="switch">Saklar/Sensor</span>
+          <select id="wSw"></select></label>
+        <label class="row small"><input type="checkbox" id="wInv" style="width:auto">
+          <span data-i18n="inverted">Logika terbalik (NC)</span></label>
+        <button class="primary sm" id="wAdd" style="margin-top:8px" data-i18n="link_add">Hubungkan</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span data-i18n="rooms">Kamar</span></h3>
+      <div class="scroll"><table class="tbl" id="tblRoom"></table></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/components.js') }}"></script>
+{% endblock %}

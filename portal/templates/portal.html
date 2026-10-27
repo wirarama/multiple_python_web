@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Simulator & ML</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f6feb'/><path d='M8 22V10h4l4 7 4-7h4v12' fill='none' stroke='white' stroke-width='2.6' stroke-linejoin='round'/></svg>">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a21;--muted:#5d6876;--line:#e3e6eb;--accent:#1f6feb;--ok:#1a7f37;--bad:#c4321d;--warn:#9a6700}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1318;--card:#171c23;--ink:#e7ebf0;--muted:#97a2b0;--line:#2a313b;--accent:#5b9dff;--ok:#4cc26a;--bad:#ff7b66;--warn:#e3b341}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 16px 56px}
+header h1{margin:0 0 6px;font-size:26px;letter-spacing:-.01em}
+header p{margin:0;color:var(--muted);max-width:680px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:28px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.st{font-size:12px;display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+.st i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.st.ok i{background:var(--ok)} .st.bad i{background:var(--bad)} .st.warn i{background:var(--warn)}
+.card h2{margin:0;font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.err{font:12px/1.4 ui-monospace,Consolas,monospace;color:var(--bad);background:color-mix(in srgb,var(--bad) 8%,transparent);padding:8px;border-radius:8px;overflow-wrap:anywhere}
+.btn{align-self:flex-start;display:inline-block;padding:8px 14px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+.btn[aria-disabled=true]{background:var(--line);color:var(--muted);pointer-events:none}
+code{font:13px ui-monospace,Consolas,monospace}
+footer{margin-top:32px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Portal Simulator &amp; Machine Learning</h1>
+    <p>Kumpulan aplikasi pembelajaran jaringan, IoT, dan machine learning — Program Studi Teknik Informatika, Universitas Mataram.</p>
+  </header>
+
+  <div class="grid">
+  {% for a in apps %}
+    <section class="card">
+      <div class="top"><span class="tag">{{ a.tag }}</span>
+        {% if a.ok %}<span class="st ok"><i></i>aktif</span>
+        {% elif a.error %}<span class="st bad"><i></i>gagal dimuat</span>
+        {% else %}<span class="st"><i></i>dinonaktifkan</span>{% endif %}
+      </div>
+      <h2>{{ a.title }}</h2>
+      <p>{{ a.desc }}</p>
+      {% if a.error %}<div class="err">{{ a.error }}</div>{% endif %}
+      <a class="btn" href="{{ a.url }}" {% if not a.ok %}aria-disabled="true"{% endif %}>Buka</a>
+    </section>
+  {% endfor %}
+    <section class="card">
+      <div class="top"><span class="tag">{{ dm.tag }}</span>
+        {% if dm.ok %}<span class="st ok"><i></i>aktif</span>{% else %}<span class="st warn"><i></i>tidak terdeteksi</span>{% endif %}
+      </div>
+      <h2>{{ dm.title }}</h2>
+      <p>{{ dm.desc }} Berjalan sebagai proses Streamlit terpisah.</p>
+      {% if not dm.ok %}<div class="err">Proses Streamlit belum berjalan. Di server: <code>bash run.sh start</code></div>{% endif %}
+      <a class="btn" id="dmLink" href="{{ dm.url or '#' }}" target="_blank" rel="noopener">Buka</a>
+    </section>
+  </div>
+
+  <footer>Status: <a href="/healthz" style="color:inherit">/healthz</a></footer>
+</div>
+<script>
+(function(){
+  var a = document.getElementById("dmLink");
+  if (a.getAttribute("href") === "#") {
+    var base = {{ dm.base|tojson }};
+    a.href = location.protocol + "//" + location.hostname + ":" + {{ dm.port|tojson }} + "/" + (base ? base + "/" : "");
+  }
+})();
+</script>
+</body>
+</html>

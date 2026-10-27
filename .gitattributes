@@ -1,0 +1,5 @@
+# Normalisasi akhir baris; script shell WAJIB LF agar bisa jalan di Linux
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.bat text eol=crlf

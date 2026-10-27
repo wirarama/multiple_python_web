@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:940px;margin:0 auto">
+  <h3><span data-i18n="nav_help">Panduan</span></h3>
+  <div class="body help" id="help_id">
+    <h4>1. Alur kerja singkat</h4>
+    <p>Buka <b>Simulator</b> → atur <b>waktu</b>, <b>cuaca</b>, dan <b>penghuni</b> di kolom kiri →
+       tekan <b>Jalan</b>. Setiap langkah simulasi memajukan jam sebanyak "menit/langkah",
+       mengevaluasi sensor dan rule, lalu menghitung daya, arus, energi, dan biaya.</p>
+
+    <h4>2. Membangun denah</h4>
+    <p>Klik <b>Edit Denah</b> untuk menggeser kamar dan mengubah ukurannya (kotak biru di pojok
+       kanan-bawah). <b>Tambah Kamar</b> membuat ruang baru. <b>Tambah Komponen</b> membuka
+       katalog; pilih jenis lalu klik posisi pada denah. Komponen otomatis masuk ke kamar tempat
+       ia dijatuhkan. Klik dua kali komponen untuk membalik statusnya.</p>
+
+    <h4>3. Instalasi listrik</h4>
+    <p>Setiap perangkat disambungkan ke sebuah <b>Grup Instalasi (MCB)</b>, dan tiap grup
+       mengambil daya dari satu <b>sumber</b> (PLN, genset, panel surya, baterai).
+       Arus dihitung <code>I = P / (V × cos φ)</code>. Bila arus grup melampaui rating MCB,
+       grup itu <b>trip</b> dan seluruh perangkat di dalamnya padam; bila arus total melampaui
+       MCB utama, seluruh rumah padam. Tekan <b>Reset MCB</b> untuk menaikkan kembali.</p>
+
+    <h4>4. Saklar, sensor, dan logika seri/paralel</h4>
+    <p>Jenis saklar yang tersedia: tombol, saklar biasa, PIR (gerak), LDR (cahaya), infrared/remote,
+       sensor suhu, kelembaban, hujan, timer, asap, dan sensor pintu. Satu perangkat boleh
+       dikendalikan beberapa saklar sekaligus:</p>
+    <p><b>Paralel</b> — perangkat menyala bila <i>salah satu</i> saklar aktif (logika OR).<br>
+       <b>Seri</b> — perangkat menyala hanya bila <i>semua</i> saklar aktif (logika AND).</p>
+    <p>Centang <b>NC</b> pada sebuah hubungan untuk membalik logikanya (normally closed).
+       Pengaturan lengkap ada di halaman <b>Komponen</b> bagian <i>Pengkabelan</i>.</p>
+
+    <h4>5. Rule otomasi</h4>
+    <p>Rule berbentuk <code>JIKA (syarat) MAKA (aksi)</code>. Syarat dapat memakai periode waktu,
+       jam, cuaca, suhu/cahaya/kelembaban kamar, jumlah orang di kamar, status sensor atau
+       perangkat, total daya, dan energi. Aksi dapat menyalakan/mematikan perangkat, menekan
+       saklar, memutus grup, atau mematikan semua perangkat. Rule dengan
+       <b>prioritas lebih besar dieksekusi terakhir</b> sehingga keputusannya menang.
+       Tombol <b>Uji sekarang</b> menampilkan nilai tiap syarat pada kondisi saat ini.</p>
+
+    <h4>6. Manusia, waktu, dan cuaca</h4>
+    <p>Penghuni memiliki <b>jadwal per jam</b> (kamar tujuan atau "di luar rumah"). Penghuni
+       memicu sensor PIR, menambah beban panas ruangan, dan menjadi masukan syarat rule.
+       Seret ikon orang pada denah untuk memindahkannya secara manual.
+       Periode waktu dibagi menjadi pagi (05–10), siang (10–15), sore (15–18), dan malam.
+       Cuaca (cerah, berawan, hujan, badai, kabut) mengubah cahaya luar, suhu luar,
+       dan kelembaban — yang kemudian memengaruhi sensor LDR, sensor suhu, dan rule.</p>
+
+    <h4>7. Model fisika ruangan</h4>
+    <p>Cahaya kamar = cahaya luar × faktor jendela + kontribusi lampu yang menyala.
+       Suhu kamar bergerak menuju suhu target (suhu luar + panas perangkat + panas penghuni,
+       dibatasi set point AC) dengan konstanta waktu ±45 menit.</p>
+
+    <h4>8. Laporan</h4>
+    <p>Halaman <b>Laporan</b> menampilkan grafik daya dan energi, konsumsi per kamar dan per grup,
+       serta unduhan CSV untuk diolah lebih lanjut.</p>
+
+    <h4>9. Ekspor, impor, dan studi kasus</h4>
+    <p>Tombol <b>Ekspor JSON</b> menyimpan seluruh isi rumah — kamar, komponen, grup instalasi,
+       pengkabelan, aturan, dan penghuni — ke dalam satu berkas. Tombol <b>Impor JSON</b> memuat
+       berkas tersebut kembali dan <i>mengganti</i> seluruh isi rumah saat ini, jadi ekspor dulu
+       pekerjaan yang ingin disimpan. Seluruh nomor id dipetakan ulang saat impor sehingga acuan
+       pada aturan dan jadwal penghuni tetap sahih.</p>
+    <p>Halaman <b>Studi Kasus</b> berisi enam kasus siap pakai dengan sumber listrik dan waktu yang
+       berbeda: PLN malam hari, pemadaman dengan genset, panel surya siang hari, baterai dini hari,
+       beban puncak pagi yang memutus MCB, serta hujan sore hari. Tiap kasus dilengkapi ringkasan,
+       tujuan pembelajaran, langkah pengamatan, pertanyaan pemandu, dan hasil yang diharapkan.
+       Tekan <b>Muat Kasus</b> untuk memasangnya, atau <b>Unduh JSON</b> untuk membagikannya kepada
+       peserta didik.</p>
+  </div>
+
+  <div class="body help" id="help_en" style="display:none">
+    <h4>1. Quick workflow</h4>
+    <p>Open <b>Simulator</b> → set <b>time</b>, <b>weather</b> and <b>occupants</b> in the left
+       column → press <b>Run</b>. Each simulation step advances the clock by "minutes/step",
+       evaluates sensors and rules, then computes power, current, energy and cost.</p>
+
+    <h4>2. Building the floor plan</h4>
+    <p>Click <b>Edit plan</b> to drag rooms and resize them (blue handle at the bottom-right).
+       <b>Add Room</b> creates a new space. <b>Add Component</b> opens the catalogue; pick a type
+       then click a position on the plan. Components join whichever room they land in.
+       Double-click a component to flip its state.</p>
+
+    <h4>3. Electrical installation</h4>
+    <p>Every device belongs to a <b>circuit (MCB)</b>, and each circuit draws from one
+       <b>source</b> (grid, generator, solar, battery). Current is <code>I = P / (V × cos φ)</code>.
+       If a circuit exceeds its breaker rating it <b>trips</b> and everything on it goes dark;
+       if the total exceeds the main breaker the whole house goes dark. Use
+       <b>Reset breaker</b> to restore.</p>
+
+    <h4>4. Switches, sensors, series/parallel logic</h4>
+    <p>Available switch types: push button, plain switch, PIR (motion), LDR (light), infrared
+       remote, temperature, humidity, rain, timer, smoke and door sensors. One device may be
+       driven by several switches:</p>
+    <p><b>Parallel</b> — the device turns on if <i>any</i> switch is active (OR).<br>
+       <b>Series</b> — the device turns on only if <i>all</i> switches are active (AND).</p>
+    <p>Tick <b>NC</b> on a link to invert it (normally closed). Full wiring lives on the
+       <b>Components</b> page.</p>
+
+    <h4>5. Automation rules</h4>
+    <p>A rule is <code>IF (conditions) THEN (actions)</code>. Conditions can use time period,
+       hour, weather, room temperature/light/humidity, people in a room, sensor or device state,
+       total power and energy. Actions turn devices on/off, press a switch, trip a circuit, or
+       switch everything off. <b>Higher priority rules run last</b>, so they win.
+       <b>Test now</b> shows each condition's current value.</p>
+
+    <h4>6. People, time and weather</h4>
+    <p>Occupants follow an <b>hourly schedule</b> (target room, or "away"). They trigger PIR
+       sensors, add heat to a room, and feed rule conditions. Drag a person icon on the plan to
+       move them manually. Periods are morning (05–10), midday (10–15), afternoon (15–18) and
+       night. Weather (clear, cloudy, rain, storm, fog) changes outdoor light, temperature and
+       humidity — which in turn drive LDR sensors, temperature sensors and rules.</p>
+
+    <h4>7. Room physics model</h4>
+    <p>Room light = outdoor light × window factor + light from lamps that are on.
+       Room temperature moves toward a target (outdoor temperature + device heat + occupant heat,
+       capped by the AC set point) with a ~45 minute time constant.</p>
+
+    <h4>8. Reports</h4>
+    <p>The <b>Report</b> page shows power and energy charts, consumption per room and per circuit,
+       and a CSV download for further analysis.</p>
+
+    <h4>9. Export, import and case studies</h4>
+    <p><b>Export JSON</b> saves the whole house — rooms, components, circuits, wiring, rules and
+       occupants — into a single file. <b>Import JSON</b> loads such a file back and <i>replaces</i>
+       the current house, so export anything you want to keep first. Every identifier is remapped on
+       import, so references inside rules and occupant schedules stay valid.</p>
+    <p>The <b>Case Studies</b> page holds six ready-made cases with different power sources and times
+       of day: grid at night, a blackout on generator supply, solar at midday, battery backup before
+       dawn, a morning peak that trips a breaker, and a rainy afternoon. Each case carries a summary,
+       learning goals, observation steps, guiding questions and the expected results. Press
+       <b>Load case</b> to install it, or <b>Download JSON</b> to hand it to students.</p>
+  </div>
+</div>
+<script>
+function helpLang(){
+  var id = LANG === "id";
+  document.getElementById("help_id").style.display = id ? "" : "none";
+  document.getElementById("help_en").style.display = id ? "none" : "";
+}
+document.addEventListener("DOMContentLoaded", helpLang);
+document.addEventListener("langchange", helpLang);
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{
+  "description": "Topologi contoh jaringan SDN (mesh, 10 switch). delay dalam ms, bandwidth dalam Mbps, loss = probabilitas dasar packet loss per link.",
+  "nodes": ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10"],
+  "edges": [
+    {"source": "S1", "target": "S2", "delay": 2,  "bandwidth": 100, "loss": 0.001},
+    {"source": "S1", "target": "S3", "delay": 5,  "bandwidth": 60,  "loss": 0.003},
+    {"source": "S2", "target": "S3", "delay": 1,  "bandwidth": 100, "loss": 0.001},
+    {"source": "S2", "target": "S4", "delay": 4,  "bandwidth": 80,  "loss": 0.002},
+    {"source": "S3", "target": "S4", "delay": 1,  "bandwidth": 100, "loss": 0.001},
+    {"source": "S3", "target": "S5", "delay": 6,  "bandwidth": 50,  "loss": 0.004},
+    {"source": "S4", "target": "S5", "delay": 2,  "bandwidth": 90,  "loss": 0.002},
+    {"source": "S4", "target": "S6", "delay": 3,  "bandwidth": 70,  "loss": 0.002},
+    {"source": "S5", "target": "S6", "delay": 1,  "bandwidth": 100, "loss": 0.001},
+    {"source": "S5", "target": "S7", "delay": 4,  "bandwidth": 60,  "loss": 0.003},
+    {"source": "S6", "target": "S7", "delay": 2,  "bandwidth": 90,  "loss": 0.002},
+    {"source": "S6", "target": "S8", "delay": 5,  "bandwidth": 50,  "loss": 0.004},
+    {"source": "S7", "target": "S8", "delay": 1,  "bandwidth": 100, "loss": 0.001},
+    {"source": "S7", "target": "S9", "delay": 3,  "bandwidth": 80,  "loss": 0.002},
+    {"source": "S8", "target": "S9", "delay": 2,  "bandwidth": 90,  "loss": 0.002},
+    {"source": "S8", "target": "S10", "delay": 4, "bandwidth": 60,  "loss": 0.003},
+    {"source": "S9", "target": "S10", "delay": 1, "bandwidth": 100, "loss": 0.001},
+    {"source": "S2", "target": "S5", "delay": 7,  "bandwidth": 40,  "loss": 0.005},
+    {"source": "S3", "target": "S6", "delay": 6,  "bandwidth": 45,  "loss": 0.004},
+    {"source": "S1", "target": "S4", "delay": 8,  "bandwidth": 35,  "loss": 0.005}
+  ]
+}

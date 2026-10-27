@@ -1,0 +1,34 @@
+{
+ "cases": [
+  {
+   "slug": "k1-pln-malam",
+   "kode": "K1",
+   "judul": "Jaringan PLN pada Malam Hari"
+  },
+  {
+   "slug": "k2-pemadaman-genset",
+   "kode": "K2",
+   "judul": "Pemadaman PLN dan Suplai Genset pada Malam Hari"
+  },
+  {
+   "slug": "k3-surya-siang",
+   "kode": "K3",
+   "judul": "Panel Surya pada Siang Hari"
+  },
+  {
+   "slug": "k4-baterai-dini-hari",
+   "kode": "K4",
+   "judul": "Baterai Cadangan pada Dini Hari"
+  },
+  {
+   "slug": "k5-beban-puncak-pagi",
+   "kode": "K5",
+   "judul": "Beban Puncak Pagi dan Pemutusan MCB"
+  },
+  {
+   "slug": "k6-hujan-sore",
+   "kode": "K6",
+   "judul": "Hujan pada Sore Hari dan Reaksi Sensor Luar"
+  }
+ ]
+}

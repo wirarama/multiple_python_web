@@ -1,0 +1,9 @@
+# Dependensi Data Mining UI (Streamlit, proses terpisah)
+# pandas, numpy, networkx, matplotlib, openpyxl sudah ada di requirements-web.txt
+-r requirements-web.txt
+streamlit>=1.49
+scipy>=1.10
+scikit-learn>=1.3
+statsmodels>=0.14
+mlxtend>=0.23
+XlsxWriter>=3.1
