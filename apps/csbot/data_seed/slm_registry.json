@@ -1,0 +1,15 @@
+{
+  "active": "slm_732ab81ee8",
+  "slms": [
+    {
+      "id": "slm_01ef2e76b2",
+      "name": "Default",
+      "created": "2026-08-31 15:35:18"
+    },
+    {
+      "id": "slm_732ab81ee8",
+      "name": "SLM1",
+      "created": "2026-09-10 15:24:21"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ Gateway WSGI: menggabungkan beberapa aplikasi Flask di bawah satu server.
     /smarthome/...   -> apps/smarthome  (Smart Home Simulator)
     /rlfl/...        -> apps/rlfl       (RL & Federated Learning SDN)
     /pyspark/...     -> apps/pyspark    (PySpark ML Script Generator)
+    /csbot/...       -> apps/csbot      (CS Bot, Decision Tree SLM)
 
 Kode aplikasi sumber TIDAK diubah. Aplikasi-aplikasi itu memakai URL absolut
 seperti fetch('/api/state') atau href="/tutorial". Permintaan seperti itu
@@ -31,6 +32,7 @@ FLASK_APPS = {
     "smarthome": ("/smarthome", "smarthome", "Smart Home Simulator"),
     "rlfl": ("/rlfl", "rlfl", "RL & Federated Learning SDN"),
     "pyspark": ("/pyspark", "pyspark", "PySpark ML Script Generator"),
+    "csbot": ("/csbot", "csbot", "CS Bot (Decision Tree SLM)"),
 }
 
 COOKIE = "mpw_app"
@@ -53,6 +55,13 @@ def load_flask_app(key: str, folder: Path, owners: dict):
     app_py = folder / "app.py"
     if not app_py.is_file():
         raise FileNotFoundError(f"{app_py} tidak ada - jalankan: python sync.py")
+    # Data awal (data_seed/, ikut git) disalin ke data/ (runtime, di .gitignore) bila belum ada,
+    # sehingga perubahan data di server tidak bentrok dengan git pull.
+    seed, data = folder / "data_seed", folder / "data"
+    if seed.is_dir() and not data.exists():
+        import shutil
+        shutil.copytree(seed, data)
+        print(f"[gateway] {key}: data/ dibuat dari data_seed/", file=sys.stderr)
     # Modul lokal aplikasi (models, core, ...) tidak boleh bernama sama antar aplikasi
     for name in _top_level_modules(folder):
         if name in owners and owners[name] != key:
@@ -195,10 +204,11 @@ class Gateway:
         return self.portal(environ, start_response)
 
 
-BADGE = (b'<a href="/portal" title="Kembali ke portal" style="position:fixed;left:12px;bottom:12px;'
-         b'z-index:2147483000;font:600 12px/1 system-ui,-apple-system,Segoe UI,sans-serif;'
-         b'padding:8px 11px;border-radius:999px;background:#1d2733;color:#fff;text-decoration:none;'
-         b'box-shadow:0 2px 8px rgba(0,0,0,.25);opacity:.82">&#8962; Portal</a>')
+BADGE = (b'<a href="/portal" title="Kembali ke portal" style="position:fixed;left:0;top:50%;'
+         b'transform:translateY(-50%);z-index:2147483000;writing-mode:vertical-rl;'
+         b'font:600 11px/1 system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:.04em;'
+         b'padding:10px 5px;border-radius:0 8px 8px 0;background:#1d2733;color:#fff;'
+         b'text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25);opacity:.75">&#8962; Portal</a>')
 
 
 def _inject_badge(html: bytes) -> bytes:

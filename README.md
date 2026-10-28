@@ -1,6 +1,6 @@
 # multiple_python_web — Portal Gabungan Simulator & ML
 
-Satu paket untuk menjalankan lima aplikasi web Python di server Linux:
+Satu paket untuk menjalankan enam aplikasi web Python di server Linux:
 
 | Aplikasi | Sumber | URL | Cara jalan |
 |---|---|---|---|
@@ -8,9 +8,10 @@ Satu paket untuk menjalankan lima aplikasi web Python di server Linux:
 | Smart Home Simulator | `smarthome` | `/smarthome/` | digabung (Flask) |
 | RL & Federated Learning SDN | `reinforcement_and_federated_network` | `/rlfl/` | digabung (Flask) |
 | PySpark ML Script Generator | `pysparkML` | `/pyspark/` | digabung (Flask) |
+| CS Bot (Decision Tree SLM) | `csbot` | `/csbot/` | digabung (Flask) |
 | Data Mining UI | `dataminingui` | `:8501/datamining/` | **terpisah** (Streamlit) |
 
-Empat aplikasi Flask berjalan dalam **satu proses gunicorn** di port 8000, dengan
+Lima aplikasi Flask berjalan dalam **satu proses gunicorn** di port 8000, dengan
 portal di `/`. Data Mining UI berbasis Streamlit (server Tornado + WebSocket) sehingga
 tidak bisa digabung ke dalam WSGI; ia dijalankan sebagai proses kedua dan ditautkan
 dari portal. Dengan nginx (`deploy/nginx.conf.example`) keduanya bisa tampil di satu
@@ -124,6 +125,25 @@ Data Mining UI aktif kembali otomatis.
 
 ## Mengelola layanan
 
+### Tanpa Data Mining UI
+
+Streamlit tidak dijalankan sama sekali dan port 8501 tidak dibuka; kartu Data Mining
+disembunyikan dari portal.
+
+```bash
+bash run.sh start --no-datamining      # sekali jalan (berlaku juga untuk restart)
+bash run.sh restart --no-datamining    # bila portal sudah berjalan
+bash start.sh --no-datamining          # versi satu langkah
+bash run.sh datamining off             # permanen (ENABLE_DATAMINING=0 di config.env)
+bash run.sh datamining on              # aktifkan kembali
+```
+
+Di Windows: `run.bat start --no-datamining` dan `run.bat datamining off|on`. Untuk server yang
+tidak butuh Data Mining sama sekali, `bash setup.sh --no-datamining` juga melewati pemasangan
+Streamlit beserta paketnya.
+
+### Perintah lain
+
 ```bash
 bash stop.sh [portal|datamining]          # Linux   - hentikan layanan
 stop.bat [portal|datamining]              # Windows - hentikan layanan
@@ -165,6 +185,12 @@ bash sync.sh --source git --git-base git@github.com:wirarama/   # repo private v
 bash run.sh restart
 ```
 
+Data awal csbot (`data/` di repo sumber: knowledge base, SLM, model RNN) disalin ke
+`apps/csbot/data_seed/` (ikut git). Saat pertama dijalankan, gateway menyalinnya ke
+`apps/csbot/data/`, yang dipakai dan diubah aplikasi. Folder `data/` itu ada di `.gitignore`,
+jadi perubahan knowledge base di server tidak bentrok dengan `git pull`. Untuk mengulang dari
+data awal, hapus `apps/csbot/data/` lalu `bash run.sh restart`.
+
 File yang sudah dihapus di sumber juga dihapus di `apps/`, kecuali data runtime yang
 tercantum di `preserve`. Bila sebuah aplikasi menambah paket baru di
 `requirements.txt`-nya, `sync.py` memberi peringatan; tambahkan paket itu ke
@@ -190,7 +216,7 @@ Modul lokal antar aplikasi tidak boleh bernama sama (misalnya dua aplikasi sama-
 
 ```
 apps/                 salinan aplikasi (dikelola sync.py)
-  sdn/ smarthome/ rlfl/ pyspark/ datamining/
+  sdn/ smarthome/ rlfl/ pyspark/ csbot/ datamining/
 portal/               gateway WSGI + halaman portal
 wsgi.py               titik masuk gunicorn
 setup.sh              membuat .venv & memasang dependensi

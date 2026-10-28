@@ -1,31 +1,66 @@
 {
-  "_keterangan": "Daftar sumber yang disalin ke apps/. 'local' relatif terhadap folder repo ini (default: folder saudara di GitHub/). 'git' dipakai bila sync dijalankan dengan --source git (misalnya di server). 'include' = pola file yang disalin, 'exclude' = pola yang dilewati, 'preserve' = file di tujuan yang tidak boleh dihapus (data runtime).",
+  "_keterangan": "Daftar sumber yang disalin ke apps/. 'local' relatif terhadap folder repo ini (default: folder saudara di GitHub/). 'git' dipakai bila sync dijalankan dengan --source git (misalnya di server). 'include' = pola file yang disalin, 'exclude' = pola yang dilewati, 'preserve' = file di tujuan yang tidak boleh dihapus (data runtime). 'rename' memindahkan awalan path di tujuan (mis. data awal csbot -> data_seed/, disalin ke data/ saat pertama dijalankan).",
   "apps": {
     "sdn": {
       "title": "SDN Simulator",
       "local": "../software_defined_network",
       "git": "https://github.com/wirarama/software_defined_network.git",
       "dest": "apps/sdn",
-      "include": ["*.py", "algorithms/*.py", "data/topology.json", "static/**", "templates/*.html", "requirements.txt", "README.md"],
-      "exclude": ["**/.ipynb_checkpoints/**", "Claude outputs/**"],
-      "preserve": ["data/_uploaded_topology.json"]
+      "include": [
+        "*.py",
+        "algorithms/*.py",
+        "data/topology.json",
+        "static/**",
+        "templates/*.html",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "**/.ipynb_checkpoints/**",
+        "Claude outputs/**"
+      ],
+      "preserve": [
+        "data/_uploaded_topology.json"
+      ]
     },
     "smarthome": {
       "title": "Smart Home Simulator",
       "local": "../smarthome",
       "git": "https://github.com/wirarama/smarthome.git",
       "dest": "apps/smarthome",
-      "include": ["*.py", "scenarios/*.json", "static/**", "templates/*.html", "requirements.txt", "README.md"],
-      "exclude": ["Claude outputs/**", "hki/**", "paper/**"],
-      "preserve": ["instance/**"]
+      "include": [
+        "*.py",
+        "scenarios/*.json",
+        "static/**",
+        "templates/*.html",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "Claude outputs/**",
+        "hki/**",
+        "paper/**"
+      ],
+      "preserve": [
+        "instance/**"
+      ]
     },
     "rlfl": {
       "title": "RL & Federated Learning SDN",
       "local": "../reinforcement_and_federated_network",
       "git": "https://github.com/wirarama/reinforcement_and_federated_network.git",
       "dest": "apps/rlfl",
-      "include": ["*.py", "core/**/*.py", "static/**", "templates/*.html", "requirements.txt", "README.md"],
-      "exclude": ["contoh_paket_script/**"],
+      "include": [
+        "*.py",
+        "core/**/*.py",
+        "static/**",
+        "templates/*.html",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "contoh_paket_script/**"
+      ],
       "preserve": []
     },
     "pyspark": {
@@ -33,18 +68,64 @@
       "local": "../pysparkML",
       "git": "https://github.com/wirarama/pysparkML.git",
       "dest": "apps/pyspark",
-      "include": ["*.py", "static/**", "templates/*.html", "uploads/.gitkeep", "requirements.txt", "README.md"],
-      "exclude": ["_to_delete/**"],
-      "preserve": ["uploads/**"]
+      "include": [
+        "*.py",
+        "static/**",
+        "templates/*.html",
+        "uploads/.gitkeep",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "_to_delete/**"
+      ],
+      "preserve": [
+        "uploads/**"
+      ]
     },
     "datamining": {
       "title": "Data Mining UI (Streamlit)",
       "local": "../dataminingui",
       "git": "https://github.com/wirarama/dataminingui.git",
       "dest": "apps/datamining",
-      "include": ["*.py", "core/**/*.py", "modules/**/*.py", ".streamlit/config.toml", "requirements.txt", "README.md"],
-      "exclude": ["tests/**", "anaconda_projects/**"],
+      "include": [
+        "*.py",
+        "core/**/*.py",
+        "modules/**/*.py",
+        ".streamlit/config.toml",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "tests/**",
+        "anaconda_projects/**"
+      ],
       "preserve": []
+    },
+    "csbot": {
+      "title": "CS Bot (Decision Tree SLM)",
+      "local": "../csbot",
+      "git": "https://github.com/wirarama/csbot.git",
+      "dest": "apps/csbot",
+      "include": [
+        "*.py",
+        "templates/*.html",
+        "data/*.json",
+        "data/*.txt",
+        "data/slms/*.json",
+        "data/rnn_models/*.json",
+        "requirements.txt",
+        "README.md"
+      ],
+      "exclude": [
+        "**/.ipynb_checkpoints/**"
+      ],
+      "rename": {
+        "data/": "data_seed/"
+      },
+      "preserve": [
+        "data/**"
+      ]
     }
   }
 }

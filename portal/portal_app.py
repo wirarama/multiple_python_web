@@ -19,6 +19,9 @@ APPS = [
     {"key": "pyspark", "url": "/pyspark/", "title": "PySpark ML Script Generator",
      "tag": "Big Data", "desc": "Unggah CSV, pilih tugas dan algoritma Spark MLlib, lalu bangkitkan "
      "script PySpark siap dijalankan."},
+    {"key": "csbot", "url": "/csbot/", "title": "CS Bot (Decision Tree SLM)",
+     "tag": "NLP / Chatbot", "desc": "Chatbot customer service: knowledge base dari teks, CSV, atau web "
+     "scraping dengan TF-IDF + decision tree, beberapa SLM, graf kata kunci, dan model RNN (GRU)."},
 ]
 
 
@@ -48,12 +51,13 @@ def create_portal(loaded, failed):
             item["error"] = failed.get(a["key"])
             item["disabled"] = not item["ok"] and not item["error"]
             apps.append(item)
+        dm_enabled = os.environ.get("ENABLE_DATAMINING", "1") != "0"
         dm = {
             "key": "datamining", "title": "Data Mining UI", "tag": "Streamlit",
             "desc": "Klasifikasi, regresi, klastering, asosiasi, dan deret waktu dengan "
                     "pembangkit data, tuning parameter, dan visualisasi algoritma.",
-            "ok": _streamlit_status(),
-            "enabled": os.environ.get("ENABLE_DATAMINING", "1") != "0",
+            "enabled": dm_enabled,
+            "ok": dm_enabled and _streamlit_status(),   # tidak menyentuh port bila dinonaktifkan
             "note": os.environ.get("DATAMINING_NOTE", ""),
             "url": os.environ.get("DATAMINING_URL", ""),
             "port": os.environ.get("STREAMLIT_PORT", "8501"),
@@ -63,9 +67,10 @@ def create_portal(loaded, failed):
 
     @app.route("/healthz")
     def healthz():
+        dm_enabled = os.environ.get("ENABLE_DATAMINING", "1") != "0"
         return jsonify(status="ok", loaded=loaded, failed=failed,
-                       datamining_enabled=os.environ.get("ENABLE_DATAMINING", "1") != "0",
-                       datamining=_streamlit_status())
+                       datamining_enabled=dm_enabled,
+                       datamining=dm_enabled and _streamlit_status())
 
     @app.errorhandler(404)
     def not_found(_e):

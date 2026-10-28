@@ -107,14 +107,23 @@ def req_names(path: Path, _seen=None):
     return names
 
 
+def remap(rel: str, spec: dict) -> str:
+    """'rename': {"data/": "data_seed/"} memindahkan awalan path di tujuan."""
+    for a, b in spec.get("rename", {}).items():
+        if rel.startswith(a):
+            return b + rel[len(a):]
+    return rel
+
+
 def sync_app(key: str, spec: dict, src: Path, dry: bool, prune: bool) -> dict:
     dest = ROOT / spec["dest"]
     files = select(src, spec)
     if not files:
         raise SystemExit(f"[{key}] tidak ada file cocok di {src} - periksa pola include.")
     stat = {"baru": 0, "ubah": 0, "sama": 0, "hapus": 0}
-    for rel in files:
-        s, d = src / rel, dest / rel
+    for rel_src in files:
+        rel = remap(rel_src, spec)
+        s, d = src / rel_src, dest / rel
         if d.exists() and filecmp.cmp(s, d, shallow=False):
             stat["sama"] += 1
             continue
@@ -124,7 +133,7 @@ def sync_app(key: str, spec: dict, src: Path, dry: bool, prune: bool) -> dict:
             d.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(s, d)
     if prune and dest.exists():
-        keep = set(files)
+        keep = {remap(r, spec) for r in files}
         pres = [pattern_to_regex(p) for p in spec.get("preserve", [])]
         for rel in list(list_files(dest)):
             if rel in keep or matches(rel, pres):

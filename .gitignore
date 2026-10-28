@@ -12,6 +12,7 @@ run/
 apps/smarthome/instance/
 *.db
 apps/sdn/data/_uploaded_topology.json
+apps/csbot/data/
 apps/pyspark/uploads/*
 !apps/pyspark/uploads/.gitkeep
 

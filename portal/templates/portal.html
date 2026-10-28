@@ -50,6 +50,7 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
       <a class="btn" href="{{ a.url }}" {% if not a.ok %}aria-disabled="true"{% endif %}>Buka</a>
     </section>
   {% endfor %}
+    {% if dm.enabled or dm.note %}
     <section class="card">
       <div class="top"><span class="tag">{{ dm.tag }}</span>
         {% if not dm.enabled %}<span class="st"><i></i>dinonaktifkan</span>
@@ -61,6 +62,7 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
       {% elif not dm.ok %}<div class="err">Proses Streamlit belum berjalan. Di server: <code>bash run.sh start</code></div>{% endif %}
       <a class="btn" id="dmLink" href="{{ dm.url or '#' }}" target="_blank" rel="noopener" {% if not dm.enabled %}aria-disabled="true"{% endif %}>Buka</a>
     </section>
+    {% endif %}
   </div>
 
   <footer>Status: <a href="/healthz" style="color:inherit">/healthz</a></footer>
@@ -68,7 +70,7 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
 <script>
 (function(){
   var a = document.getElementById("dmLink");
-  if (a.getAttribute("href") === "#") {
+  if (a && a.getAttribute("href") === "#") {
     var base = {{ dm.base|tojson }};
     a.href = location.protocol + "//" + location.hostname + ":" + {{ dm.port|tojson }} + "/" + (base ? base + "/" : "");
   }

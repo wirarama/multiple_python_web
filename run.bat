@@ -10,6 +10,8 @@ REM     run.bat status                         cek proses & health check
 REM     run.bat logs    [portal|datamining]   ikuti log (Ctrl+C keluar)
 REM     run.bat open    [portal|datamining]   buka di browser
 REM     run.bat fg      portal|datamining     jalan di jendela ini (debug)
+REM     run.bat start --no-datamining          tanpa Data Mining UI (Streamlit tidak dijalankan)
+REM     run.bat datamining off|on             nonaktifkan/aktifkan permanen
 REM     run.bat autostart-on                   jalankan otomatis saat login Windows
 REM     run.bat autostart-off                  matikan autostart
 REM

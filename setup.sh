@@ -166,7 +166,9 @@ ok "Paket inti dapat dimuat"
 
 # --------------------------------------------------------------- 4. konfigurasi
 mkdir -p logs run
-chmod +x "$ROOT"/*.sh 2>/dev/null || true   # file dari Windows tidak membawa izin eksekusi
+chmod +x "$ROOT"/*.sh 2>/dev/null || true
+# izin eksekusi di atas jangan dianggap perubahan oleh git (agar "git pull" tidak bentrok)
+[ -d "$ROOT/.git" ] && git -C "$ROOT" config core.fileMode false 2>/dev/null || true   # file dari Windows tidak membawa izin eksekusi
 if [ ! -f config.env ]; then
   cp config.env.example config.env
   ok "config.env dibuat dari config.env.example (ubah port di sini bila perlu)"

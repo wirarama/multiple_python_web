@@ -10,6 +10,8 @@
 #     bash start.sh --no-boot           matikan autostart systemd
 #     bash start.sh --install-launcher  DESKTOP: buat ikon "Start/Stop Portal" di menu
 #                                       aplikasi & Desktop (cukup klik dua kali)
+#     bash start.sh --no-datamining     jalankan tanpa Data Mining UI (Streamlit & port
+#                                       8501 tidak dipakai). Permanen: bash run.sh datamining off
 #
 #  Menghentikan: bash stop.sh   (atau ikon "Stop Portal")
 # =============================================================================
@@ -18,6 +20,8 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$ROOT"
 chmod +x "$ROOT"/*.sh 2>/dev/null || true
+# izin eksekusi di atas jangan dianggap perubahan oleh git (agar "git pull" tidak bentrok)
+[ -d "$ROOT/.git" ] && git -C "$ROOT" config core.fileMode false 2>/dev/null || true
 if [ -f config.env ]; then set -a; . ./config.env; set +a; fi
 PORTAL_PORT="${PORTAL_PORT:-8000}"
 UNITS="mpw-portal mpw-datamining"
@@ -125,11 +129,13 @@ EOF
 }
 
 # --------------------------------------------------------------- utama
+RUN_ARGS=()
 case "${1:-}" in
+  --no-datamining|--web-only) RUN_ARGS=(--no-datamining) ;;
   --boot) install_boot; exit 0 ;;
   --no-boot) remove_boot; exit 0 ;;
   --install-launcher) install_launcher; exit 0 ;;
-  -h|--help) sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  -h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
   "") ;;
   *) echo "Opsi tidak dikenal: $1 (lihat: bash start.sh --help)" >&2; exit 1 ;;
 esac
@@ -138,7 +144,7 @@ ensure_setup
 if systemctl is-active --quiet mpw-portal 2>/dev/null; then
   echo "Layanan sudah dikelola systemd (autostart) dan sedang berjalan."
 else
-  bash run.sh start || fail "layanan tidak bisa dijalankan (lihat: bash run.sh logs)"
+  bash run.sh start "${RUN_ARGS[@]+"${RUN_ARGS[@]}"}" || fail "layanan tidak bisa dijalankan (lihat: bash run.sh logs)"
 fi
 
 URL="http://localhost:$PORTAL_PORT/"

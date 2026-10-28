@@ -8,6 +8,8 @@ Pengendali layanan untuk Windows (dipanggil oleh run.bat).
     python -m portal.winctl logs    [portal|datamining]
     python -m portal.winctl fg      portal|datamining
     python -m portal.winctl open    [portal|datamining]   buka di browser
+    python -m portal.winctl start --no-datamining         tanpa Data Mining UI (Streamlit tidak dijalankan)
+    python -m portal.winctl datamining on|off             aktifkan/nonaktifkan permanen (config.env)
 
 Proses dijalankan di latar belakang tanpa jendela konsol; PID disimpan di run\\,
 log di logs\\. Hanya memakai pustaka standar (selain waitress/streamlit yang dijalankan).
@@ -118,7 +120,7 @@ def command(svc):
 # ---------------------------------------------------------------- perintah
 def start(svc):
     if svc == "datamining" and cfg("ENABLE_DATAMINING") != "1":
-        print("datamining dinonaktifkan (ENABLE_DATAMINING=0 di config.env)")
+        print(f"datamining tidak dijalankan (Data Mining UI dinonaktifkan; port {cfg('STREAMLIT_PORT')} tidak dipakai)")
         return True
     pid = read_pid(svc)
     if pid_alive(pid):
@@ -181,9 +183,32 @@ def stop(svc):
     return True
 
 
+def dm_enabled():
+    return cfg("ENABLE_DATAMINING") == "1"
+
+
+def set_cfg(key, value):
+    f = ROOT / "config.env"
+    if not f.exists():
+        f.write_text((ROOT / "config.env.example").read_text(encoding="utf-8"), encoding="utf-8")
+    lines = [l for l in f.read_text(encoding="utf-8").splitlines() if not l.startswith(key + "=")]
+    lines.append(f"{key}={value}")
+    f.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def drop_datamining():
+    """Mode tanpa Data Mining: hentikan Streamlit yang masih berjalan."""
+    if not dm_enabled() and pid_alive(read_pid("datamining")):
+        print("Data Mining UI dinonaktifkan - menghentikan Streamlit yang masih berjalan")
+        stop("datamining")
+
+
 def status():
     for svc in SERVICES:
         pid = read_pid(svc)
+        if svc == "datamining" and not dm_enabled() and not pid_alive(pid):
+            print(f"{svc:<11} dinonaktifkan (Streamlit tidak dijalankan)")
+            continue
         run = f"berjalan (pid {pid})" if pid_alive(pid) else "berhenti"
         port = cfg("PORTAL_PORT") if svc == "portal" else cfg("STREAMLIT_PORT")
         ok = "OK" if http_ok(health_url(svc)) else "-"
@@ -221,14 +246,35 @@ def fg(svc):
 
 def main(argv):
     load_config()
-    if not argv or argv[0] not in ("start", "stop", "restart", "status", "logs", "fg", "open"):
+    if any(a in ("--no-datamining", "--web-only") for a in argv):
+        os.environ["ENABLE_DATAMINING"] = "0"     # diteruskan ke proses portal
+        argv = [a for a in argv if a not in ("--no-datamining", "--web-only")]
+    if not argv or argv[0] not in ("start", "stop", "restart", "status", "logs", "fg", "open", "datamining"):
         print(__doc__)
         return 1
     action, target = argv[0], (argv[1] if len(argv) > 1 else None)
+    if action == "datamining":
+        if target == "off":
+            set_cfg("ENABLE_DATAMINING", "0")
+            os.environ["ENABLE_DATAMINING"] = "0"
+            print("Data Mining UI dinonaktifkan permanen (ENABLE_DATAMINING=0 di config.env).")
+            drop_datamining()
+        elif target == "on":
+            set_cfg("ENABLE_DATAMINING", "1")
+            os.environ["ENABLE_DATAMINING"] = "1"
+            print("Data Mining UI diaktifkan (ENABLE_DATAMINING=1 di config.env).")
+            start("datamining")
+        else:
+            print("pakai: run.bat datamining on|off")
+            return 1
+        if pid_alive(read_pid("portal")):   # muat ulang portal agar kartunya ikut berubah
+            stop("portal")
+            start("portal")
+        return 0
     if target and target not in SERVICES:
         print(f"Layanan tidak dikenal: {target} (pilihan: portal, datamining)")
         return 1
-    targets = [target] if target else list(SERVICES)
+    targets = [target] if target else [s for s in SERVICES if s == "portal" or dm_enabled()]
     if action == "status":
         status()
     elif action == "open":
@@ -243,6 +289,8 @@ def main(argv):
         fg(target)
     else:
         ok = True
+        if action in ("start", "restart"):
+            drop_datamining()
         for s in targets:
             if action in ("stop", "restart"):
                 stop(s)

@@ -1,0 +1,2570 @@
+{
+  "kb": [
+    {
+      "id": "8c4d1000-aba9-499f-8e93-a9a990c7923e",
+      "source": "default",
+      "created": "2026-08-09 02:36:52",
+      "keywords": [
+        "jam",
+        "buka",
+        "operasional",
+        "tutup",
+        "kerja"
+      ],
+      "answer": "Kami beroperasi Senin–Jumat pukul 08.00–17.00 WIB dan Sabtu 08.00–12.00 WIB. Hari Minggu dan libur nasional kami tutup."
+    },
+    {
+      "id": "156d9fcc-35eb-47a4-85d0-fd9c2f36d4dc",
+      "source": "default",
+      "created": "2026-08-09 02:36:52",
+      "keywords": [
+        "hubungi",
+        "kontak",
+        "telepon",
+        "email",
+        "whatsapp"
+      ],
+      "answer": "📞 Telepon: (0370) 123-4567\n📧 Email: cs@example.ac.id\n💬 WhatsApp: 0812-3456-7890"
+    },
+    {
+      "id": "5ace0819-070d-4376-b3a4-9527f7c0f881",
+      "source": "default",
+      "created": "2026-08-09 02:36:52",
+      "keywords": [
+        "harga",
+        "biaya",
+        "tarif",
+        "bayar",
+        "cost"
+      ],
+      "answer": "Informasi harga tersedia di website kami. Harga berbeda tergantung layanan yang dipilih. Hubungi kami untuk penawaran khusus."
+    },
+    {
+      "id": "8a85d298-04f8-4e71-af08-0fa74b64ea31",
+      "source": "default",
+      "created": "2026-08-09 02:36:52",
+      "keywords": [
+        "daftar",
+        "registrasi",
+        "mendaftar",
+        "pendaftaran"
+      ],
+      "answer": "Pendaftaran dapat dilakukan secara online melalui website resmi atau langsung ke kantor kami dengan membawa dokumen yang diperlukan."
+    },
+    {
+      "id": "59daa390-5eab-433f-83ca-0ef509e431f4",
+      "source": "default",
+      "created": "2026-08-09 02:36:52",
+      "keywords": [
+        "status",
+        "cek",
+        "lacak",
+        "pesanan",
+        "order"
+      ],
+      "answer": "Untuk mengecek status, login ke akun Anda atau hubungi CS dengan menyebutkan nomor transaksi/referensi Anda."
+    },
+    {
+      "id": "e0e68cc1-a7b7-4931-b2bf-46bade0e5494",
+      "keywords": [
+        "bosan",
+        "hidup",
+        "hubungi",
+        "psikiater",
+        "jangan",
+        "bunuh",
+        "diri",
+        "merepotkan"
+      ],
+      "answer": "jika anda bosan hidup maka hubungi psikiater. jangan bunuh diri karena akan merepotkan banyak orang.",
+      "source": "stress.txt",
+      "created": "2026-08-09 10:53:34"
+    },
+    {
+      "id": "4ae6acd1-f53f-4569-9c9a-08a33a35f2b2",
+      "keywords": [
+        "melakukan",
+        "jakarta",
+        "akses",
+        "bina",
+        "penataan",
+        "lokbin",
+        "lokasi",
+        "masuk"
+      ],
+      "answer": "Dinas Bina Marga DKI Jakarta melakukan pengaspalan akses masuk dan halaman Lokasi Binaan (Lokbin) Kramat Jati, Jakarta Timur. Penataan ini dilakukan untuk membuat akses lokbin lebih nyaman sekaligus mendukung penataan kawasan Jalan Raya Bogor.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "4508e557-e81a-4f36-8fb6-db3a5f0a27e5",
+      "keywords": [
+        "suku",
+        "27",
+        "28",
+        "agustus",
+        "dilakukan",
+        "2026",
+        "pengaspalan",
+        "jakarta"
+      ],
+      "answer": "Pengaspalan dilakukan oleh Suku Dinas Bina Marga Jakarta Timur pada 27-28 Agustus 2026.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "7dc3f1bb-d2d0-4661-b7f5-4aa8a2709cf9",
+      "keywords": [
+        "jakarta",
+        "dikutip",
+        "instagram",
+        "senin",
+        "31",
+        "kegiatan",
+        "merupakan",
+        "bagian"
+      ],
+      "answer": "Dikutip dari unggahan Instagram Dinas Bina Marga DKI Jakarta, Senin (31/8/2026), kegiatan tersebut merupakan bagian dari dukungan terhadap penataan kawasan Jalan Raya Bogor di Kecamatan Kramat Jati, Jakarta Timur.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "6e999851-24f4-4c93-953d-eb5c7e011240",
+      "keywords": [
+        "scroll",
+        "to",
+        "continue",
+        "with",
+        "content"
+      ],
+      "answer": "SCROLL TO CONTINUE WITH CONTENT",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "bfbc48e6-1c76-4979-98f1-d0100bf794a6",
+      "keywords": [
+        "demikian",
+        "keterangan",
+        "masuk",
+        "halaman",
+        "unggahan",
+        "pengaspalan",
+        "akses",
+        "dukung"
+      ],
+      "answer": "\"Pengaspalan akses masuk dan halaman Lokbin Kramat Jati. Dukung penataan Jalan Raya Bogor,\" demikian keterangan dalam unggahan tersebut.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "137dfd93-1201-4baa-badc-6e8951d5bc09",
+      "keywords": [
+        "jual",
+        "aktivitas",
+        "lokbin",
+        "area",
+        "menjalankan",
+        "begitu",
+        "para",
+        "akses"
+      ],
+      "answer": "Dengan akses dan area lokbin yang lebih nyaman, para pedagang diharapkan dapat menjalankan aktivitas jual beli di dalam kawasan lokbin. Dengan begitu, aktivitas berjualan di pinggir jalan dapat berkurang.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "ecd2ef2c-b31b-4cbb-ab5a-c537aff160f0",
+      "keywords": [
+        "lagi",
+        "berada",
+        "para",
+        "tulisnya",
+        "berjualan",
+        "pinggir",
+        "pedagang",
+        "beraktivitas"
+      ],
+      "answer": "\"Para pedagang diharapkan dapat beraktivitas dan berjualan di dalam Lokbin, sehingga tidak lagi berada di pinggir jalan,\" tulisnya.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "327ad691-736a-4534-bf8e-463a257de4ff",
+      "keywords": [
+        "berdampak",
+        "dinilai",
+        "terhadap",
+        "kelancaran",
+        "lintas",
+        "meminimalkan",
+        "potensi",
+        "kemacetan"
+      ],
+      "answer": "Penataan ini juga diharapkan berdampak terhadap kelancaran lalu lintas di Jalan Raya Bogor, Kramat Jati. Berkurangnya aktivitas jual beli di pinggir jalan dinilai dapat meminimalkan potensi kemacetan.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "c5bb2043-ce0e-451e-9db9-4ac26e5e2609",
+      "keywords": [
+        "kondisi",
+        "sekitar",
+        "lingkungan",
+        "masyarakat",
+        "melintas",
+        "membuat",
+        "nyaman",
+        "pedagang"
+      ],
+      "answer": "Selain itu, kondisi jalan yang lebih baik di sekitar lokbin diharapkan membuat lingkungan menjadi lebih nyaman bagi pedagang maupun masyarakat yang melintas.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "b39784ff-462e-4197-855f-d163136ae2fc",
+      "keywords": [
+        "potensi",
+        "berjualan",
+        "jalan",
+        "mengurangi",
+        "licin",
+        "meminimalkan",
+        "kemacetan",
+        "sekaligus"
+      ],
+      "answer": "\"Dengan pedagang berjualan di dalam Lokbin, aktivitas jual beli di pinggir jalan dapat berkurang. Hal ini diharapkan dapat meminimalkan potensi kemacetan di Jalan Raya Bogor, Kramat Jati, sekaligus mengurangi potensi jalan menjadi licin,\" tulisnya.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "2861098c-dfb4-4cfb-b1c7-95a0a64baea0",
+      "keywords": [
+        "menekankan",
+        "tertib",
+        "semakin",
+        "lancar",
+        "dki",
+        "tersebut",
+        "membuat",
+        "dinas"
+      ],
+      "answer": "Dinas Bina Marga DKI pun menekankan penataan tersebut diharapkan membuat aktivitas perdagangan lebih tertib dan Jalan Raya Bogor di kawasan Kramat Jati semakin lancar.",
+      "source": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "created": "2026-08-31 15:36:55"
+    },
+    {
+      "id": "3d7c66e4-90b3-4039-b28a-0a037e7c1d34",
+      "keywords": [
+        "cerita",
+        "dibahas",
+        "periode",
+        "sebelumnya",
+        "mahfud",
+        "ruu",
+        "dpr",
+        "perampasan"
+      ],
+      "answer": "Mahfud Cerita RUU Perampasan Aset yang Tidak Dibahas DPR Periode Sebelumnya",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "8e01c126-5c5b-41d4-8b61-b1bc4b514c75",
+      "keywords": [
+        "undang",
+        "com",
+        "mantan",
+        "menteri",
+        "koordinator",
+        "keamanan",
+        "menyorot",
+        "jakarta"
+      ],
+      "answer": "JAKARTA, KOMPAS.com - Mantan Menteri Koordinator Politik, Hukum, dan Keamanan (Menkopolhukam) Mahfud MD menyorot DPR periode sebelumnya yang tidak membahas rancangan undang-undang Perampasan Aset Terkait Tindak Pidana.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "82353f9b-7c93-42d7-b8e2-c795f147fce7",
+      "keywords": [
+        "padahal",
+        "dirinya",
+        "mengusulkan",
+        "program",
+        "legislasi",
+        "nasional",
+        "masuk",
+        "prioritas"
+      ],
+      "answer": "Padahal saat dirinya menjadi Menkopolhukam, Mahfud sudah mengusulkan agar RUU Perampasan Aset masuk program legislasi nasional (Prolegnas) Prioritas 2020.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "0c7d6ed1-4d72-4cb3-b8e4-14e7200c36ff",
+      "keywords": [
+        "masuk",
+        "tiba",
+        "prolegnas",
+        "mahfud",
+        "ajukan",
+        "2021",
+        "2022",
+        "ribut"
+      ],
+      "answer": "\"Saya ajukan Desember 2019, 2020 masuk (prolegnas), 2021 masuk, 2022 masuk, tiba-tiba 2023 keluar (dari prolegnas). Sehingga saya ribut di DPR,\" ujar Mahfud dalam kanal Youtube Mahfud MD Official, dikutip Kamis (3/9/2026).",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "2c50d772-08c7-4182-9e72-2202f48da056",
+      "keywords": [
+        "draf",
+        "dibuka",
+        "dinilai",
+        "transparan",
+        "penyusunan",
+        "tak",
+        "baca",
+        "belum"
+      ],
+      "answer": "Baca juga: Draf Belum Dibuka, Penyusunan RUU Perampasan Aset Dinilai Tak Transparan",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "9f29c83c-89fd-4ca4-8c73-66e9cc76dfe2",
+      "keywords": [
+        "masih",
+        "menjabat",
+        "sebagai",
+        "bertanya",
+        "alasan",
+        "mengeluarkan",
+        "prioritas",
+        "menkopolhukam"
+      ],
+      "answer": "Saat masih menjabat sebagai Menkopolhukam, Mahfud bertanya alasan DPR mengeluarkan RUU Perampasan Aset dari Prolegnas Prioritas.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "2bfb2875-fdb5-44ff-9eb0-770124412c3d",
+      "keywords": [
+        "mengungkap",
+        "memiliki",
+        "meminta",
+        "persetujuan",
+        "umum",
+        "terlebih",
+        "dahulu",
+        "alasan"
+      ],
+      "answer": "Ia mengungkap, DPR memiliki banyak alasan. Salah satunya adalah harus meminta persetujuan dari ketua umum partai politik terlebih dahulu.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "16019de5-bb90-40ee-b941-95cb4362f0f5",
+      "keywords": [
+        "sungguh",
+        "memang",
+        "pemerintah",
+        "buat",
+        "dong",
+        "gitu",
+        "partai",
+        "mengatakan"
+      ],
+      "answer": "\"Tapi ada satu partai yang mengatakan, 'kalau memang pemerintah sungguh-sungguh, buat dong surpresnya' gitu,\" ujar Mahfud.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "c76ed193-3374-461f-8354-98d53f490ecc",
+      "keywords": [
+        "presiden",
+        "menjelaskan",
+        "republik",
+        "joko",
+        "widodo",
+        "jokowi",
+        "mengirimkan",
+        "surat"
+      ],
+      "answer": "Mahfud pun menjelaskan, Presiden ke-7 Republik Indonesia Joko Widodo (Jokowi) sudah mengirimkan surat presiden (surpres) RUU Perampasan Aset pada 4 Mei 2023.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "521822cd-458e-4cbc-9cc1-ca0e77f0cc1a",
+      "keywords": [
+        "uu",
+        "as",
+        "inggris",
+        "hingga",
+        "australia",
+        "sasar",
+        "tipikor",
+        "habiburokhman"
+      ],
+      "answer": "Baca juga: Habiburokhman: UU Perampasan Aset di AS, Inggris, hingga Australia Tak Hanya Sasar Tipikor",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "7273bef6-3ddb-42b7-8a92-a5abea2e1d3e",
+      "keywords": [
+        "kunjung",
+        "pimpinan",
+        "2019",
+        "2024",
+        "rapat",
+        "paripurna",
+        "tak",
+        "periode"
+      ],
+      "answer": "Namun, pimpinan DPR periode 2019-2024 tak kunjung membacakan surpres RUU Perampasan Aset itu dalam rapat paripurna .",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "096240de-1e56-4e41-b7cd-2e382b0ffb53",
+      "keywords": [
+        "minta",
+        "enggak",
+        "sampai",
+        "selesainya",
+        "pergantian",
+        "dibahas",
+        "presiden",
+        "surpres"
+      ],
+      "answer": "\"Ini Anda (DPR) minta surpres, enggak dibahas juga sampai selesainya pergantian Presiden,\" ujar Mahfud.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "0a0c2bcc-0c96-4776-a165-d7990412b78e",
+      "keywords": [
+        "undang",
+        "mengapresiasi",
+        "2029",
+        "mulai",
+        "menargetkan",
+        "2024",
+        "membahas",
+        "sah"
+      ],
+      "answer": "Oleh karena itu, ia mengapresiasi DPR periode 2024-2029 yang mulai membahas dan menargetkan RUU Perampasan Aset sah menjadi undang-undang pada Desember 2026.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "7e7a2846-13d2-468a-b39d-da4b47663689",
+      "keywords": [
+        "benar",
+        "berharap",
+        "khususnya",
+        "menerapkan",
+        "partisipasi",
+        "bermakna",
+        "pembahasan",
+        "iii"
+      ],
+      "answer": "Ia berharap agar DPR, khususnya Komisi III benar-benar menerapkan partisipasi bermakna dalam pembahasan RUU Perampasan Aset.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "6f96bbad-4aa7-45bc-93c7-d5bd2f00b178",
+      "keywords": [
+        "sambut",
+        "janji",
+        "merampungkan",
+        "bulan",
+        "desember",
+        "ujar",
+        "mahfud",
+        "ruu"
+      ],
+      "answer": "\"Kita sambut baik ini janji DPR bahwa akan merampungkan RUU Perampasan Aset ini bulan Desember,\" ujar Mahfud.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "429a41fb-7664-45c2-893f-65b6a121ac3a",
+      "keywords": [
+        "urgensi",
+        "lembaga",
+        "pengelola",
+        "aset",
+        "baca",
+        "ruu",
+        "perampasan"
+      ],
+      "answer": "Baca juga: Urgensi Lembaga Pengelola Aset dalam RUU Perampasan Aset",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "33fe0040-1957-4cb8-99da-524e2813c084",
+      "keywords": [
+        "wakil",
+        "ahmad",
+        "menerima",
+        "aliansi",
+        "masyarakat",
+        "pati",
+        "ampb",
+        "bersatu"
+      ],
+      "answer": "ANTARA FOTO/Asprilla Dwi Adha Wakil Ketua DPR Sufmi Dasco Ahmad (kedua kanan), Cucun Ahmad Syamsurijal (ketiga kanan), Saan Mustopa (kanan), serta Wakil Ketua Komisi VI DPR Andre Rosiade menerima Aliansi Masyarakat Pati Bersatu (AMPB) di Kompleks Parlemen, Senayan, Jakarta, Kamis (27/8/2026). Pimpinan DPR menerima audiensi dari Aliansi Masyarakat Pati Bersatu (AMPB) di sela adanya aksi damai menuntut pengesahan Rancangan Undang-Undang (RUU) Perampasan Aset dan terkait pemberantasan korupsi.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "4065c258-1171-4394-bb57-4f13a8f7b59f",
+      "keywords": [
+        "pihaknya",
+        "iii",
+        "mengatakan",
+        "memerlukan",
+        "waktu",
+        "ketua",
+        "komisi",
+        "habiburokhman"
+      ],
+      "answer": "Sebelumnya, Ketua Komisi III DPR Habiburokhman mengatakan pihaknya memerlukan waktu dalam menyusun RUU Perampasan Aset.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "836d5201-112a-4133-9ea6-1cd73444c5b5",
+      "keywords": [
+        "pasalnya",
+        "payung",
+        "merupakan",
+        "hukum",
+        "tindak",
+        "pidana",
+        "baru",
+        "indonesia"
+      ],
+      "answer": "Pasalnya, payung hukum terkait perampasan aset untuk tindak pidana merupakan hal yang baru di Indonesia.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "977b071e-845b-486b-9c4f-d4bdabbe261e",
+      "keywords": [
+        "benar",
+        "undang",
+        "persidangan",
+        "baru",
+        "2026",
+        "konsepnya",
+        "masa",
+        "tahun"
+      ],
+      "answer": "\"Kalau Undang-Undang Perampasan Aset ini benar-benar undang-undang yang sangat baru, konsepnya pun baru, sehingga kita benar-benar memerlukan waktu untuk menyusunnya,\" ujar Habiburokhman dalam rapat paripurna ke-3 DPR Masa Persidangan I Tahun Sidang 2026-2027, Kamis (27/8/2026).",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "17e2f151-0995-417f-ac32-656c79532b05",
+      "keywords": [
+        "kompas",
+        "copyright",
+        "2008",
+        "pt",
+        "cyber",
+        "media",
+        "gramedia",
+        "digital"
+      ],
+      "answer": "Copyright 2008 - 2026 PT. Kompas Cyber Media (Kompas Gramedia Digital Group). All Rights Reserved.",
+      "source": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "created": "2026-09-03 15:22:19"
+    },
+    {
+      "id": "bd787600-77dc-4de3-87e7-4f742d718519",
+      "keywords": [
+        "ringkasan",
+        "data",
+        "dataset",
+        "statistik",
+        "gambaran",
+        "overview",
+        "summary"
+      ],
+      "answer": "Dataset \"Coffee_domestic_consumption.csv\" berisi 55 baris data dan 33 kolom. Kolom numerik: 1990/91, 1991/92, 1992/93, 1993/94, 1994/95, 1995/96, 1996/97, 1997/98, 1998/99, 1999/00, 2000/01, 2001/02, 2002/03, 2003/04, 2004/05, 2005/06, 2006/07, 2007/08, 2008/09, 2009/10, 2010/11, 2011/12, 2012/13, 2013/14, 2014/15, 2015/16, 2016/17, 2017/18, 2018/19, 2019/20, Total_domestic_consumption. Kolom kategorikal: Country, Coffee type.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "afcbc6f7-31eb-4896-8b5d-06b93d9f4ffc",
+      "keywords": [
+        "1990/91",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1990/91: jumlah data 55, rata-rata 21282775.64, standar deviasi 68100615.5, nilai minimum 0, kuartil 1 180000, median 2040000, kuartil 3 12990000, dan nilai maksimum 492000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e4b1af41-1263-4d19-9fd2-7e40aaa6296d",
+      "keywords": [
+        "1991/92",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1991/92: jumlah data 55, rata-rata 22067014.91, standar deviasi 70328393.67, nilai minimum 0, kuartil 1 180000, median 3000000, kuartil 3 16713000, dan nilai maksimum 510000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "ccc8de8c-a501-4f88-8cc1-dd1d8ae69ee8",
+      "keywords": [
+        "1992/93",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1992/93: jumlah data 55, rata-rata 22856129.45, standar deviasi 73630768.93, nilai minimum 0, kuartil 1 180000, median 3000000, kuartil 3 16500000, dan nilai maksimum 534000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "034d36fd-61f4-408c-bced-a5cf5118ab18",
+      "keywords": [
+        "1993/94",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1993/94: jumlah data 55, rata-rata 23015897.45, standar deviasi 75117694.58, nilai minimum 0, kuartil 1 240000, median 2400000, kuartil 3 17310000, dan nilai maksimum 546000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a8778d10-d6a7-4cf7-8742-a0f959ae3f80",
+      "keywords": [
+        "1994/95",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1994/95: jumlah data 55, rata-rata 23301999.27, standar deviasi 76799447.08, nilai minimum 0, kuartil 1 240000, median 3000000, kuartil 3 16500000, dan nilai maksimum 558000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1931718c-f46c-447e-a6a8-46a088b5a475",
+      "keywords": [
+        "1995/96",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1995/96: jumlah data 55, rata-rata 24657351.27, standar deviasi 83217433.44, nilai minimum 0, kuartil 1 240000, median 3000000, kuartil 3 17755350, dan nilai maksimum 606000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1baee111-c80a-4f06-9585-ada8c6fd00d4",
+      "keywords": [
+        "1996/97",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1996/97: jumlah data 55, rata-rata 25650098.18, standar deviasi 90394434.35, nilai minimum 0, kuartil 1 180000, median 3000000, kuartil 3 17925480, dan nilai maksimum 660000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "465fa507-2321-4b45-a76e-71b51a034334",
+      "keywords": [
+        "1997/98",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1997/98: jumlah data 55, rata-rata 26477498.16, standar deviasi 94389045.06, nilai minimum 0, kuartil 1 180000, median 3000000, kuartil 3 18000000, dan nilai maksimum 690000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5bfc1c3f-d65b-46db-b0a0-fb9279b39c94",
+      "keywords": [
+        "1998/99",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1998/99: jumlah data 55, rata-rata 27399919.64, standar deviasi 99951541.3, nilai minimum 0, kuartil 1 210000, median 3000000, kuartil 3 18000000, dan nilai maksimum 732000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "40bd515a-5e96-4b49-8786-9ed9cf8a63aa",
+      "keywords": [
+        "1999/00",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 1999/00: jumlah data 55, rata-rata 28081314.55, standar deviasi 104078227.17, nilai minimum 0, kuartil 1 210000, median 3000000, kuartil 3 15900000, dan nilai maksimum 762000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "8f2a9fa9-7c77-4ae7-ae63-88fa9f072882",
+      "keywords": [
+        "2000/01",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2000/01: jumlah data 55, rata-rata 29528904, standar deviasi 108146960.58, nilai minimum 0, kuartil 1 150000, median 3000000, kuartil 3 18500010, dan nilai maksimum 792000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "fa64a847-1777-4dd1-9179-7984042da3bb",
+      "keywords": [
+        "2001/02",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2001/02: jumlah data 55, rata-rata 30882534.55, standar deviasi 111699109.52, nilai minimum 0, kuartil 1 180000, median 3000000, kuartil 3 18500010, dan nilai maksimum 815400000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "04495ef4-6adc-4134-b1b0-85110c3325e4",
+      "keywords": [
+        "2002/03",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2002/03: jumlah data 55, rata-rata 31365568.36, standar deviasi 112865782.03, nilai minimum 0, kuartil 1 233610, median 3000000, kuartil 3 18500010, dan nilai maksimum 825000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d1d95fba-d7b6-4a5c-aea5-3bbd10297281",
+      "keywords": [
+        "2003/04",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2003/04: jumlah data 55, rata-rata 32544739.64, standar deviasi 116548489.28, nilai minimum 0, kuartil 1 262500, median 4020000, kuartil 3 19490010, dan nilai maksimum 852000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a74e4a30-25ca-4a39-b9f1-134f889102b1",
+      "keywords": [
+        "2004/05",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2004/05: jumlah data 55, rata-rata 34268922.55, standar deviasi 122654802.92, nilai minimum 0, kuartil 1 270000, median 4020000, kuartil 3 19700010, dan nilai maksimum 896760000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "412ba95d-700d-4e3f-9d29-0fc593dd9335",
+      "keywords": [
+        "2005/06",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2005/06: jumlah data 55, rata-rata 36155978.18, standar deviasi 128001737.7, nilai minimum 0, kuartil 1 270000, median 4020000, kuartil 3 19700010, dan nilai maksimum 932280000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e63746a3-8ba5-4e3e-b9c6-45ec3d147d3d",
+      "keywords": [
+        "2006/07",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2006/07: jumlah data 55, rata-rata 38152985.45, standar deviasi 134864142.17, nilai minimum 0, kuartil 1 270000, median 4020000, kuartil 3 19700010, dan nilai maksimum 979860000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "7fc6e61c-b10b-4ab5-a44d-7128ab346410",
+      "keywords": [
+        "2007/08",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2007/08: jumlah data 55, rata-rata 40266696, standar deviasi 141844391.14, nilai minimum 0, kuartil 1 270000, median 4020000, kuartil 3 19710000, dan nilai maksimum 1026600000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f76d9269-6c2b-43d2-aba5-429507e151bf",
+      "keywords": [
+        "2008/09",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2008/09: jumlah data 55, rata-rata 41893719.27, standar deviasi 146486186.43, nilai minimum 0, kuartil 1 300000, median 4020000, kuartil 3 19560000, dan nilai maksimum 1059600000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "9ca9d0e1-500b-4107-8a15-99a98f5d2fb4",
+      "keywords": [
+        "2009/10",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2009/10: jumlah data 55, rata-rata 43308462.55, standar deviasi 152262548.58, nilai minimum 0, kuartil 1 300000, median 4020000, kuartil 3 19110000, dan nilai maksimum 1103400000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "45ebb1c6-816e-4df5-b527-7edeb840450d",
+      "keywords": [
+        "2010/11",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2010/11: jumlah data 55, rata-rata 45432207.27, standar deviasi 158406415.39, nilai minimum 0, kuartil 1 300000, median 4020000, kuartil 3 20400000, dan nilai maksimum 1147920000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dac37d05-ed99-456c-ad4d-4b52785f5245",
+      "keywords": [
+        "2011/12",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2011/12: jumlah data 55, rata-rata 47119071.27, standar deviasi 163494343.56, nilai minimum 0, kuartil 1 300000, median 4020000, kuartil 3 20700000, dan nilai maksimum 1183200000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d0aede60-18ca-4225-9627-dcb1a1bc4b8f",
+      "keywords": [
+        "2012/13",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2012/13: jumlah data 55, rata-rata 48711832.36, standar deviasi 168718466.32, nilai minimum 0, kuartil 1 300000, median 4302000, kuartil 3 21150000, dan nilai maksimum 1219800000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d182aa6f-463d-4bb9-80fd-3c7b0898658e",
+      "keywords": [
+        "2013/14",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2013/14: jumlah data 55, rata-rata 49444226.18, standar deviasi 167607375.59, nilai minimum 0, kuartil 1 300000, median 4408020, kuartil 3 20700000, dan nilai maksimum 1205100000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "3831c99c-3f17-443e-966d-6477ab4eb06d",
+      "keywords": [
+        "2014/15",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2014/15: jumlah data 55, rata-rata 50698576.36, standar deviasi 170117877.19, nilai minimum 0, kuartil 1 300000, median 4519020, kuartil 3 22050000, dan nilai maksimum 1219980000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f4be49d7-bb36-486b-b68b-96ab2fc68bcd",
+      "keywords": [
+        "2015/16",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2015/16: jumlah data 55, rata-rata 51653672.73, standar deviasi 171926197.81, nilai minimum 0, kuartil 1 300000, median 4560000, kuartil 3 22050000, dan nilai maksimum 1230480000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5c778748-7689-4397-b27c-3f45a5eb1d38",
+      "keywords": [
+        "2016/17",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2016/17: jumlah data 55, rata-rata 52728185.89, standar deviasi 177739293.39, nilai minimum 0, kuartil 1 300000, median 4620000, kuartil 3 21000000, dan nilai maksimum 1273500000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a11e8a65-e0ec-46f7-b9ae-e7487a82c7e5",
+      "keywords": [
+        "2017/18",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2017/18: jumlah data 55, rata-rata 54202708.36, standar deviasi 184052169.58, nilai minimum 0, kuartil 1 300000, median 4680000, kuartil 3 21550020, dan nilai maksimum 1319820000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "21575ed1-c382-4149-a010-0473e5dfc8db",
+      "keywords": [
+        "2018/19",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2018/19: jumlah data 55, rata-rata 54812349.82, standar deviasi 185892378.03, nilai minimum 0, kuartil 1 300000, median 4200000, kuartil 3 22200000, dan nilai maksimum 1332000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4a05cb71-ad9b-477f-9713-f3aa10cb4fe5",
+      "keywords": [
+        "2019/20",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk 2019/20: jumlah data 55, rata-rata 54525298.91, standar deviasi 184491744.64, nilai minimum 0, kuartil 1 300000, median 4290000, kuartil 3 21060000, dan nilai maksimum 1320000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a900eae8-11cc-490f-9ef1-c9c88846c9a1",
+      "keywords": [
+        "Total_domestic_consumption",
+        "statistik",
+        "deskripsi",
+        "describe",
+        "sebaran"
+      ],
+      "answer": "Statistik deskriptif untuk Total_domestic_consumption: jumlah data 55, rata-rata 1112486638.24, standar deviasi 3834783126.97, nilai minimum 0, kuartil 1 9586920, median 121620000, kuartil 3 589792980, dan nilai maksimum 27824700000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "7a56837a-bff0-4007-8c54-0b5bee968a1f",
+      "keywords": [
+        "1990/91",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1990/91 tertinggi adalah 492000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "9db1c661-b5d1-4bad-97cd-b8c96184c586",
+      "keywords": [
+        "1990/91",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1990/91 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e2dcff97-52d5-4fc0-8c8a-6f84ab3fb21e",
+      "keywords": [
+        "1990/91",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1990/91 adalah 21282775.64.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "809dc76d-6ad9-4326-8ff2-2262e0b450b5",
+      "keywords": [
+        "1990/91",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1990/91 adalah 1170552660.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "ec389fa1-7a05-477a-9bfb-167f6c716207",
+      "keywords": [
+        "1991/92",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1991/92 tertinggi adalah 510000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "64788860-77d0-4263-a7a1-18a2c1832b4f",
+      "keywords": [
+        "1991/92",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1991/92 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "8ecd854e-e819-4333-b512-4216973968e1",
+      "keywords": [
+        "1991/92",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1991/92 adalah 22067014.91.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "2f3df6cf-778f-4685-b098-0dc68db2dd13",
+      "keywords": [
+        "1991/92",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1991/92 adalah 1213685820.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "af5acfe2-1d48-478d-811f-21032f625007",
+      "keywords": [
+        "1992/93",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1992/93 tertinggi adalah 534000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "90a3541e-dd6d-4dc6-b5ec-1e273a01c297",
+      "keywords": [
+        "1992/93",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1992/93 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "cf6ee0f4-0c42-4f3d-9f82-cdbbef8f467b",
+      "keywords": [
+        "1992/93",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1992/93 adalah 22856129.45.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "6527c771-766e-46a1-95a4-72aed3840c16",
+      "keywords": [
+        "1992/93",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1992/93 adalah 1257087120.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "96b7f4ba-1582-42a4-9b7c-9ce34d4c9804",
+      "keywords": [
+        "1993/94",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1993/94 tertinggi adalah 546000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5f1176f9-7cce-4cbd-9973-7da07ec1376f",
+      "keywords": [
+        "1993/94",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1993/94 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4f3d05d2-82b6-4a9e-950f-66fe31cfde38",
+      "keywords": [
+        "1993/94",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1993/94 adalah 23015897.45.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dab78ed0-50ed-417a-99df-59d260f4d757",
+      "keywords": [
+        "1993/94",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1993/94 adalah 1265874360.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4f16c4ea-2d78-4cc0-8a04-634dcb30a7dc",
+      "keywords": [
+        "1994/95",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1994/95 tertinggi adalah 558000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4fd0be37-4d6b-4edd-a8e5-c3e4361f0dd8",
+      "keywords": [
+        "1994/95",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1994/95 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "b38a34e5-aeac-456b-961b-9b73f6468ca4",
+      "keywords": [
+        "1994/95",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1994/95 adalah 23301999.27.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5a141f2b-9065-4c75-a969-12b0a71b0069",
+      "keywords": [
+        "1994/95",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1994/95 adalah 1281609960.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4cd25937-7c91-424e-a196-6dd43c6a3c76",
+      "keywords": [
+        "1995/96",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1995/96 tertinggi adalah 606000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "df88ec49-6571-47b8-a875-ab2981a32622",
+      "keywords": [
+        "1995/96",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1995/96 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "7c573364-0986-4ad2-9bdc-e659bc77ed0d",
+      "keywords": [
+        "1995/96",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1995/96 adalah 24657351.27.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "c9bab6bc-138f-4984-b011-d63d9d515a53",
+      "keywords": [
+        "1995/96",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1995/96 adalah 1356154320.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e92ee205-b1bc-49dc-a5bf-60f982868190",
+      "keywords": [
+        "1996/97",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1996/97 tertinggi adalah 660000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dbd18da7-7be5-4a5e-a8df-388eeff462ab",
+      "keywords": [
+        "1996/97",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1996/97 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dd40f343-6d1a-4c5c-92b2-847fba2ab90a",
+      "keywords": [
+        "1996/97",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1996/97 adalah 25650098.18.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "54ba6449-8a06-4938-affa-25c7a40401d0",
+      "keywords": [
+        "1996/97",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1996/97 adalah 1410755400.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d04110cf-4501-407f-9729-1ec630a7384a",
+      "keywords": [
+        "1997/98",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1997/98 tertinggi adalah 690000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "117e1762-3cdb-4e7e-8bec-fde0f929235e",
+      "keywords": [
+        "1997/98",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1997/98 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f8d23326-6650-46e0-9de0-75b78641e504",
+      "keywords": [
+        "1997/98",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1997/98 adalah 26477498.16.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "b404edc6-86df-4e4b-8f50-32599082e63e",
+      "keywords": [
+        "1997/98",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1997/98 adalah 1456262399.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "01ea7f87-63b1-49e5-9ac3-7ca4537c9644",
+      "keywords": [
+        "1998/99",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1998/99 tertinggi adalah 732000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "386a0af7-00c7-46e4-b552-baf18b426960",
+      "keywords": [
+        "1998/99",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1998/99 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a9a9fcb8-cf33-40f0-a9a9-c21c9715f28b",
+      "keywords": [
+        "1998/99",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1998/99 adalah 27399919.64.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "969685cd-76d4-4333-b2ff-149d7fa9b99a",
+      "keywords": [
+        "1998/99",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1998/99 adalah 1506995580.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "790e591f-34a3-493b-9694-829182233def",
+      "keywords": [
+        "1999/00",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "1999/00 tertinggi adalah 762000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "fe3661cb-5468-4c44-a0f0-7557cef0c585",
+      "keywords": [
+        "1999/00",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "1999/00 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "bb0c03ff-0adc-4cbc-9e5c-83aaf20742c9",
+      "keywords": [
+        "1999/00",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 1999/00 adalah 28081314.55.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "027cfe7d-ea76-46ed-99d1-9945da757596",
+      "keywords": [
+        "1999/00",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 1999/00 adalah 1544472300.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1c241815-5aa8-457a-a151-013be2fbe6b6",
+      "keywords": [
+        "2000/01",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2000/01 tertinggi adalah 792000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "9429e44a-1d7e-4c03-bc8e-eeb65d2406b4",
+      "keywords": [
+        "2000/01",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2000/01 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "c25ce296-947f-404e-8d0c-2516335d2b73",
+      "keywords": [
+        "2000/01",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2000/01 adalah 29528904.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "98bf5a6b-d582-4ac1-83b4-45c8735204c7",
+      "keywords": [
+        "2000/01",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2000/01 adalah 1624089720.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4d696b82-90c9-404d-a1d6-7a18e60f183c",
+      "keywords": [
+        "2001/02",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2001/02 tertinggi adalah 815400000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f5832e3c-350f-4175-9370-b9c9abf67846",
+      "keywords": [
+        "2001/02",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2001/02 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "769a387a-f2ce-418d-9339-1d1dd6133119",
+      "keywords": [
+        "2001/02",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2001/02 adalah 30882534.55.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "20d91095-7d8e-40d8-bc61-7daa4e1c23e9",
+      "keywords": [
+        "2001/02",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2001/02 adalah 1698539400.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "408d5ac5-624e-4df3-92b4-446ec7bfdd24",
+      "keywords": [
+        "2002/03",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2002/03 tertinggi adalah 825000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "56e477d3-0796-4b9a-bfeb-5de6ee165133",
+      "keywords": [
+        "2002/03",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2002/03 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "fe02a32c-5aca-478b-bac7-3713add811b2",
+      "keywords": [
+        "2002/03",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2002/03 adalah 31365568.36.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "32ec3063-1b2c-4401-ab7e-0b1c7dd3bcb4",
+      "keywords": [
+        "2002/03",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2002/03 adalah 1725106260.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e57cdd8d-4089-4cac-a893-f2143bdf6e4a",
+      "keywords": [
+        "2003/04",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2003/04 tertinggi adalah 852000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5b80f9af-4e9b-40d1-9e58-284fb17268b8",
+      "keywords": [
+        "2003/04",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2003/04 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "6826acf2-5e60-4ef0-9eca-3fe3a9f39b8d",
+      "keywords": [
+        "2003/04",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2003/04 adalah 32544739.64.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f443f027-d020-4212-94c5-05ad050430b7",
+      "keywords": [
+        "2003/04",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2003/04 adalah 1789960680.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "caef64e6-a094-49af-8dcd-89329ee83076",
+      "keywords": [
+        "2004/05",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2004/05 tertinggi adalah 896760000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "b56e4098-cd59-4b68-9f53-bff6e35376b1",
+      "keywords": [
+        "2004/05",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2004/05 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1448a1e9-cc45-4a2a-bce1-e6512c269d0f",
+      "keywords": [
+        "2004/05",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2004/05 adalah 34268922.55.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5e3d2f4c-9064-43cc-855a-70807162efef",
+      "keywords": [
+        "2004/05",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2004/05 adalah 1884790740.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d5eb2b8a-830f-4760-8e00-ed206ca0291e",
+      "keywords": [
+        "2005/06",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2005/06 tertinggi adalah 932280000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e11781cc-73d8-4874-88df-97580c811766",
+      "keywords": [
+        "2005/06",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2005/06 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "c7f995d1-054d-4e88-89e9-aed684d99348",
+      "keywords": [
+        "2005/06",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2005/06 adalah 36155978.18.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "c5ddd033-5161-4057-8757-2b47741f110a",
+      "keywords": [
+        "2005/06",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2005/06 adalah 1988578800.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "0549aeb6-7195-4aec-92b3-6d01cce24600",
+      "keywords": [
+        "2006/07",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2006/07 tertinggi adalah 979860000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d6169387-a91d-43b8-93b3-fa749ef4c8f2",
+      "keywords": [
+        "2006/07",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2006/07 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "effc0d3b-c4b0-474d-9d5e-30ee1c65f85e",
+      "keywords": [
+        "2006/07",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2006/07 adalah 38152985.45.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "10c97127-60b4-43fa-9968-9539f067ea38",
+      "keywords": [
+        "2006/07",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2006/07 adalah 2098414200.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "b7f3ac35-f339-4cd4-b8f9-6041834731dc",
+      "keywords": [
+        "2007/08",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2007/08 tertinggi adalah 1026600000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "57b73002-662c-4321-9c54-0fbcd09a74f7",
+      "keywords": [
+        "2007/08",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2007/08 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f81f907a-294c-414b-9b2d-e2e5998e3180",
+      "keywords": [
+        "2007/08",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2007/08 adalah 40266696.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "801c216f-4c0a-4687-afc9-bc5e4e449b23",
+      "keywords": [
+        "2007/08",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2007/08 adalah 2214668280.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "267ccd26-b066-42ec-8590-80aead83de7f",
+      "keywords": [
+        "2008/09",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2008/09 tertinggi adalah 1059600000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "05cc0223-93a6-46c3-92ae-fa7339c48dd0",
+      "keywords": [
+        "2008/09",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2008/09 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "2ce91222-9550-4631-9b43-4d123115933a",
+      "keywords": [
+        "2008/09",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2008/09 adalah 41893719.27.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "ec23ced7-8c9b-47d5-8e17-72d68dae296e",
+      "keywords": [
+        "2008/09",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2008/09 adalah 2304154560.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f8f8006e-567a-4ad4-891e-6a188a2ad8f2",
+      "keywords": [
+        "2009/10",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2009/10 tertinggi adalah 1103400000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e7e750d5-51eb-47d4-915b-fc67cc22c61c",
+      "keywords": [
+        "2009/10",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2009/10 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "60beb53d-9030-460d-989b-79b73a5af27d",
+      "keywords": [
+        "2009/10",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2009/10 adalah 43308462.55.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "08adf4e4-f602-4568-951e-2d55559db347",
+      "keywords": [
+        "2009/10",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2009/10 adalah 2381965440.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "38c92cfc-6e43-4b9b-8dbe-ad376c08e884",
+      "keywords": [
+        "2010/11",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2010/11 tertinggi adalah 1147920000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "796c93b4-2c59-493c-9ac1-9c95883da418",
+      "keywords": [
+        "2010/11",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2010/11 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1f087e16-6e1d-441c-b365-e444b6d8f7e0",
+      "keywords": [
+        "2010/11",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2010/11 adalah 45432207.27.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dd87b348-53a3-46e2-8e35-0fd8654490a4",
+      "keywords": [
+        "2010/11",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2010/11 adalah 2498771400.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "abaadd0c-336a-437a-b066-bc1571a2d6b1",
+      "keywords": [
+        "2011/12",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2011/12 tertinggi adalah 1183200000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "31a0c4d9-4dc2-42dc-bee6-3a3e902e328c",
+      "keywords": [
+        "2011/12",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2011/12 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e1e94395-ee8a-4579-9e3d-4b94f928ba66",
+      "keywords": [
+        "2011/12",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2011/12 adalah 47119071.27.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "f606077d-9df3-4707-8e0a-2f2b7331c010",
+      "keywords": [
+        "2011/12",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2011/12 adalah 2591548920.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "de05403a-5481-4f89-b2ea-292dc42d5d33",
+      "keywords": [
+        "2012/13",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2012/13 tertinggi adalah 1219800000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "589b7fc7-2a82-4440-a956-03712dedabd8",
+      "keywords": [
+        "2012/13",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2012/13 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "002d0e1d-5aa5-4217-93db-772d67d98e31",
+      "keywords": [
+        "2012/13",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2012/13 adalah 48711832.36.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "9ce4fdb5-3f71-4423-8afb-cf7304ef31e3",
+      "keywords": [
+        "2012/13",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2012/13 adalah 2679150780.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "0d3fece7-7226-4b4f-a3a8-482559c33017",
+      "keywords": [
+        "2013/14",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2013/14 tertinggi adalah 1205100000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "10332118-b931-433a-90b7-878d7cc0c713",
+      "keywords": [
+        "2013/14",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2013/14 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5f6f5dc3-ac35-4aee-b109-bafd1e3f36cc",
+      "keywords": [
+        "2013/14",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2013/14 adalah 49444226.18.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "afe80290-4600-4879-906a-3131607f53d6",
+      "keywords": [
+        "2013/14",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2013/14 adalah 2719432440.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "983e7d29-331d-4837-9fb3-21d2caba078c",
+      "keywords": [
+        "2014/15",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2014/15 tertinggi adalah 1219980000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "64a5d700-36bd-41b9-b0f5-75acead9730e",
+      "keywords": [
+        "2014/15",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2014/15 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "c9f11e0c-b70a-4724-9f1a-3b93ce7244a9",
+      "keywords": [
+        "2014/15",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2014/15 adalah 50698576.36.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "138e48dc-c57a-472b-b271-805157a285b1",
+      "keywords": [
+        "2014/15",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2014/15 adalah 2788421700.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "de6488f4-1fce-4de2-bc7d-da2e3a7de6a8",
+      "keywords": [
+        "2015/16",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2015/16 tertinggi adalah 1230480000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "ff54643c-3e27-4a20-a9de-ab62b374cb54",
+      "keywords": [
+        "2015/16",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2015/16 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e619e6d4-487b-4ee3-a332-490d372cf0bd",
+      "keywords": [
+        "2015/16",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2015/16 adalah 51653672.73.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "6fa13dfa-3977-4081-a874-b030019f11af",
+      "keywords": [
+        "2015/16",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2015/16 adalah 2840952000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a6ed2670-407e-4e60-9d8c-7e8384bad63f",
+      "keywords": [
+        "2016/17",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2016/17 tertinggi adalah 1273500000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a172c3ab-bc0a-49b7-a8c7-d4241299860f",
+      "keywords": [
+        "2016/17",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2016/17 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "630fcf89-ad85-4034-93c5-21ae2778a38d",
+      "keywords": [
+        "2016/17",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2016/17 adalah 52728185.89.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "37404f41-550e-4eea-bc3e-75b43b479188",
+      "keywords": [
+        "2016/17",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2016/17 adalah 2900050224.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1febdf50-0637-40b3-8c5f-de508ef5bb59",
+      "keywords": [
+        "2017/18",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2017/18 tertinggi adalah 1319820000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "35a31bed-cb58-4e0c-92fe-f65813b483ec",
+      "keywords": [
+        "2017/18",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2017/18 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "64cf6ef5-03d0-491d-b89a-942a890c05c4",
+      "keywords": [
+        "2017/18",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2017/18 adalah 54202708.36.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1adfff16-091d-40f1-8663-cf02f135a480",
+      "keywords": [
+        "2017/18",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2017/18 adalah 2981148960.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "ca4b9f37-4b16-4a53-be71-94fc07113aad",
+      "keywords": [
+        "2018/19",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2018/19 tertinggi adalah 1332000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "dbdc5eb7-889f-4745-87bb-1294087d7f50",
+      "keywords": [
+        "2018/19",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2018/19 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "144c2697-32f8-4796-8c76-ce22ef794ee6",
+      "keywords": [
+        "2018/19",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2018/19 adalah 54812349.82.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "fe8ce6c7-26f1-4bc7-ba65-05d1c75d28b6",
+      "keywords": [
+        "2018/19",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2018/19 adalah 3014679240.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "a21a04c1-6b2b-49d4-8917-7f071cb24a9b",
+      "keywords": [
+        "2019/20",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "2019/20 tertinggi adalah 1320000000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "d0994d37-94e3-44f6-922b-04cfa582f143",
+      "keywords": [
+        "2019/20",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "2019/20 terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "1c3bd689-95cb-48ba-a161-0f7a57241ae2",
+      "keywords": [
+        "2019/20",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata 2019/20 adalah 54525298.91.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "5def4a63-2449-4164-8290-cb56d4480130",
+      "keywords": [
+        "2019/20",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total 2019/20 adalah 2998891440.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e70c9080-7cc1-4baa-ab2d-3a7fddb68ecc",
+      "keywords": [
+        "Total_domestic_consumption",
+        "tertinggi",
+        "maksimum",
+        "terbesar",
+        "puncak"
+      ],
+      "answer": "Total_domestic_consumption tertinggi adalah 27824700000.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "6558d0bb-23be-4589-ada4-e0cfe96d0497",
+      "keywords": [
+        "Total_domestic_consumption",
+        "terendah",
+        "minimum",
+        "terkecil"
+      ],
+      "answer": "Total_domestic_consumption terendah adalah 0.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "289f6c90-8e7a-4c2f-916e-96ecd8b3db06",
+      "keywords": [
+        "Total_domestic_consumption",
+        "rata-rata",
+        "ratarata",
+        "mean"
+      ],
+      "answer": "Rata-rata Total_domestic_consumption adalah 1112486638.24.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "4b477a05-d128-4055-9e70-c509245ee2ea",
+      "keywords": [
+        "Total_domestic_consumption",
+        "total",
+        "jumlah"
+      ],
+      "answer": "Total Total_domestic_consumption adalah 61186765103.",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "7f17731f-75c7-4045-a59f-9dfd8bd0c61a",
+      "keywords": [
+        "korelasi",
+        "hubungan",
+        "korelasi antar kolom",
+        "relasi",
+        "keterkaitan"
+      ],
+      "answer": "Korelasi antara 2017/18 dan 2018/19 adalah 1.0 (sangat kuat, arah positif). Korelasi antara 2016/17 dan 2017/18 adalah 1.0 (sangat kuat, arah positif). Korelasi antara 2015/16 dan 2016/17 adalah 1.0 (sangat kuat, arah positif). Korelasi antara 2014/15 dan 2016/17 adalah 1.0 (sangat kuat, arah positif). Korelasi antara 2011/12 dan 2012/13 adalah 1.0 (sangat kuat, arah positif).",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "e979296f-667f-4087-8e57-f07f3bc5c85b",
+      "keywords": [
+        "Country",
+        "kategori",
+        "terbanyak",
+        "unik"
+      ],
+      "answer": "Kolom Country memiliki 55 nilai unik. Nilai paling sering muncul adalah \"Angola\" sebanyak 1 kali (1.8% dari data).",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    },
+    {
+      "id": "bbffba95-3540-4a34-a6d8-3af52bf08e5c",
+      "keywords": [
+        "Coffee type",
+        "kategori",
+        "terbanyak",
+        "unik"
+      ],
+      "answer": "Kolom Coffee type memiliki 4 nilai unik. Nilai paling sering muncul adalah \"Arabica\" sebanyak 22 kali (40.0% dari data).",
+      "source": "Coffee_domestic_consumption.csv",
+      "created": "2026-09-03 15:25:04"
+    }
+  ],
+  "documents": [
+    {
+      "filename": "stress.txt",
+      "paragraphs": 1,
+      "uploaded": "2026-08-09 10:53:34",
+      "char_count": 100
+    },
+    {
+      "filename": "scrape_news_detik_com_berita_d_8641875_akses_lokbin_krama.txt",
+      "paragraphs": 11,
+      "uploaded": "2026-08-31 15:36:55",
+      "char_count": 1837,
+      "source_type": "scrape",
+      "source_url": "https://news.detik.com/berita/d-8641875/akses-lokbin-kramat-jati-diaspal-pedagang-diminta-tak-jualan-di-pinggir-jalan?pk_vid=e2c844a30c374823178816178152724e",
+      "selector": "p"
+    },
+    {
+      "filename": "scrape_nasional_kompas_com_read_2026_09_03_13430061_mahfu.txt",
+      "paragraphs": 21,
+      "uploaded": "2026-09-03 15:22:19",
+      "char_count": 3217,
+      "source_type": "scrape",
+      "source_url": "https://nasional.kompas.com/read/2026/09/03/13430061/mahfud-cerita-ruu-perampasan-aset-yang-tidak-dibahas-dpr-periode-sebelumnya?source=headline",
+      "selector": "p"
+    },
+    {
+      "filename": "Coffee_domestic_consumption.csv",
+      "paragraphs": 159,
+      "uploaded": "2026-09-03 15:25:05",
+      "char_count": 0,
+      "source_type": "csv",
+      "rows": 55,
+      "columns": 33
+    }
+  ]
+}
