@@ -98,6 +98,30 @@ start/stop ada di `portal/winctl.py` (PID di `run\`, log di `logs\`). Saat perta
 dijalankan, Windows Firewall mungkin meminta izin. Bila hanya dipakai di komputer
 sendiri, isi `HOST=127.0.0.1` di `config.env`.
 
+## Server dengan CPU lama / VM "kvm64"
+
+Gejala: `NumPy was built with baseline optimizations: (X86_V2) but your machine doesn't
+support: (X86_V2)`, lalu `cannot load module more than once per process` di aplikasi lain.
+
+Penyebab: wheel NumPy ≥ 2.4, pandas ≥ 3.1, dan pyarrow butuh CPU **x86-64-v2**
+(SSE4.2, POPCNT, SSSE3). VM dengan tipe CPU lama (mis. `kvm64`/`qemu64` di Proxmox/KVM)
+tidak menyediakannya, meskipun prosesor fisiknya modern. Cek di server:
+
+```bash
+grep -m1 'model name' /proc/cpuinfo          # "Common KVM processor" / "QEMU Virtual CPU" = tipe CPU lama
+grep -cw sse4_2 /proc/cpuinfo                 # 0 = tidak didukung
+```
+
+`setup.sh` mendeteksi ini otomatis dan beralih ke **mode kompatibel**
+(`constraints-legacy-cpu.txt`: `numpy<2.4`, `pandas<3.1`, tanpa pyarrow). Empat aplikasi Flask
+berjalan normal; **Data Mining UI dinonaktifkan** karena Streamlit wajib memakai pyarrow, dan
+pyarrow selalu crash di CPU seperti ini. Paksa manual: `bash setup.sh --legacy-cpu`.
+
+Solusi permanen: minta pengelola VM mengganti tipe CPU menjadi **host** (atau
+**x86-64-v2-AES** di Proxmox: *Hardware → Processors → Type*; di VMware aktifkan EVC minimal
+Nehalem). Setelah VM di-restart: `bash setup.sh --recreate && bash run.sh restart`.
+Data Mining UI aktif kembali otomatis.
+
 ## Mengelola layanan
 
 ```bash

@@ -53,6 +53,8 @@ def create_portal(loaded, failed):
             "desc": "Klasifikasi, regresi, klastering, asosiasi, dan deret waktu dengan "
                     "pembangkit data, tuning parameter, dan visualisasi algoritma.",
             "ok": _streamlit_status(),
+            "enabled": os.environ.get("ENABLE_DATAMINING", "1") != "0",
+            "note": os.environ.get("DATAMINING_NOTE", ""),
             "url": os.environ.get("DATAMINING_URL", ""),
             "port": os.environ.get("STREAMLIT_PORT", "8501"),
             "base": os.environ.get("STREAMLIT_BASE_PATH", "datamining").strip("/"),
@@ -62,6 +64,7 @@ def create_portal(loaded, failed):
     @app.route("/healthz")
     def healthz():
         return jsonify(status="ok", loaded=loaded, failed=failed,
+                       datamining_enabled=os.environ.get("ENABLE_DATAMINING", "1") != "0",
                        datamining=_streamlit_status())
 
     @app.errorhandler(404)

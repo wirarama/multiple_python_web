@@ -216,8 +216,21 @@ def build():
     apps, loaded, failed = {}, [], {}
     enabled = os.environ.get("MPW_APPS")  # mis. "sdn,pyspark" untuk membatasi
     enabled = {k.strip() for k in enabled.split(",")} if enabled else None
+    # Muat NumPy sekali di awal: bila gagal (mis. CPU tanpa x86-64-v2), semua aplikasi
+    # mendapat pesan asli yang jelas, bukan "cannot load module more than once per process".
+    numpy_error = None
+    try:
+        import numpy  # noqa: F401
+    except Exception as e:
+        numpy_error = (f"NumPy tidak dapat dimuat: {type(e).__name__}: {e} "
+                       "-- jalankan ulang 'bash setup.sh' (mendeteksi CPU lama otomatis) "
+                       "atau 'bash setup.sh --legacy-cpu'.")
+        print(f"[gateway] {numpy_error}", file=sys.stderr)
     for key, (prefix, folder, title) in FLASK_APPS.items():
         if enabled is not None and key not in enabled:
+            continue
+        if numpy_error:
+            failed[key] = numpy_error
             continue
         try:
             apps[prefix] = load_flask_app(key, APPS_DIR / folder, owners)

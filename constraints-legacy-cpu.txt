@@ -1,0 +1,12 @@
+# Batasan versi untuk CPU lama / VM tanpa x86-64-v2 (tanpa SSE4.2, POPCNT, SSSE3).
+# Dipakai otomatis oleh setup.sh bila CPU seperti itu terdeteksi (atau: setup.sh --legacy-cpu).
+#
+#  - NumPy >= 2.4 dikompilasi dengan baseline x86-64-v2  -> "NumPy was built with baseline
+#    optimizations: (X86_V2) but your machine doesn't support: (X86_V2)"
+#  - pandas >= 3.1 juga crash (Illegal instruction) di CPU seperti ini
+#  - pyarrow (dependensi wajib Streamlit) butuh SSE4.2 di semua versi; bila terpasang,
+#    pandas ikut crash saat diimpor. Karena itu di mode ini pyarrow & Streamlit TIDAK
+#    dipasang dan Data Mining UI dinonaktifkan.
+# Teruji dengan emulasi CPU "kvm64" (model CPU bawaan VM KVM/Proxmox lama).
+numpy<2.4
+pandas<3.1

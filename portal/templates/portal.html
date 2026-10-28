@@ -52,12 +52,14 @@ footer{margin-top:32px;color:var(--muted);font-size:13px}
   {% endfor %}
     <section class="card">
       <div class="top"><span class="tag">{{ dm.tag }}</span>
-        {% if dm.ok %}<span class="st ok"><i></i>aktif</span>{% else %}<span class="st warn"><i></i>tidak terdeteksi</span>{% endif %}
+        {% if not dm.enabled %}<span class="st"><i></i>dinonaktifkan</span>
+        {% elif dm.ok %}<span class="st ok"><i></i>aktif</span>{% else %}<span class="st warn"><i></i>tidak terdeteksi</span>{% endif %}
       </div>
       <h2>{{ dm.title }}</h2>
       <p>{{ dm.desc }} Berjalan sebagai proses Streamlit terpisah.</p>
-      {% if not dm.ok %}<div class="err">Proses Streamlit belum berjalan. Di server: <code>bash run.sh start</code></div>{% endif %}
-      <a class="btn" id="dmLink" href="{{ dm.url or '#' }}" target="_blank" rel="noopener">Buka</a>
+      {% if not dm.enabled %}<div class="err">{{ dm.note or "Dinonaktifkan di config.env (ENABLE_DATAMINING=0)." }}</div>
+      {% elif not dm.ok %}<div class="err">Proses Streamlit belum berjalan. Di server: <code>bash run.sh start</code></div>{% endif %}
+      <a class="btn" id="dmLink" href="{{ dm.url or '#' }}" target="_blank" rel="noopener" {% if not dm.enabled %}aria-disabled="true"{% endif %}>Buka</a>
     </section>
   </div>
 
